@@ -1,6 +1,6 @@
 {
   "name": "Pause du Champion",
-  "short_name": "Pause Champion",
+  "short_name": "Pause du Champion",
   "description": "Ton minuteur de musculation intelligent",
   "start_url": "./index.html",
   "display": "standalone",
