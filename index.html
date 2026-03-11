@@ -83,7 +83,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 20px 10px;
+      padding: 18px 30px 10px;
       gap: 10px;
     }
     .header-logo {
@@ -95,6 +95,7 @@
     .header-logo img {
       height: 80px;
       width: auto;
+      display: block;
     }
     .header-logo span { color: var(--text); }
     .btn-icon {
@@ -239,6 +240,7 @@
       transition: border-color .15s;
     }
     .form-input:focus { border-color: var(--accent); }
+    .form-input.error { border-color: var(--accent2); }
     .form-input::placeholder { color: var(--text-muted); }
 
     /* time pickers */
@@ -266,6 +268,49 @@
       border-color: var(--accent);
       color: var(--accent);
       background: rgba(232,255,0,.08);
+    }
+
+    /* ============================================================
+       EXERCISE SUGGESTIONS
+    ============================================================ */
+    .exercise-input-wrap {
+      position: relative;
+    }
+    .exercise-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 10;
+      display: none;
+      margin-top: 4px;
+    }
+    .exercise-suggestions.show {
+      display: block;
+    }
+    .exercise-suggestion {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+    .exercise-suggestion:last-child {
+      border-bottom: none;
+    }
+    .exercise-suggestion:hover {
+      background: var(--border);
+    }
+    .exercise-suggestion mark {
+      background: transparent;
+      color: var(--accent);
+      font-weight: 600;
     }
 
     /* ============================================================
@@ -301,6 +346,10 @@
       line-height: 1;
     }
     .exercise-delete:hover { color: var(--accent2); }
+    .exercise-card.error-card {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px var(--accent2);
+    }
 
     /* ============================================================
        DURATION SUMMARY
@@ -648,7 +697,7 @@
   <div class="page" id="page-create">
       <div class="header">
       <button class="btn-icon" onclick="goBack()">←</button>
-      <div class="header-logo"><img src="logo.png" alt="Pause du Champion" style="height:24px" /></div>
+      <div class="header-logo"><img src="logo.png" alt="Pause du Champion" style="height:40px" /></div>
       <div style="width:40px"></div>
     </div>
 
@@ -876,6 +925,50 @@ const TIME_PRESETS_REST = [
 ];
 const SETS_PRESETS = [1,2,3,4,5,6];
 
+const EXERCISE_SUGGESTIONS = [
+  "Tractions pronation",
+  "Tractions supination",
+  "Tractions prise neutre",
+  "Dips",
+  "Pompes normales",
+  "Pompes larges",
+  "Pompes diamant",
+  "Pompes inclinées",
+  "Pompes déclinées",
+  "Développé couché",
+  "Développé incliné haltères",
+  "Développé militaire",
+  "Développé épaules haltères",
+  "Curl biceps barre",
+  "Curl biceps haltères",
+  "Curl marteau",
+  "Curl incliné haltères",
+  "Curl pupitre",
+  "Barre au front",
+  "Extension triceps poulie",
+  "Extension triceps au-dessus de la tête",
+  "Dips triceps",
+  "Élévations latérales",
+  "Élévations frontales",
+  "Oiseau (élévations arrière épaules)",
+  "Face pull",
+  "Rowing barre",
+  "Rowing haltère",
+  "Tirage vertical (lat pulldown)",
+  "Tirage horizontal poulie",
+  "Extensions lombaires",
+  "Gainage",
+  "Crunch",
+  "Relevés de jambes suspendu",
+  "Squat",
+  "Presse à cuisses",
+  "Fentes",
+  "Soulevé de terre",
+  "Soulevé de terre roumain",
+  "Mollets debout",
+  "Mollets à la presse"
+];
+
 function openCreatePage() {
   editingSessionId = null;
   exercises = [];
@@ -940,10 +1033,14 @@ function renderExercises() {
 
       <div class="form-group">
         <label class="form-label">Nom de l'exercice</label>
-        <input class="form-input" type="text" placeholder="Ex : Développé couché"
-          value="${escHtml(ex.name)}"
-          oninput="updateExerciseField('${ex.id}','name',this.value)"
-          maxlength="60" />
+        <div class="exercise-input-wrap">
+          <input class="form-input" type="text" placeholder="Ex : Développé couché"
+            value="${escHtml(ex.name)}"
+            oninput="updateExerciseField('${ex.id}','name',this.value); showSuggestions('${ex.id}', this.value)"
+            maxlength="60" 
+            autocomplete="off" />
+          <div class="exercise-suggestions" id="suggestions-${ex.id}"></div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -1000,19 +1097,101 @@ function selectPreset(id, field, value, btn) {
 }
 
 /* ================================================================
+   EXERCISE SUGGESTIONS
+================================================================ */
+function removeAccents(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function showSuggestions(exId, query) {
+  const container = document.getElementById('suggestions-' + exId);
+  if (!container) return;
+  
+  if (!query || query.length < 2) {
+    container.classList.remove('show');
+    return;
+  }
+  
+  const q = removeAccents(query.toLowerCase());
+  const matches = EXERCISE_SUGGESTIONS.filter(ex => 
+    removeAccents(ex.toLowerCase()).includes(q)
+  ).slice(0, 6);
+  
+  if (matches.length === 0) {
+    container.classList.remove('show');
+    return;
+  }
+  
+  // Find the actual position in the original string (not the normalized one)
+  container.innerHTML = matches.map(ex => {
+    const exLower = ex.toLowerCase();
+    const exNormalized = removeAccents(exLower);
+    const idx = exNormalized.indexOf(q);
+    if (idx === -1) {
+      return `<div class="exercise-suggestion" onclick="selectSuggestion('${exId}', '${escHtml(ex).replace(/'/g, "\\'")}')">${escHtml(ex)}</div>`;
+    }
+    const before = escHtml(ex.substring(0, idx));
+    const match = escHtml(ex.substring(idx, idx + q.length));
+    const after = escHtml(ex.substring(idx + q.length));
+    return `<div class="exercise-suggestion" onclick="selectSuggestion('${exId}', '${escHtml(ex).replace(/'/g, "\\'")}')">${before}<mark>${match}</mark>${after}</div>`;
+  }).join('');
+  
+  container.classList.add('show');
+}
+
+function selectSuggestion(exId, value) {
+  const ex = exercises.find(e => e.id === exId);
+  if (!ex) return;
+  
+  ex.name = value;
+  // Update the input field
+  const card = document.getElementById('excard-' + exId);
+  const input = card.querySelector('input[type="text"]');
+  if (input) input.value = value;
+  
+  // Hide suggestions
+  const container = document.getElementById('suggestions-' + exId);
+  if (container) container.classList.remove('show');
+  
+  updateDuration();
+}
+
+// Close suggestions when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.exercise-input-wrap')) {
+    document.querySelectorAll('.exercise-suggestions').forEach(el => {
+      el.classList.remove('show');
+    });
+  }
+});
+
+/* ================================================================
    DURATION CALCULATION
    Logic: for each exercise, sum (workTime + restTime) × sets,
-   THEN subtract ONE restTime per exercise (no rest after the last
-   set of an exercise, only after transitioning to next exercise
-   — except the very last exercise which has no trailing rest at all).
-   This is the most realistic UX representation.
+   BUT exclude rest time after the last series of the last exercise
+   (since the session ends immediately after completing it).
 ================================================================ */
 function calcSessionDuration(session) {
   let total = 0;
-  session.exercises.forEach(ex => {
-    // (workTime + restTime) × sets
-    total += (ex.workTime + ex.restTime) * ex.sets;
+  const exCount = session.exercises.length;
+  
+  session.exercises.forEach((ex, exIdx) => {
+    // Add work time for all sets
+    total += ex.workTime * ex.sets;
+    
+    // Add rest time between sets
+    // Rest between sets = (sets - 1) × restTime
+    if (ex.sets > 1) {
+      total += ex.restTime * (ex.sets - 1);
+    }
+    
+    // Add rest between exercises (after last set of this exercise, before next exercise)
+    // BUT exclude rest after the very last exercise
+    if (exIdx < exCount - 1) {
+      total += ex.restTime;
+    }
   });
+  
   return Math.max(0, total);
 }
 
@@ -1030,12 +1209,68 @@ function formatDuration(secs) {
 }
 
 function saveSession() {
-  const name = document.getElementById('session-name').value.trim();
-  if (!name) { alert('Donne un nom à ta séance !'); return; }
-  if (exercises.length === 0) { alert('Ajoute au moins un exercice.'); return; }
+  // Clear previous error states
+  document.querySelectorAll('.form-input.error').forEach(el => {
+    el.classList.remove('error');
+    // Restore default placeholder based on context
+    if (el.id === 'session-name') {
+      el.placeholder = "Ex : Push — Pectoraux & Épaules";
+    } else if (el.closest('.exercise-card')) {
+      el.placeholder = "Ex : Développé couché";
+    }
+  });
+  document.querySelectorAll('.exercise-card').forEach(el => el.classList.remove('error-card'));
+  
+  const nameInput = document.getElementById('session-name');
+  const name = nameInput.value.trim();
+  
+  // Check session name
+  if (!name) {
+    nameInput.classList.add('error');
+    nameInput.placeholder = "⚠ Donne un nom à ta séance";
+    nameInput.focus();
+    // Scroll to the input
+    setTimeout(() => {
+      const scrollEl = document.getElementById('create-scroll');
+      scrollEl.scrollTop = 0;
+    }, 100);
+    return;
+  }
+  
+  // Check exercises exist
+  if (exercises.length === 0) {
+    const scrollEl = document.getElementById('create-scroll');
+    scrollEl.scrollTop = scrollEl.scrollHeight;
+    setTimeout(() => {
+      const addBtn = document.querySelector('#exercises-list + .sticky-bottom .btn') || document.querySelector('.sticky-bottom .btn');
+      if (addBtn) addBtn.focus();
+    }, 100);
+    return;
+  }
 
+  // Check exercise names
   const invalids = exercises.filter(e => !e.name.trim());
-  if (invalids.length) { alert('Donne un nom à tous les exercices.'); return; }
+  if (invalids.length > 0) {
+    // Find the first invalid exercise and scroll to it
+    const firstInvalidId = invalids[0].id;
+    const card = document.getElementById('excard-' + firstInvalidId);
+    if (card) {
+      card.classList.add('error-card');
+      const input = card.querySelector('input[type="text"]');
+      if (input) {
+        input.classList.add('error');
+        input.placeholder = "⚠ Nom de l'exercice";
+        input.focus();
+      }
+      // Scroll to the card
+      setTimeout(() => {
+        const scrollEl = document.getElementById('create-scroll');
+        const cardTop = card.offsetTop;
+        scrollEl.scrollTo({ top: cardTop - 20, behavior: 'smooth' });
+      }, 100);
+    }
+    return;
+  }
 
   const sessions = loadSessions();
 
@@ -1160,12 +1395,14 @@ function advancePhase() {
     timerState.phase = 'work';
     const newEx = session.exercises[timerState.exIndex];
     timerState.timeLeft = newEx.workTime;
-    playBeep('work');
+    playBeep('restEnd');
     renderTimer();
   }
 }
 
 function skipPhase() {
+  // Subtract remaining time from total before advancing
+  timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
   timerState.timeLeft = 0;
   advancePhase();
 }
@@ -1326,7 +1563,7 @@ function renderTimerDone() {
     <div class="done-screen">
       <div class="trophy">🏆</div>
       <h2>SÉANCE<br/><span>TERMINÉE !</span></h2>
-      <p>Tu as bouclé <strong>${escHtml(timerState.session.name)}</strong> en ${dur}.<br/>Champion.</p>
+      <p>Tu as bouclé ta séance <strong>${escHtml(timerState.session.name)}</strong> en ${dur}.<br/>Champion.</p>
       <button class="btn btn-primary mt-16" style="width:100%;max-width:280px" onclick="goHome()">🏠 &nbsp;Retour à l'accueil</button>
       <button class="btn btn-secondary mt-8" style="width:100%;max-width:280px" onclick="restartSession()">🔁 &nbsp;Relancer la séance</button>
     </div>`;
@@ -1349,28 +1586,65 @@ function formatTime(secs) {
 }
 
 /* ================================================================
-   AUDIO — Web Audio API beeps
+   AUDIO — Web Audio API sounds
 ================================================================ */
 function playBeep(type) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
+    
     if (type === 'rest') {
-      osc.frequency.value = 440;
-      gain.gain.setValueAtTime(.4, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .4);
+      // Breath-like sound (descending frequency with noise-like effect)
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.5, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
       osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + .4);
+      osc.stop(ctx.currentTime + 0.5);
+      
+      // Add a second tone for depth
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(200, ctx.currentTime);
+      osc2.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.6);
+      gain2.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(ctx.currentTime);
+      osc2.stop(ctx.currentTime + 0.6);
+      
+    } else if (type === 'restEnd') {
+      // End of rest - rising "ready" sound
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+      
     } else if (type === 'work') {
+      // Short激励 beep
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
       osc.frequency.value = 660;
       gain.gain.setValueAtTime(.4, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + .25);
+      
     } else if (type === 'done') {
       // 3 ascending beeps
       [440, 550, 660].forEach((freq, i) => {
@@ -1388,6 +1662,7 @@ function playBeep(type) {
     // Vibration
     if (navigator.vibrate) {
       if (type === 'done') navigator.vibrate([200, 100, 200, 100, 400]);
+      else if (type === 'restEnd') navigator.vibrate(150);
       else navigator.vibrate(100);
     }
   } catch(e) { /* audio not supported */ }
