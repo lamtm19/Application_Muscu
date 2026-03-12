@@ -697,7 +697,7 @@ function renderExercises() {
       </div>
 
       <div class="form-group">
-        <label class="form-label">Répétitions</label>
+        <label class="form-label">Répétitions (facultatif)</label>
         <div class="time-grid time-grid-6">
           ${REPS_PRESETS.map(n => `
             <button class="time-btn ${ex.reps===n?'selected':''}" onclick="selectPreset('${ex.id}','reps',${n},this)">
