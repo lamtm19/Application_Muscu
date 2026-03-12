@@ -14,17 +14,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ============================================================
-       VARIABLES & RESET
-    ============================================================ */
     :root {
       --bg:        #0a0a0a;
       --surface:   #141414;
       --surface2:  #1e1e1e;
       --border:    #2a2a2a;
-      --accent:    #e8ff00;   /* electric yellow-green */
-      --accent2:   #ff4d4d;   /* rest red */
-      --accent3:   #00d4ff;   /* done blue */
+      --accent:    #e8ff00;
+      --accent2:   #ff4d4d;
+      --accent3:   #00d4ff;
       --text:      #f0f0f0;
       --text-muted:#888;
       --radius:    16px;
@@ -36,9 +33,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { height: 100%; background: var(--bg); }
-
     body {
       font-family: var(--font-body);
       background: var(--bg);
@@ -48,9 +43,6 @@
       overflow-x: hidden;
     }
 
-    /* ============================================================
-       APP SHELL
-    ============================================================ */
     #app {
       max-width: 480px;
       margin: 0 auto;
@@ -60,9 +52,6 @@
       padding-top: var(--safe-top);
     }
 
-    /* ============================================================
-       PAGES (view switching)
-    ============================================================ */
     .page {
       display: none;
       flex-direction: column;
@@ -76,9 +65,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ============================================================
-       HEADER
-    ============================================================ */
     .header {
       display: flex;
       align-items: center;
@@ -112,19 +98,14 @@
     }
     .btn-icon:hover, .btn-icon:active { background: var(--border); color: var(--text); }
 
-    /* ============================================================
-       SCROLL AREA
-    ============================================================ */
     .scroll-area {
       flex: 1;
       overflow-y: auto;
       padding: 0 16px 100px;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
 
-    /* ============================================================
-       BUTTONS
-    ============================================================ */
     .btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%;
@@ -139,34 +120,13 @@
       letter-spacing: .3px;
     }
     .btn:active { transform: scale(0.97); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #000;
-    }
+    .btn-primary { background: var(--accent); color: #000; }
     .btn-primary:hover { background: #d4e800; }
-
-    .btn-secondary {
-      background: var(--surface2);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: var(--border); }
+    .btn-danger { background: transparent; color: var(--accent2); border: 1px solid var(--accent2); }
+    .btn-sm { padding: 10px 16px; font-size: 14px; border-radius: var(--radius-sm); }
 
-    .btn-danger {
-      background: transparent;
-      color: var(--accent2);
-      border: 1px solid var(--accent2);
-    }
-    .btn-sm {
-      padding: 10px 16px;
-      font-size: 14px;
-      border-radius: var(--radius-sm);
-    }
-
-    /* ============================================================
-       CARDS
-    ============================================================ */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -174,25 +134,11 @@
       padding: 16px;
       margin-bottom: 12px;
     }
-    .card-title {
-      font-family: var(--font-head);
-      font-size: 20px;
-      letter-spacing: .5px;
-      margin-bottom: 4px;
-    }
-    .card-meta {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .card-actions {
-      display: flex; gap: 8px; margin-top: 12px;
-    }
+    .card-title { font-family: var(--font-head); font-size: 20px; letter-spacing: .5px; margin-bottom: 4px; }
+    .card-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+    .card-actions { display: flex; gap: 8px; margin-top: 12px; }
     .card-actions .btn { flex: 1; }
 
-    /* ============================================================
-       SECTION TITLES
-    ============================================================ */
     .section-title {
       font-family: var(--font-head);
       font-size: 28px;
@@ -202,21 +148,11 @@
     }
     .section-title span { color: var(--accent); }
 
-    /* ============================================================
-       EMPTY STATE
-    ============================================================ */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-    }
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
     .empty-state-icon { font-size: 48px; margin-bottom: 16px; }
     .empty-state h3 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
     .empty-state p { font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
 
-    /* ============================================================
-       FORM ELEMENTS
-    ============================================================ */
     .form-group { margin-bottom: 16px; }
     .form-label {
       display: block;
@@ -240,16 +176,23 @@
       transition: border-color .15s;
     }
     .form-input:focus { border-color: var(--accent); }
-    .form-input.error { border-color: var(--accent2); }
-    .form-input::placeholder { color: var(--text-muted); }
+    .form-input.error { 
+      border-color: var(--accent2); 
+      box-shadow: 0 0 0 3px rgba(255,77,77,0.3);
+      animation: pulse-error 1s infinite;
+    }
+    .form-input.error::placeholder { color: var(--accent2); opacity: 1; font-weight: 500; }
+    @keyframes pulse-error {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,77,77,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(255,77,77,0); }
+    }
 
-    /* time pickers */
     .time-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 10px;
     }
-    .time-grid-2 { grid-template-columns: 1fr 1fr; }
+    .time-grid-6 { grid-template-columns: repeat(6,1fr); }
 
     .time-btn {
       background: var(--surface2);
@@ -270,9 +213,10 @@
       background: rgba(232,255,0,.08);
     }
 
-    /* ============================================================
-       EXERCISE SUGGESTIONS
-    ============================================================ */
+    .custom-input-wrap { display: none; margin-top: 8px; }
+    .custom-input-wrap.show { display: block; }
+
+
     .exercise-input-wrap {
       position: relative;
     }
@@ -286,36 +230,24 @@
       border-radius: var(--radius-sm);
       max-height: 200px;
       overflow-y: auto;
-      z-index: 10;
+      z-index: 20;
       display: none;
       margin-top: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
-    .exercise-suggestions.show {
-      display: block;
-    }
+    .exercise-suggestions.show { display: block; }
     .exercise-suggestion {
       padding: 12px 16px;
       cursor: pointer;
       font-size: 14px;
       color: var(--text);
       border-bottom: 1px solid var(--border);
-      transition: background .1s;
+      transition: background .1s, color .1s;
     }
-    .exercise-suggestion:last-child {
-      border-bottom: none;
-    }
-    .exercise-suggestion:hover {
-      background: var(--border);
-    }
-    .exercise-suggestion mark {
-      background: transparent;
-      color: var(--accent);
-      font-weight: 600;
-    }
+    .exercise-suggestion:last-child { border-bottom: none; }
+    .exercise-suggestion:hover { background: var(--border); }
+    .exercise-suggestion mark { background: transparent; color: var(--accent); font-weight: 600; }
 
-    /* ============================================================
-       EXERCISE BUILDER
-    ============================================================ */
     .exercise-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -330,30 +262,11 @@
       justify-content: space-between;
       margin-bottom: 14px;
     }
-    .exercise-number {
-      font-family: var(--font-head);
-      font-size: 28px;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .exercise-delete {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 20px;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-    }
+    .exercise-number { font-family: var(--font-head); font-size: 28px; color: var(--accent); line-height: 1; }
+    .exercise-delete { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 4px; line-height: 1; }
     .exercise-delete:hover { color: var(--accent2); }
-    .exercise-card.error-card {
-      border-color: var(--accent2);
-      box-shadow: 0 0 0 1px var(--accent2);
-    }
+    .exercise-card.error-card { border-color: var(--accent2); box-shadow: 0 0 0 1px var(--accent2); }
 
-    /* ============================================================
-       DURATION SUMMARY
-    ============================================================ */
     .duration-bar {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -364,16 +277,8 @@
       text-align: center;
     }
     .duration-bar label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .duration-bar .duration-val {
-      font-family: var(--font-head);
-      font-size: 36px;
-      color: var(--accent);
-      letter-spacing: 2px;
-    }
+    .duration-bar .duration-val { font-family: var(--font-head); font-size: 36px; color: var(--accent); letter-spacing: 2px; }
 
-    /* ============================================================
-       TIMER PAGE
-    ============================================================ */
     .timer-page {
       flex: 1;
       display: flex;
@@ -381,171 +286,40 @@
       padding: 0 20px;
       padding-bottom: calc(20px + var(--safe-bottom));
     }
-
-    .timer-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 0 14px;
-    }
-
-    .timer-session-name {
-      font-family: var(--font-head);
-      font-size: 18px;
-      letter-spacing: .5px;
-      color: var(--text-muted);
-      flex: 1;
-    }
-
-    .timer-progress-wrap {
-      background: var(--surface2);
-      border-radius: 4px;
-      height: 4px;
-      margin-bottom: 24px;
-      overflow: hidden;
-    }
-    .timer-progress-bar {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 4px;
-      transition: width .5s linear;
-    }
-
-    .timer-exercise-label {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    .timer-exercise-name {
-      font-family: var(--font-head);
-      font-size: 32px;
-      letter-spacing: .5px;
-      line-height: 1.1;
-      margin-bottom: 4px;
-    }
-    .timer-series-info {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 28px;
-    }
-
-    .timer-ring-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 28px;
-      flex: 1;
-    }
-
-    .timer-ring {
-      position: relative;
-      width: min(260px, 65vw);
-      aspect-ratio: 1;
-    }
-
-    .timer-ring svg {
-      width: 100%; height: 100%;
-      transform: rotate(-90deg);
-    }
+    .timer-header { display: flex; align-items: center; gap: 12px; padding: 18px 0 14px; }
+    .timer-session-name { font-family: var(--font-head); font-size: 18px; letter-spacing: .5px; color: var(--text-muted); flex: 1; }
+    .timer-progress-wrap { background: var(--surface2); border-radius: 4px; height: 4px; margin-bottom: 24px; overflow: hidden; }
+    .timer-progress-bar { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s linear; }
+    .timer-exercise-label { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .timer-exercise-name { font-family: var(--font-head); font-size: 32px; letter-spacing: .5px; line-height: 1.1; margin-bottom: 4px; }
+    .timer-series-info { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+    .timer-ring-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 28px; flex: 1; }
+    .timer-ring { position: relative; width: min(260px, 65vw); aspect-ratio: 1; }
+    .timer-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
     .timer-ring-bg { stroke: var(--surface2); fill: none; }
-    .timer-ring-progress {
-      fill: none;
-      stroke-linecap: round;
-      transition: stroke-dashoffset .5s linear, stroke .3s;
-    }
-    .timer-ring-center {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .timer-phase-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-    .timer-countdown {
-      font-family: var(--font-head);
-      font-size: clamp(52px, 14vw, 72px);
-      line-height: 1;
-      letter-spacing: 2px;
-    }
+    .timer-ring-progress { fill: none; stroke-linecap: round; transition: stroke-dashoffset .5s linear, stroke .3s; }
+    .timer-ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .timer-phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .timer-countdown { font-family: var(--font-head); font-size: clamp(52px, 14vw, 72px); line-height: 1; letter-spacing: 2px; }
     .timer-countdown.work  { color: var(--accent); }
     .timer-countdown.rest  { color: var(--accent2); }
     .timer-countdown.done  { color: var(--accent3); }
-
-    .timer-total-remaining {
-      text-align: center;
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
+    .timer-total-remaining { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
     .timer-total-remaining strong { color: var(--text); font-weight: 600; }
+    .timer-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .timer-controls .btn-icon { width: 100%; height: 56px; border-radius: var(--radius-sm); font-size: 22px; }
+    .timer-controls .btn-icon.accent { background: var(--accent); color: #000; border-color: var(--accent); font-size: 26px; }
 
-    .timer-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .timer-controls .btn-icon {
-      width: 100%; height: 56px;
-      border-radius: var(--radius-sm);
-      font-size: 22px;
-    }
-    .timer-controls .btn-icon.accent {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-      font-size: 26px;
-    }
-
-    /* ============================================================
-       DONE SCREEN
-    ============================================================ */
-    .done-screen {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 24px;
-      gap: 16px;
-    }
+    .done-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px; gap: 16px; }
     .done-screen .trophy { font-size: 72px; animation: pop .4s cubic-bezier(.3,1.5,.6,1); }
-    @keyframes pop {
-      from { transform: scale(0); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .done-screen h2 { font-family: var(--font-head); font-size: 42px; letter-spacing: 1px; }
     .done-screen h2 span { color: var(--accent); }
     .done-screen p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 
-    /* ============================================================
-       MODAL
-    ============================================================ */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.75);
-      z-index: 100;
-      align-items: flex-end;
-      justify-content: center;
-      animation: fadeIn .2s ease;
-    }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 100; align-items: flex-end; justify-content: center; animation: fadeIn .2s ease; }
     .modal-overlay.open { display: flex; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
     .modal-sheet {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -560,97 +334,22 @@
       animation: slideUp .22s ease;
     }
     @keyframes slideUp { from { transform: translateY(40px); } to { transform: translateY(0); } }
-
-    .modal-handle {
-      width: 36px; height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      margin: 0 auto 20px;
-    }
-    .modal-title {
-      font-family: var(--font-head);
-      font-size: 24px;
-      letter-spacing: .5px;
-      margin-bottom: 16px;
-    }
+    .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+    .modal-title { font-family: var(--font-head); font-size: 24px; letter-spacing: .5px; margin-bottom: 16px; }
     .modal-body { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
     .modal-body h4 { color: var(--text); font-size: 15px; margin: 16px 0 6px; }
     .modal-body ol { padding-left: 20px; }
-
-    .copy-block {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-      white-space: pre-wrap;
-      margin: 10px 0;
-      font-family: monospace;
-    }
-    .copy-block-btn {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px;
-      color: var(--text-muted);
-      font-family: var(--font-body);
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: all .15s;
-    }
+    .copy-block { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; font-size: 13px; line-height: 1.7; color: var(--text); white-space: pre-wrap; margin: 10px 0; font-family: monospace; }
+    .copy-block-btn { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; cursor: pointer; margin-top: 8px; transition: all .15s; }
     .copy-block-btn:active { background: var(--border); color: var(--accent); }
 
-    /* ============================================================
-       BOTTOM STICKY AREA
-    ============================================================ */
-    .sticky-bottom {
-      position: sticky;
-      bottom: 0;
-      background: linear-gradient(transparent, var(--bg) 40%);
-      padding: 16px 16px calc(16px + var(--safe-bottom));
-    }
-
-    /* ============================================================
-       BADGE / PILL
-    ============================================================ */
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 4px 10px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ============================================================
-       SERIES COUNTER DOTS
-    ============================================================ */
-    .series-dots {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .series-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      transition: all .2s;
-    }
+    .sticky-bottom { position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 40%); padding: 16px 16px calc(16px + var(--safe-bottom)); }
+    .pill { display: inline-flex; align-items: center; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 4px 10px; font-size: 12px; color: var(--text-muted); }
+    .series-dots { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .series-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--surface2); border: 1.5px solid var(--border); transition: all .2s; }
     .series-dot.done { background: var(--accent); border-color: var(--accent); }
     .series-dot.current { background: transparent; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,255,0,.2); }
 
-    /* ============================================================
-       UTILITY
-    ============================================================ */
     .mt-8 { margin-top: 8px; }
     .mt-12 { margin-top: 12px; }
     .mt-16 { margin-top: 16px; }
@@ -662,78 +361,54 @@
     .w-full { width: 100%; }
     .text-muted { color: var(--text-muted); font-size: 13px; }
     .divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-    /* scroll to top on page switch */
     .scroll-area:focus { outline: none; }
-
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ═══════════════════════════════════════════
-       PAGE : ACCUEIL
-  ═══════════════════════════════════════════ -->
   <div class="page active" id="page-home">
     <div class="header">
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" /></div>
       <button class="btn-icon" onclick="openHelpModal()" title="Aide">❓</button>
     </div>
-
     <div class="scroll-area">
       <div id="home-content"></div>
     </div>
-
     <div class="sticky-bottom">
-      <button class="btn btn-primary" onclick="openCreatePage()">
-        ＋ &nbsp;Nouvelle séance
-      </button>
+      <button class="btn btn-primary" onclick="openCreatePage()">＋ &nbsp;Nouvelle séance</button>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       PAGE : CRÉER / MODIFIER SÉANCE
-  ═══════════════════════════════════════════ -->
   <div class="page" id="page-create">
-      <div class="header">
+    <div class="header">
       <button class="btn-icon" onclick="goBack()">←</button>
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" style="height:40px" /></div>
       <div style="width:40px"></div>
     </div>
-
     <div class="scroll-area" id="create-scroll">
-
       <div class="form-group">
         <label class="form-label">Nom de la séance</label>
         <input class="form-input" id="session-name" type="text" placeholder="Ex : Push — Pectoraux & Épaules" maxlength="60" />
       </div>
-
       <div class="divider"></div>
-
       <div class="flex items-center justify-between mt-8" style="margin-bottom:12px">
         <div class="section-title" style="margin:0">Exercices</div>
         <button class="btn btn-secondary btn-sm" style="width:auto" onclick="addExercise()">＋ Ajouter</button>
       </div>
-
       <div id="exercises-list"></div>
-
       <div class="duration-bar" id="duration-bar">
         <div class="form-label" style="margin:0 0 4px">Durée estimée</div>
         <div class="duration-val" id="duration-val">0 min</div>
       </div>
-
     </div>
-
     <div class="sticky-bottom">
       <button class="btn btn-primary" onclick="saveSession()">✓ &nbsp;Enregistrer la séance</button>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       PAGE : MES SÉANCES
-  ═══════════════════════════════════════════ -->
   <div class="page" id="page-sessions">
-      <div class="header">
+    <div class="header">
       <button class="btn-icon" onclick="goTo('page-home')">←</button>
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" style="height:24px" /></div>
       <div style="width:40px"></div>
@@ -741,27 +416,17 @@
     <div class="scroll-area" id="sessions-list"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       PAGE : MINUTEUR
-  ═══════════════════════════════════════════ -->
   <div class="page" id="page-timer">
-    <div class="timer-page" id="timer-main">
-      <!-- built dynamically -->
-    </div>
+    <div class="timer-page" id="timer-main"></div>
   </div>
 
-</div><!-- #app -->
+</div>
 
-<!-- ═══════════════════════════════════════════
-     MODAL : AIDE
-═══════════════════════════════════════════ -->
 <div class="modal-overlay" id="help-modal" onclick="closeHelpModal(event)">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">Aide &amp; conseils 💡</div>
-
     <div class="modal-body">
-
       <h4>📱 Installer sur iPhone</h4>
       <ol>
         <li>Ouvre ce site dans <strong>Safari</strong></li>
@@ -770,42 +435,36 @@
         <li>Choisis <strong>« Sur l'écran d'accueil »</strong></li>
         <li>Appuie sur <strong>Ajouter</strong> — c'est tout ! 🎉</li>
       </ol>
-
       <h4>🤖 Obtenir tes temps avec une IA</h4>
       <p>Copie le prompt ci-dessous, colle-le dans ChatGPT (ou toute autre IA) et remplace l'exemple par tes exercices et ton objectif :</p>
-
       <div class="copy-block" id="copy-prompt">Voici ma séance :
+[ta séance]
+
+(Exemple :
 Développé couché - 4 x 10
 Curl biceps - 3 x 10
 Curl marteau - 3 x 10
 Élévations latérales - 3 x 12
 Barre au front - 3 x 10
-Face pull - 2 x 15
+Face pull - 2 x 15)
 
-Pour cette séance dis moi le temps de repos que je dois prendre pour chaque exercice (sachant que je veux prendre du muscle et de la force) et le temps que je passe sur chaque série.
+Pour cette séance, dis moi le temps de repos que je dois prendre pour chaque exercice (sachant que je veux [objectif]) et le temps que je passe sur chaque série. (Facultatif : estime moi aussi la charge la plus adapté selon mes objectifs sachant que je fais [taille] pour [poids])
 
 Je veux donc cette forme :
 [nom exo] :
-[temps de la série]
-[temps de récupération]
-
-[nom exo] :
+[nombre de série]
+[nombre de répétitions]
+[charge]
 [temps de la série]
 [temps de récupération]</div>
-
       <button class="copy-block-btn" onclick="copyPrompt()">📋 &nbsp;Copier le prompt</button>
-
     </div>
-
     <div style="margin-top:24px">
       <button class="btn btn-secondary" onclick="closeHelpModal()">Fermer</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     MODAL : CONFIRMATION QUITTER
-═══════════════════════════════════════════ -->
 <div class="modal-overlay" id="quit-modal" onclick="closeQuitModal(event)">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -820,15 +479,36 @@ Je veux donc cette forme :
   </div>
 </div>
 
+<div class="modal-overlay" id="delete-modal" onclick="closeDeleteModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Supprimer la séance ?</div>
+    <div class="modal-body">
+      <p>Cette action est irréversible. La séance sera supprimée définitivement.</p>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="closeDeleteModal()">Annuler</button>
+      <button class="btn btn-danger" style="flex:1" onclick="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ================================================================
-   DATA LAYER — localStorage
+   DATA LAYER
 ================================================================ */
 const STORAGE_KEY = 'pause_champion_sessions';
 
 function loadSessions() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch { return []; }
+  const sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  return sessions.map(s => ({
+    ...s,
+    exercises: s.exercises.map(e => ({
+      ...e,
+      reps: e.reps ?? null,
+      load: e.load ?? null,
+    }))
+  }));
 }
 
 function saveSessions(sessions) {
@@ -840,7 +520,7 @@ function generateId() {
 }
 
 /* ================================================================
-   ROUTER — simple page switcher
+   ROUTER
 ================================================================ */
 let pageHistory = ['page-home'];
 
@@ -848,12 +528,8 @@ function goTo(pageId, pushHistory = true) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   if (pushHistory) pageHistory.push(pageId);
-
-  // init page
   if (pageId === 'page-home') renderHome();
   if (pageId === 'page-sessions') renderSessions();
-
-  // reset scroll
   const scroll = document.querySelector('#' + pageId + ' .scroll-area');
   if (scroll) scroll.scrollTop = 0;
 }
@@ -870,7 +546,6 @@ function goBack() {
 function renderHome() {
   const sessions = loadSessions();
   const el = document.getElementById('home-content');
-
   if (sessions.length === 0) {
     el.innerHTML = `
       <div class="empty-state">
@@ -880,7 +555,6 @@ function renderHome() {
       </div>`;
     return;
   }
-
   let html = `<div class="section-title">Mes <span>séances</span></div>`;
   sessions.forEach(s => {
     const dur = formatDuration(calcSessionDuration(s));
@@ -895,78 +569,45 @@ function renderHome() {
       <div class="card-actions">
         <button class="btn btn-primary btn-sm" onclick="startSession('${s.id}')">▶ Lancer</button>
         <button class="btn btn-secondary btn-sm" onclick="editSession('${s.id}')">✏️ Modifier</button>
-        <button class="btn btn-danger btn-sm" style="flex:0;padding:10px 14px;" onclick="deleteSession('${s.id}')">🗑</button>
+<button class="btn btn-danger btn-sm" style="flex:0;padding:10px 14px;" onclick="openDeleteModal('${s.id}')">🗑</button>
       </div>
     </div>`;
   });
   el.innerHTML = html;
 }
 
-/* ================================================================
-   SESSIONS PAGE
-================================================================ */
-function renderSessions() { renderHome(); } // re-use same data
+function renderSessions() { renderHome(); }
 
 /* ================================================================
    CREATE / EDIT SESSION
 ================================================================ */
 let editingSessionId = null;
-let exercises = [];  // [{id, name, sets, workTime, restTime}]
+let exercises = [];
 
 const TIME_PRESETS_WORK = [
   {label:'20 s', val:20}, {label:'30 s', val:30}, {label:'40 s', val:40},
   {label:'45 s', val:45}, {label:'1 min', val:60}, {label:'1 min 15', val:75},
-  {label:'1 min 30', val:90},
 ];
+
 const TIME_PRESETS_REST = [
   {label:'30 s', val:30}, {label:'45 s', val:45}, {label:'1 min', val:60},
   {label:'1 min 30', val:90}, {label:'2 min', val:120}, {label:'2 min 30', val:150},
-  {label:'3 min', val:180},
 ];
-const SETS_PRESETS = [1,2,3,4,5,6];
+
+const SETS_PRESETS = [1,2,3,4,5];
+const REPS_PRESETS = [4,5,10,12,15];
 
 const EXERCISE_SUGGESTIONS = [
-  "Tractions pronation",
-  "Tractions supination",
-  "Tractions prise neutre",
-  "Dips",
-  "Pompes normales",
-  "Pompes larges",
-  "Pompes diamant",
-  "Pompes inclinées",
-  "Pompes déclinées",
-  "Développé couché",
-  "Développé incliné haltères",
-  "Développé militaire",
-  "Développé épaules haltères",
-  "Curl biceps barre",
-  "Curl biceps haltères",
-  "Curl marteau",
-  "Curl incliné haltères",
-  "Curl pupitre",
-  "Barre au front",
-  "Extension triceps poulie",
-  "Extension triceps au-dessus de la tête",
-  "Dips triceps",
-  "Élévations latérales",
-  "Élévations frontales",
-  "Oiseau (élévations arrière épaules)",
-  "Face pull",
-  "Rowing barre",
-  "Rowing haltère",
-  "Tirage vertical (lat pulldown)",
-  "Tirage horizontal poulie",
-  "Extensions lombaires",
-  "Gainage",
-  "Crunch",
-  "Relevés de jambes suspendu",
-  "Squat",
-  "Presse à cuisses",
-  "Fentes",
-  "Soulevé de terre",
-  "Soulevé de terre roumain",
-  "Mollets debout",
-  "Mollets à la presse"
+  "Tractions pronation","Tractions supination","Tractions prise neutre","Dips",
+  "Pompes normales","Pompes larges","Pompes diamant","Pompes inclinées","Pompes déclinées",
+  "Développé couché","Développé incliné haltères","Développé militaire","Développé épaules haltères",
+  "Curl biceps barre","Curl biceps haltères","Curl marteau","Curl incliné haltères","Curl pupitre",
+  "Barre au front","Extension triceps poulie","Extension triceps au-dessus de la tête","Dips triceps",
+  "Élévations latérales","Élévations frontales","Oiseau (élévations arrière épaules)","Face pull",
+  "Rowing barre","Rowing haltère","Tirage vertical (lat pulldown)","Tirage horizontal poulie",
+  "Extensions lombaires","Gainage","Crunch","Relevés de jambes suspendu",
+  "Squat","Presse à cuisses","Fentes","Soulevé de terre","Soulevé de terre roumain",
+  "Mollets debout","Mollets à la presse"
 ];
 
 function openCreatePage() {
@@ -982,16 +623,15 @@ function editSession(id) {
   const s = sessions.find(x => x.id === id);
   if (!s) return;
   editingSessionId = id;
-  exercises = s.exercises.map(e => ({...e}));
+  exercises = s.exercises.map(e => ({...e, reps: e.reps ?? null, load: e.load ?? null}));
   document.getElementById('session-name').value = s.name;
   renderExercises();
   goTo('page-create');
 }
 
 function addExercise() {
-  exercises.push({ id: generateId(), name: '', sets: 3, workTime: 45, restTime: 90 });
+  exercises.push({ id: generateId(), name: '', sets: 3, reps: null, load: null, workTime: 45, restTime: 90 });
   renderExercises();
-  // scroll to bottom
   setTimeout(() => {
     const el = document.getElementById('create-scroll');
     el.scrollTop = el.scrollHeight;
@@ -1001,10 +641,9 @@ function addExercise() {
 function addExerciseAfter(afterId) {
   const index = exercises.findIndex(e => e.id === afterId);
   if (index === -1) return;
-  const newEx = { id: generateId(), name: '', sets: 3, workTime: 45, restTime: 90 };
+  const newEx = { id: generateId(), name: '', sets: 3, reps: null, load: null, workTime: 45, restTime: 90 };
   exercises.splice(index + 1, 0, newEx);
   renderExercises();
-  // scroll to the new exercise
   setTimeout(() => {
     const el = document.getElementById('create-scroll');
     el.scrollTop = el.scrollHeight;
@@ -1037,27 +676,54 @@ function renderExercises() {
           <input class="form-input" type="text" placeholder="Ex : Développé couché"
             value="${escHtml(ex.name)}"
             oninput="updateExerciseField('${ex.id}','name',this.value); showSuggestions('${ex.id}', this.value)"
-            maxlength="60" 
-            autocomplete="off" />
+            maxlength="60" autocomplete="off" />
           <div class="exercise-suggestions" id="suggestions-${ex.id}"></div>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Nombre de séries</label>
-        <div class="time-grid" style="grid-template-columns:repeat(6,1fr)">
+        <div class="time-grid time-grid-6">
           ${SETS_PRESETS.map(n => `
             <button class="time-btn ${ex.sets===n?'selected':''}" onclick="selectPreset('${ex.id}','sets',${n},this)">
               ${n}
             </button>`).join('')}
+          <button class="time-btn" onclick="showCustomInput('${ex.id}','sets')">CUSTOM</button>
         </div>
+        <div class="custom-input-wrap" id="custom-${ex.id}-sets">
+          <input class="form-input" type="number" min="1" placeholder="Nombre de séries personnalisé"
+            onchange="setCustomValue('${ex.id}','sets',this.value)" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Répétitions</label>
+        <div class="time-grid time-grid-6">
+          ${REPS_PRESETS.map(n => `
+            <button class="time-btn ${ex.reps===n?'selected':''}" onclick="selectPreset('${ex.id}','reps',${n},this)">
+              ${n}
+            </button>`).join('')}
+          <button class="time-btn" onclick="showCustomInput('${ex.id}','reps')">CUSTOM</button>
+        </div>
+        <div class="custom-input-wrap" id="custom-${ex.id}-reps">
+          <input class="form-input" type="number" min="1" placeholder="Répétitions personnalisées"
+            onchange="setCustomValue('${ex.id}','reps',this.value)" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Charge (facultatif)</label>
+        <input class="form-input" type="text" placeholder="Ex: 40kg, 20kg x 2"
+          value="${escHtml(ex.load || '')}"
+          oninput="updateExerciseField('${ex.id}','load',this.value)" />
       </div>
 
       <div class="form-group">
         <label class="form-label">⚡ Temps de série</label>
         <div class="time-grid">
           ${TIME_PRESETS_WORK.map(p => `
-            <button class="time-btn ${ex.workTime===p.val?'selected':''}" onclick="selectPreset('${ex.id}','workTime',${p.val},this)">
+            <button class="time-btn ${ex.workTime === p.val ? 'selected' : ''}"
+              onclick="selectPreset('${ex.id}','workTime',${p.val},this)">
               ${p.label}
             </button>`).join('')}
         </div>
@@ -1067,7 +733,8 @@ function renderExercises() {
         <label class="form-label">😮‍💨 Temps de récupération</label>
         <div class="time-grid">
           ${TIME_PRESETS_REST.map(p => `
-            <button class="time-btn ${ex.restTime===p.val?'selected':''}" onclick="selectPreset('${ex.id}','restTime',${p.val},this)">
+            <button class="time-btn ${ex.restTime === p.val ? 'selected' : ''}"
+              onclick="selectPreset('${ex.id}','restTime',${p.val},this)">
               ${p.label}
             </button>`).join('')}
         </div>
@@ -1088,11 +755,29 @@ function selectPreset(id, field, value, btn) {
   const ex = exercises.find(e => e.id === id);
   if (!ex) return;
   ex[field] = value;
-  // update UI selection
-  const card = document.getElementById('excard-' + id);
-  const group = btn.closest('.form-group');
-  group.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  btn.parentElement.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+  updateDuration();
+}
+
+function showCustomInput(id, field) {
+  const wrap = document.getElementById(`custom-${id}-${field}`);
+  if (!wrap) return;
+  wrap.classList.add('show');
+  const input = wrap.querySelector('input');
+  if (input) setTimeout(() => input.focus(), 50);
+}
+
+function setCustomValue(id, field, valueStr) {
+  const ex = exercises.find(e => e.id === id);
+  if (!ex) return;
+  const val = parseInt(valueStr);
+  if (!isNaN(val) && val >= 1) {
+    ex[field] = val;
+    // Deselect all preset buttons for this field
+    const wrap = document.getElementById(`custom-${id}-${field}`);
+    if (wrap) wrap.previousElementSibling.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  }
   updateDuration();
 }
 
@@ -1103,95 +788,92 @@ function removeAccents(str) {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+let suggestionTimeout;
 function showSuggestions(exId, query) {
-  const container = document.getElementById('suggestions-' + exId);
-  if (!container) return;
-  
-  if (!query || query.length < 2) {
-    container.classList.remove('show');
-    return;
-  }
-  
-  const q = removeAccents(query.toLowerCase());
-  const matches = EXERCISE_SUGGESTIONS.filter(ex => 
-    removeAccents(ex.toLowerCase()).includes(q)
-  ).slice(0, 6);
-  
-  if (matches.length === 0) {
-    container.classList.remove('show');
-    return;
-  }
-  
-  // Find the actual position in the original string (not the normalized one)
-  container.innerHTML = matches.map(ex => {
-    const exLower = ex.toLowerCase();
-    const exNormalized = removeAccents(exLower);
-    const idx = exNormalized.indexOf(q);
-    if (idx === -1) {
-      return `<div class="exercise-suggestion" onclick="selectSuggestion('${exId}', '${escHtml(ex).replace(/'/g, "\\'")}')">${escHtml(ex)}</div>`;
+  if (suggestionTimeout) clearTimeout(suggestionTimeout);
+
+  suggestionTimeout = setTimeout(() => {
+    const container = document.getElementById('suggestions-' + exId);
+    if (!container) return;
+    if (!query || query.length < 1) { 
+      container.classList.remove('show'); 
+      return; 
     }
-    const before = escHtml(ex.substring(0, idx));
-    const match = escHtml(ex.substring(idx, idx + q.length));
-    const after = escHtml(ex.substring(idx + q.length));
-    return `<div class="exercise-suggestion" onclick="selectSuggestion('${exId}', '${escHtml(ex).replace(/'/g, "\\'")}')">${before}<mark>${match}</mark>${after}</div>`;
-  }).join('');
-  
-  container.classList.add('show');
+
+    const q = query.toLowerCase(); // Keep original q for prefix matching
+    const normQ = removeAccents(q);
+
+    const matches = EXERCISE_SUGGESTIONS.filter(name => {
+      const normName = removeAccents(name.toLowerCase());
+      return normName.startsWith(normQ); // Prefix matching for better UX
+    }).slice(0, 8);
+
+    if (matches.length === 0) { 
+      container.classList.remove('show'); 
+      return; 
+    }
+
+    container.innerHTML = matches.map(name => {
+      const normName = removeAccents(name.toLowerCase());
+      const idx = normName.indexOf(normQ);
+      let display;
+      if (idx === -1 || idx > 3) { // If not prefix-ish
+        display = escHtml(name);
+      } else {
+        // Highlight prefix length
+        const highlightLen = Math.max(1, Math.min(normQ.length, 10));
+        display = '<mark>' + escHtml(name.slice(0, highlightLen)) + '</mark>'
+          + escHtml(name.slice(highlightLen));
+      }
+      return `<div class="exercise-suggestion" data-value="${escHtml(name)}" data-exid="${exId}">${display}</div>`;
+    }).join('');
+
+    // Event listeners
+    container.querySelectorAll('.exercise-suggestion').forEach(el => {
+      el.removeEventListener('mousedown', suggestionClickHandler); // Prevent duplicates
+      el.addEventListener('mousedown', suggestionClickHandler);
+    });
+
+    container.classList.add('show');
+  }, 50); // Faster debounce
+}
+
+function suggestionClickHandler(e) {
+  e.preventDefault();
+  const exId = this.dataset.exid;
+  const value = this.dataset.value;
+  selectSuggestion(exId, value);
 }
 
 function selectSuggestion(exId, value) {
   const ex = exercises.find(e => e.id === exId);
   if (!ex) return;
-  
   ex.name = value;
-  // Update the input field
   const card = document.getElementById('excard-' + exId);
   const input = card.querySelector('input[type="text"]');
   if (input) input.value = value;
-  
-  // Hide suggestions
   const container = document.getElementById('suggestions-' + exId);
   if (container) container.classList.remove('show');
-  
   updateDuration();
 }
 
-// Close suggestions when clicking outside
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.exercise-input-wrap')) {
-    document.querySelectorAll('.exercise-suggestions').forEach(el => {
-      el.classList.remove('show');
-    });
+  if (!e.target.closest('.exercise-input-wrap') && !e.target.closest('.exercise-suggestion')) {
+    document.querySelectorAll('.exercise-suggestions').forEach(el => el.classList.remove('show'));
   }
 });
 
 /* ================================================================
-   DURATION CALCULATION
-   Logic: for each exercise, sum (workTime + restTime) × sets,
-   BUT exclude rest time after the last series of the last exercise
-   (since the session ends immediately after completing it).
+   DURATION
 ================================================================ */
 function calcSessionDuration(session) {
   let total = 0;
   const exCount = session.exercises.length;
-  
   session.exercises.forEach((ex, exIdx) => {
-    // Add work time for all sets
     total += ex.workTime * ex.sets;
-    
-    // Add rest time between sets
-    // Rest between sets = (sets - 1) × restTime
-    if (ex.sets > 1) {
-      total += ex.restTime * (ex.sets - 1);
-    }
-    
-    // Add rest between exercises (after last set of this exercise, before next exercise)
-    // BUT exclude rest after the very last exercise
-    if (exIdx < exCount - 1) {
-      total += ex.restTime;
-    }
+    if (ex.sets > 1) total += ex.restTime * (ex.sets - 1);
+    if (exIdx < exCount - 1) total += ex.restTime;
   });
-  
   return Math.max(0, total);
 }
 
@@ -1208,89 +890,93 @@ function formatDuration(secs) {
   return s > 0 ? `${m} min ${s} s` : `${m} min`;
 }
 
-function saveSession() {
-  // Clear previous error states
-  document.querySelectorAll('.form-input.error').forEach(el => {
-    el.classList.remove('error');
-    // Restore default placeholder based on context
-    if (el.id === 'session-name') {
-      el.placeholder = "Ex : Push — Pectoraux & Épaules";
-    } else if (el.closest('.exercise-card')) {
-      el.placeholder = "Ex : Développé couché";
-    }
-  });
-  document.querySelectorAll('.exercise-card').forEach(el => el.classList.remove('error-card'));
+function scrollToError(input) {
+  if (!input) return;
   
+  // On s'assure que l'input est bien visible avec une animation fluide
+  input.scrollIntoView({ 
+    behavior: 'smooth', 
+    block: 'center' 
+  });
+  
+  // On attend un peu que l'animation commence pour donner le focus
+  setTimeout(() => {
+    input.focus();
+    input.select();
+    
+    // Effet visuel discret pour attirer l'attention
+    input.style.transform = 'scale(1.02)';
+    input.style.transition = 'transform 0.3s ease';
+    setTimeout(() => input.style.transform = 'scale(1)', 300);
+  }, 300);
+}
+
+function saveSession() {
+  document.querySelectorAll('.form-input.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.exercise-card').forEach(el => el.classList.remove('error-card'));
+
   const nameInput = document.getElementById('session-name');
   const name = nameInput.value.trim();
-  
-  // Check session name
   if (!name) {
     nameInput.classList.add('error');
-    nameInput.placeholder = "⚠ Donne un nom à ta séance";
-    nameInput.focus();
-    // Scroll to the input
-    setTimeout(() => {
-      const scrollEl = document.getElementById('create-scroll');
-      scrollEl.scrollTop = 0;
-    }, 100);
+    nameInput.placeholder = "⚠ Nom séance requis";
+    setTimeout(() => scrollToError(nameInput), 100);
     return;
   }
-  
-  // Check exercises exist
   if (exercises.length === 0) {
     const scrollEl = document.getElementById('create-scroll');
-    scrollEl.scrollTop = scrollEl.scrollHeight;
-    setTimeout(() => {
-      const addBtn = document.querySelector('#exercises-list + .sticky-bottom .btn') || document.querySelector('.sticky-bottom .btn');
-      if (addBtn) addBtn.focus();
-    }, 100);
+    scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
     return;
   }
-
-  // Check exercise names
   const invalids = exercises.filter(e => !e.name.trim());
   if (invalids.length > 0) {
-    // Find the first invalid exercise and scroll to it
-    const firstInvalidId = invalids[0].id;
-    const card = document.getElementById('excard-' + firstInvalidId);
+    const card = document.getElementById('excard-' + invalids[0].id);
     if (card) {
       card.classList.add('error-card');
       const input = card.querySelector('input[type="text"]');
-      if (input) {
-        input.classList.add('error');
-        input.placeholder = "⚠ Nom de l'exercice";
-        input.focus();
+      if (input) { 
+        input.classList.add('error'); 
+        input.placeholder = "⚠ Nom exercice requis"; 
+        setTimeout(() => scrollToError(input), 100);
+        return;
       }
-      // Scroll to the card
-      setTimeout(() => {
-        const scrollEl = document.getElementById('create-scroll');
-        const cardTop = card.offsetTop;
-        scrollEl.scrollTo({ top: cardTop - 20, behavior: 'smooth' });
-      }, 100);
     }
     return;
   }
 
   const sessions = loadSessions();
-
   if (editingSessionId) {
     const idx = sessions.findIndex(s => s.id === editingSessionId);
     if (idx !== -1) sessions[idx] = { id: editingSessionId, name, exercises: exercises.map(e => ({...e})) };
   } else {
     sessions.push({ id: generateId(), name, exercises: exercises.map(e => ({...e})) });
   }
-
   saveSessions(sessions);
   goTo('page-home', false);
   pageHistory = ['page-home'];
 }
 
+let pendingDeleteId = null;
+
 function deleteSession(id) {
-  if (!confirm('Supprimer cette séance ?')) return;
-  const sessions = loadSessions().filter(s => s.id !== id);
-  saveSessions(sessions);
+  saveSessions(loadSessions().filter(s => s.id !== id));
   renderHome();
+}
+
+function openDeleteModal(id) {
+  pendingDeleteId = id;
+  document.getElementById('delete-modal').classList.add('open');
+}
+
+function closeDeleteModal(e) {
+  if (!e || e.target === document.getElementById('delete-modal'))
+    document.getElementById('delete-modal').classList.remove('open');
+  pendingDeleteId = null;
+}
+
+function confirmDelete() {
+  if (pendingDeleteId) deleteSession(pendingDeleteId);
+  closeDeleteModal();
 }
 
 /* ================================================================
@@ -1300,24 +986,20 @@ let timerState = {
   session: null,
   exIndex: 0,
   setIndex: 0,
-  phase: 'work',   // 'work' | 'rest'
+  phase: 'work',
   timeLeft: 0,
   totalLeft: 0,
   totalDuration: 0,
   paused: false,
   finished: false,
   intervalId: null,
-  audioCtx: null,
 };
 
 function startSession(id) {
   const sessions = loadSessions();
   const session = sessions.find(s => s.id === id);
   if (!session) return;
-
-  // clear any existing timer
   clearInterval(timerState.intervalId);
-
   timerState.session = session;
   timerState.exIndex = 0;
   timerState.setIndex = 0;
@@ -1327,7 +1009,6 @@ function startSession(id) {
   timerState.totalDuration = calcSessionDuration(session);
   timerState.totalLeft = timerState.totalDuration;
   timerState.timeLeft = session.exercises[0].workTime;
-
   goTo('page-timer');
   renderTimer();
   timerState.intervalId = setInterval(timerTick, 1000);
@@ -1335,10 +1016,8 @@ function startSession(id) {
 
 function timerTick() {
   if (timerState.paused || timerState.finished) return;
-
   timerState.timeLeft--;
   timerState.totalLeft = Math.max(0, timerState.totalLeft - 1);
-
   if (timerState.timeLeft <= 0) {
     advancePhase();
   } else {
@@ -1351,47 +1030,27 @@ function advancePhase() {
   const ex = session.exercises[exIndex];
 
   if (phase === 'work') {
-    // is this the last set of the exercise?
     const isLastSet = (setIndex + 1 >= ex.sets);
-    // is this the last exercise?
-    const isLastEx = (exIndex + 1 >= session.exercises.length);
-
+    const isLastEx  = (exIndex + 1 >= session.exercises.length);
     if (isLastSet && isLastEx) {
-      // DONE!
       timerState.finished = true;
       clearInterval(timerState.intervalId);
       playBeep('done');
       renderTimerDone();
       return;
     }
-
-    if (isLastSet) {
-      // move to next exercise — but still show rest between exercises?
-      // UX decision: we DO show rest before next exercise (it's recovery time)
-      timerState.phase = 'rest';
-      timerState.timeLeft = ex.restTime;
-      playBeep('rest');
-      renderTimer();
-    } else {
-      // go to rest
-      timerState.phase = 'rest';
-      timerState.timeLeft = ex.restTime;
-      playBeep('rest');
-      renderTimer();
-    }
-
+    timerState.phase = 'rest';
+    timerState.timeLeft = ex.restTime;
+    playBeep('rest');
+    renderTimer();
   } else {
-    // was resting
     const isLastSet = (setIndex + 1 >= ex.sets);
-
     if (isLastSet) {
-      // move to next exercise
       timerState.exIndex++;
       timerState.setIndex = 0;
     } else {
       timerState.setIndex++;
     }
-
     timerState.phase = 'work';
     const newEx = session.exercises[timerState.exIndex];
     timerState.timeLeft = newEx.workTime;
@@ -1401,7 +1060,6 @@ function advancePhase() {
 }
 
 function skipPhase() {
-  // Subtract remaining time from total before advancing
   timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
   timerState.timeLeft = 0;
   advancePhase();
@@ -1412,9 +1070,24 @@ function togglePause() {
   renderTimerControls();
 }
 
-function resetTimer() {
-  clearInterval(timerState.intervalId);
-  startSession(timerState.session.id);
+/* ----------------------------------------------------------------
+   FIX 2 : resetCurrentPhase recalcule correctement totalLeft.
+   On ajoute au totalLeft le temps déjà écoulé sur cette phase
+   (= durée totale de la phase - timeLeft restant) avant de remettre
+   le timer à sa durée initiale.
+---------------------------------------------------------------- */
+function resetCurrentPhase() {
+  const { exIndex, phase } = timerState;
+  const ex = timerState.session.exercises[exIndex];
+  const fullDuration = phase === 'work' ? ex.workTime : ex.restTime;
+  const elapsed = fullDuration - timerState.timeLeft;
+
+  // Restore the elapsed time to the total remaining
+  timerState.totalLeft = Math.min(timerState.totalDuration, timerState.totalLeft + elapsed);
+  timerState.timeLeft = fullDuration;
+
+  renderTimerCountdown();
+  playBeep(phase === 'work' ? 'work' : 'rest');
 }
 
 function openQuitModal() {
@@ -1437,47 +1110,32 @@ function confirmQuit() {
 function renderTimer() {
   const { session, exIndex, setIndex, phase, timeLeft, totalLeft, totalDuration } = timerState;
   const ex = session.exercises[exIndex];
-
-  const timerEl = document.getElementById('timer-main');
   const progress = totalDuration > 0 ? ((totalDuration - totalLeft) / totalDuration) * 100 : 0;
   const exCount = session.exercises.length;
 
-  timerEl.innerHTML = `
+  document.getElementById('timer-main').innerHTML = `
     <div class="timer-header">
       <button class="btn-icon" onclick="openQuitModal()">✕</button>
       <div class="timer-session-name">${escHtml(session.name)}</div>
       <div class="pill">${exIndex + 1}/${exCount}</div>
     </div>
-
     <div class="timer-progress-wrap">
       <div class="timer-progress-bar" id="timer-progress-bar" style="width:${progress}%"></div>
     </div>
-
     <div class="timer-exercise-label">Exercice ${exIndex + 1} sur ${exCount}</div>
     <div class="timer-exercise-name">${escHtml(ex.name)}</div>
-    <div class="timer-series-info">Série ${setIndex + 1} sur ${ex.sets}</div>
-
-    <div class="series-dots" id="series-dots">
-      ${buildSeriesDots(ex.sets, setIndex)}
+    <div class="timer-series-info">
+      Série ${setIndex + 1} sur ${ex.sets}${ex.reps ? ` • ${ex.reps} reps` : ''}${ex.load ? ` • ${escHtml(ex.load)}` : ''}
     </div>
-
+    <div class="series-dots" id="series-dots">${buildSeriesDots(ex.sets, setIndex)}</div>
     <div class="timer-ring-wrap">
-      <div class="timer-ring" id="timer-ring">
-        ${buildRing(phase, timeLeft, ex)}
-      </div>
+      <div class="timer-ring" id="timer-ring">${buildRing(phase, timeLeft, ex)}</div>
     </div>
-
     <div class="timer-total-remaining" id="timer-total">
       Séance terminée dans <strong>${formatDuration(totalLeft)}</strong>
     </div>
-
-    <div class="timer-controls" id="timer-controls">
-      ${buildControls()}
-    </div>
-
-    <button class="btn btn-secondary btn-sm mt-8" onclick="skipPhase()">
-      ⏭ &nbsp;Passer cette étape
-    </button>
+    <div class="timer-controls" id="timer-controls">${buildControls()}</div>
+    <button class="btn btn-secondary btn-sm mt-8" onclick="skipPhase()">⏭ &nbsp;Passer cette étape</button>
   `;
 }
 
@@ -1499,16 +1157,12 @@ function buildRing(phase, timeLeft, ex) {
   const color  = phase === 'work' ? 'var(--accent)' : 'var(--accent2)';
   const label  = phase === 'work' ? '⚡ SÉRIE' : '😮‍💨 REPOS';
   const cls    = phase === 'work' ? 'work' : 'rest';
-
   return `
     <svg viewBox="0 0 280 280">
       <circle class="timer-ring-bg" cx="140" cy="140" r="${radius}" stroke-width="12"/>
       <circle class="timer-ring-progress" cx="140" cy="140" r="${radius}"
         stroke="${color}" stroke-width="12"
-        stroke-dasharray="${circ}"
-        stroke-dashoffset="${offset}"
-        id="ring-progress"
-      />
+        stroke-dasharray="${circ}" stroke-dashoffset="${offset}" id="ring-progress"/>
     </svg>
     <div class="timer-ring-center">
       <div class="timer-phase-label">${label}</div>
@@ -1519,21 +1173,19 @@ function buildRing(phase, timeLeft, ex) {
 function buildControls() {
   const icon = timerState.paused ? '▶' : '⏸';
   return `
-    <button class="btn-icon" onclick="resetTimer()" title="Recommencer">↺</button>
+    <button class="btn-icon" onclick="resetCurrentPhase()" title="Recommencer">↺</button>
     <button class="btn-icon accent" onclick="togglePause()" id="pause-btn">${icon}</button>
     <button class="btn-icon" onclick="openQuitModal()" title="Quitter">✕</button>
   `;
 }
 
 function renderTimerCountdown() {
-  // Fast update — only change countdown text & ring, not whole DOM
-  const { phase, timeLeft, totalLeft, totalDuration, session, exIndex, setIndex } = timerState;
+  const { phase, timeLeft, totalLeft, totalDuration, session, exIndex } = timerState;
   const ex = session.exercises[exIndex];
 
   const cd = document.getElementById('timer-cd');
   if (cd) cd.textContent = formatTime(timeLeft);
 
-  // ring
   const total  = phase === 'work' ? ex.workTime : ex.restTime;
   const radius = 110;
   const circ   = 2 * Math.PI * radius;
@@ -1541,12 +1193,10 @@ function renderTimerCountdown() {
   const ring = document.getElementById('ring-progress');
   if (ring) ring.setAttribute('stroke-dashoffset', offset);
 
-  // progress bar
   const progress = totalDuration > 0 ? ((totalDuration - totalLeft) / totalDuration) * 100 : 0;
   const pb = document.getElementById('timer-progress-bar');
   if (pb) pb.style.width = progress + '%';
 
-  // total
   const tot = document.getElementById('timer-total');
   if (tot) tot.innerHTML = `Séance terminée dans <strong>${formatDuration(totalLeft)}</strong>`;
 }
@@ -1557,9 +1207,8 @@ function renderTimerControls() {
 }
 
 function renderTimerDone() {
-  const timerEl = document.getElementById('timer-main');
   const dur = formatDuration(timerState.totalDuration);
-  timerEl.innerHTML = `
+  document.getElementById('timer-main').innerHTML = `
     <div class="done-screen">
       <div class="trophy">🏆</div>
       <h2>SÉANCE<br/><span>TERMINÉE !</span></h2>
@@ -1586,70 +1235,39 @@ function formatTime(secs) {
 }
 
 /* ================================================================
-   AUDIO — Web Audio API sounds
+   AUDIO
 ================================================================ */
 function playBeep(type) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    
     if (type === 'rest') {
-      // Breath-like sound (descending frequency with noise-like effect)
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(300, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.5);
-      gain.gain.setValueAtTime(0.5, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.5);
-      
-      // Add a second tone for depth
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(200, ctx.currentTime);
-      osc2.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.6);
-      gain2.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-      osc2.start(ctx.currentTime);
-      osc2.stop(ctx.currentTime + 0.6);
-      
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(300, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.5);
+      g.gain.setValueAtTime(0.5, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.5);
     } else if (type === 'restEnd') {
-      // End of rest - rising "ready" sound
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(300, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
-      gain.gain.setValueAtTime(0.4, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.4);
-      
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(300, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
+      g.gain.setValueAtTime(0.4, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.4);
     } else if (type === 'work') {
-      // Short激励 beep
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.frequency.value = 660;
-      gain.gain.setValueAtTime(.4, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + .25);
-      
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.value = 660;
+      g.gain.setValueAtTime(.4, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime + .25);
     } else if (type === 'done') {
-      // 3 ascending beeps
       [440, 550, 660].forEach((freq, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
+        const o = ctx.createOscillator(), g = ctx.createGain();
         o.connect(g); g.connect(ctx.destination);
         o.frequency.value = freq;
         g.gain.setValueAtTime(.4, ctx.currentTime + i * .18);
@@ -1658,22 +1276,18 @@ function playBeep(type) {
         o.stop(ctx.currentTime + i * .18 + .25);
       });
     }
-
-    // Vibration
     if (navigator.vibrate) {
       if (type === 'done') navigator.vibrate([200, 100, 200, 100, 400]);
       else if (type === 'restEnd') navigator.vibrate(150);
       else navigator.vibrate(100);
     }
-  } catch(e) { /* audio not supported */ }
+  } catch(e) {}
 }
 
 /* ================================================================
    MODALS
 ================================================================ */
-function openHelpModal() {
-  document.getElementById('help-modal').classList.add('open');
-}
+function openHelpModal() { document.getElementById('help-modal').classList.add('open'); }
 function closeHelpModal(e) {
   if (!e || e.target === document.getElementById('help-modal'))
     document.getElementById('help-modal').classList.remove('open');
@@ -1686,7 +1300,6 @@ function copyPrompt() {
     btn.textContent = '✅ Copié !';
     setTimeout(() => btn.textContent = '📋 Copier le prompt', 2000);
   }).catch(() => {
-    // fallback
     const ta = document.createElement('textarea');
     ta.value = text;
     document.body.appendChild(ta);
@@ -1710,14 +1323,10 @@ function escHtml(str) {
 ================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
   renderHome();
-
-  // Register service worker for PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   }
 });
-
-// openCreatePage() est appelé directement depuis le HTML.
 </script>
 </body>
 </html>
