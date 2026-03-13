@@ -1,11 +1,10 @@
-# Task: Better integrate upcoming exercise during rest time without displacing timer ring ✅
+# Task: Incorporer 4 séances par défaut (Poids de corps, Fonte, Mix, Bonus)
 
 ## Plan Steps
-- [x] 1. Update CSS: Add .timer-content wrapper, adjust .next-exercise-tip margins/opacity, fix .timer-ring-wrap flex
-- [x] 2. Update JS renderTimer(): Move `${nextExHtml}` position to after .timer-series-info
-- [ ] 3. Test: Verify ring position stable during last set rest
-- [x] 4. Complete task
+- [x] 1. Create DEFAULT_SESSIONS array in index.html script (parsed from user specs)
+- [x] 2. Modify loadSessions(): populate defaults if storage empty → saveSessions(defaults)
+- [x] 3. Verify no breaking changes (home render, create/edit, timer compat)
+- [x] 4. Test: Refresh app → 4 sessions listed with correct exercises/times
+- [x] 5. Complete task + attempt_completion
 
-**Changes applied: Tip now flows after series info, subtle styling (glow/blur), ring centered stably via flex wrapper. Ready for UX test! Open index.html in browser, test timer with multi-ex/multi-set session.**
-
-
+**Approved plan:** Defaults auto-added on first load, preserved if user adds/edits.
