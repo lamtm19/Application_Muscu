@@ -52,12 +52,7 @@
       padding-top: var(--safe-top);
     }
 
-    .page {
-      display: none;
-      flex-direction: column;
-      flex: 1;
-      animation: fadeSlideIn 0.22s ease;
-    }
+    .page { display: none; flex-direction: column; flex: 1; animation: fadeSlideIn 0.22s ease; }
     .page.active { display: flex; }
 
     @keyframes fadeSlideIn {
@@ -66,58 +61,28 @@
     }
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 30px 10px;
-      gap: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 30px 10px; gap: 10px;
     }
-    .header-logo {
-      font-family: var(--font-head);
-      font-size: 22px;
-      letter-spacing: 1px;
-      color: var(--accent);
-    }
-    .header-logo img {
-      height: 80px;
-      width: auto;
-      display: block;
-    }
-    .header-logo span { color: var(--text); }
+    .header-logo { font-family: var(--font-head); font-size: 22px; letter-spacing: 1px; color: var(--accent); }
+    .header-logo img { height: 80px; width: auto; display: block; }
     .btn-icon {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--text-muted);
-      transition: all .15s;
-      flex-shrink: 0;
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 50%;
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; color: var(--text-muted); transition: all .15s; flex-shrink: 0;
     }
     .btn-icon:hover, .btn-icon:active { background: var(--border); color: var(--text); }
 
     .scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0 16px 100px;
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
+      flex: 1; overflow-y: auto; padding: 0 16px 100px;
+      -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
     }
 
     .btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: var(--radius);
-      border: none;
-      font-family: var(--font-body);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .15s;
-      letter-spacing: .3px;
+      width: 100%; padding: 16px 20px; border-radius: var(--radius); border: none;
+      font-family: var(--font-body); font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: all .15s; letter-spacing: .3px;
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: var(--accent); color: #000; }
@@ -127,25 +92,13 @@
     .btn-danger { background: transparent; color: var(--accent2); border: 1px solid var(--accent2); }
     .btn-sm { padding: 10px 16px; font-size: 14px; border-radius: var(--radius-sm); }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
-    }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
     .card-title { font-family: var(--font-head); font-size: 20px; letter-spacing: .5px; margin-bottom: 4px; }
     .card-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
     .card-actions { display: flex; gap: 8px; margin-top: 12px; }
     .card-actions .btn { flex: 1; }
 
-    .section-title {
-      font-family: var(--font-head);
-      font-size: 28px;
-      letter-spacing: 1px;
-      margin: 20px 0 14px;
-      line-height: 1.1;
-    }
+    .section-title { font-family: var(--font-head); font-size: 28px; letter-spacing: 1px; margin: 20px 0 14px; line-height: 1.1; }
     .section-title span { color: var(--accent); }
 
     .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
@@ -155,30 +108,17 @@
 
     .form-group { margin-bottom: 16px; }
     .form-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      display: block; font-size: 12px; font-weight: 600; letter-spacing: .8px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
     }
     .form-input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 16px;
-      outline: none;
-      transition: border-color .15s;
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px; color: var(--text);
+      font-family: var(--font-body); font-size: 16px; outline: none; transition: border-color .15s;
     }
     .form-input:focus { border-color: var(--accent); }
-    .form-input.error { 
-      border-color: var(--accent2); 
-      box-shadow: 0 0 0 3px rgba(255,77,77,0.3);
+    .form-input.error {
+      border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(255,77,77,0.3);
       animation: pulse-error 1s infinite;
     }
     .form-input.error::placeholder { color: var(--accent2); opacity: 1; font-weight: 500; }
@@ -187,111 +127,56 @@
       50% { box-shadow: 0 0 0 8px rgba(255,77,77,0); }
     }
 
-    .time-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-    }
+    .time-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
     .time-grid-6 { grid-template-columns: repeat(6,1fr); }
 
     .time-btn {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 6px;
-      color: var(--text-muted);
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      text-align: center;
-      transition: all .15s;
+      background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      padding: 12px 6px; color: var(--text-muted); font-family: var(--font-body); font-size: 13px;
+      font-weight: 500; cursor: pointer; text-align: center; transition: all .15s;
     }
     .time-btn:hover, .time-btn.selected {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(232,255,0,.08);
+      border-color: var(--accent); color: var(--accent); background: rgba(232,255,0,.08);
     }
 
     .custom-input-wrap { display: none; margin-top: 8px; }
     .custom-input-wrap.show { display: block; }
 
-
-    .exercise-input-wrap {
-      position: relative;
-    }
+    .exercise-input-wrap { position: relative; }
     .exercise-suggestions {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 20;
-      display: none;
-      margin-top: 4px;
+      position: absolute; top: 100%; left: 0; right: 0; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: var(--radius-sm); max-height: 200px;
+      overflow-y: auto; z-index: 20; display: none; margin-top: 4px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
     .exercise-suggestions.show { display: block; }
     .exercise-suggestion {
-      padding: 12px 16px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-      transition: background .1s, color .1s;
+      padding: 12px 16px; cursor: pointer; font-size: 14px; color: var(--text);
+      border-bottom: 1px solid var(--border); transition: background .1s;
     }
     .exercise-suggestion:last-child { border-bottom: none; }
     .exercise-suggestion:hover { background: var(--border); }
     .exercise-suggestion mark { background: transparent; color: var(--accent); font-weight: 600; }
 
-    .exercise-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .exercise-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
+    .exercise-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; position: relative; }
+    .exercise-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .exercise-number { font-family: var(--font-head); font-size: 28px; color: var(--accent); line-height: 1; }
     .exercise-delete { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 4px; line-height: 1; }
     .exercise-delete:hover { color: var(--accent2); }
     .exercise-card.error-card { border-color: var(--accent2); box-shadow: 0 0 0 1px var(--accent2); }
 
     .duration-bar {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-top: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin: 20px 0 12px;
-      text-align: center;
+      background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--accent);
+      border-radius: var(--radius); padding: 16px; margin: 20px 0 12px; text-align: center;
     }
-    .duration-bar label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
     .duration-bar .duration-val { font-family: var(--font-head); font-size: 36px; color: var(--accent); letter-spacing: 2px; }
 
-    .timer-page {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 0 20px;
-      padding-bottom: calc(20px + var(--safe-bottom));
-    }
+    .timer-page { flex: 1; display: flex; flex-direction: column; padding: 0 20px; padding-bottom: calc(20px + var(--safe-bottom)); }
     .timer-header { display: flex; align-items: center; gap: 12px; padding: 18px 0 14px; }
     .timer-session-name { font-family: var(--font-head); font-size: 18px; letter-spacing: .5px; color: var(--text-muted); flex: 1; }
     .timer-progress-wrap { background: var(--surface2); border-radius: 4px; height: 4px; margin-bottom: 24px; overflow: hidden; }
     .timer-progress-bar { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s linear; }
     .timer-exercise-label { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-    .timer-exercise-name { font-family: var(--font-head); font-size: 32px; letter-spacing: .5px; line-height: 1.1; margin-bottom: 4px; }
     .timer-series-info { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
     .timer-ring-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 28px; flex: 1; }
     .timer-ring { position: relative; width: min(260px, 65vw); aspect-ratio: 1; }
@@ -301,14 +186,19 @@
     .timer-ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .timer-phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
     .timer-countdown { font-family: var(--font-head); font-size: clamp(52px, 14vw, 72px); line-height: 1; letter-spacing: 2px; }
-    .timer-countdown.work  { color: var(--accent); }
-    .timer-countdown.rest  { color: var(--accent2); }
-    .timer-countdown.done  { color: var(--accent3); }
+    .timer-countdown.work { color: var(--accent); }
+    .timer-countdown.rest { color: var(--accent2); }
     .timer-total-remaining { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
     .timer-total-remaining strong { color: var(--text); font-weight: 600; }
     .timer-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
     .timer-controls .btn-icon { width: 100%; height: 56px; border-radius: var(--radius-sm); font-size: 22px; }
     .timer-controls .btn-icon.accent { background: var(--accent); color: #000; border-color: var(--accent); font-size: 26px; }
+
+    .timer-edit-btn {
+      background: none; border: none; cursor: pointer; color: var(--text-muted);
+      font-size: 15px; padding: 2px 4px; line-height: 1; transition: color .15s; flex-shrink: 0;
+    }
+    .timer-edit-btn:hover { color: var(--accent); }
 
     .done-screen { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px; gap: 16px; }
     .done-screen .trophy { font-size: 72px; animation: pop .4s cubic-bezier(.3,1.5,.6,1); }
@@ -317,31 +207,46 @@
     .done-screen h2 span { color: var(--accent); }
     .done-screen p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 100; align-items: flex-end; justify-content: center; animation: fadeIn .2s ease; }
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      z-index: 100; align-items: flex-end; justify-content: center; animation: fadeIn .2s ease;
+    }
     .modal-overlay.open { display: flex; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal-sheet {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-bottom: none;
-      border-radius: 20px 20px 0 0;
-      width: 100%;
-      max-width: 480px;
-      padding: 24px 20px;
-      padding-bottom: calc(24px + var(--safe-bottom));
-      max-height: 80dvh;
-      overflow-y: auto;
-      animation: slideUp .22s ease;
+      background: var(--surface); border: 1px solid var(--border); border-bottom: none;
+      border-radius: 20px 20px 0 0; width: 100%; max-width: 480px;
+      padding: 24px 20px; padding-bottom: calc(24px + var(--safe-bottom));
+      max-height: 90dvh; overflow-y: auto; animation: slideUp .22s ease;
     }
     @keyframes slideUp { from { transform: translateY(40px); } to { transform: translateY(0); } }
     .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
-    .modal-title { font-family: var(--font-head); font-size: 24px; letter-spacing: .5px; margin-bottom: 16px; }
+    .modal-title { font-family: var(--font-head); font-size: 24px; letter-spacing: .5px; margin-bottom: 4px; }
+    .modal-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
     .modal-body { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
     .modal-body h4 { color: var(--text); font-size: 15px; margin: 16px 0 6px; }
     .modal-body ol { padding-left: 20px; }
     .copy-block { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; font-size: 13px; line-height: 1.7; color: var(--text); white-space: pre-wrap; margin: 10px 0; font-family: monospace; }
     .copy-block-btn { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; cursor: pointer; margin-top: 8px; transition: all .15s; }
     .copy-block-btn:active { background: var(--border); color: var(--accent); }
+
+    .modal-section { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; }
+    .modal-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+
+    /* suggestions dans live edit */
+    .live-suggestions {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      max-height: 180px; overflow-y: auto; display: none; margin-top: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .live-suggestions.show { display: block; }
+    .live-suggestion {
+      padding: 12px 16px; cursor: pointer; font-size: 14px; color: var(--text);
+      border-bottom: 1px solid var(--border); transition: background .1s;
+    }
+    .live-suggestion:last-child { border-bottom: none; }
+    .live-suggestion:hover, .live-suggestion:active { background: var(--border); }
+    .live-suggestion mark { background: transparent; color: var(--accent); font-weight: 600; }
 
     .sticky-bottom { position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 40%); padding: 16px 16px calc(16px + var(--safe-bottom)); }
     .pill { display: inline-flex; align-items: center; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 4px 10px; font-size: 12px; color: var(--text-muted); }
@@ -351,45 +256,21 @@
     .series-dot.current { background: transparent; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,255,0,.2); }
 
     .mt-8 { margin-top: 8px; }
-    .mt-12 { margin-top: 12px; }
     .mt-16 { margin-top: 16px; }
-    .gap-8 { gap: 8px; }
     .flex { display: flex; }
-    .flex-col { flex-direction: column; }
     .items-center { align-items: center; }
     .justify-between { justify-content: space-between; }
-    .w-full { width: 100%; }
     .text-muted { color: var(--text-muted); font-size: 13px; }
     .divider { height: 1px; background: var(--border); margin: 20px 0; }
-    .scroll-area:focus { outline: none; }
 
     .next-exercise-tip {
-      margin-bottom: 24px;
-      padding: 14px 18px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: var(--radius-sm);
-      animation: fadeSlideIn 0.3s ease;
-      text-align: left;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(232,255,0,0.08); border: 1px solid rgba(232,255,0,0.25);
+      border-radius: 100px; padding: 4px 10px 4px 8px;
+      animation: fadeSlideIn 0.3s ease; flex-shrink: 0;
     }
-    .next-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      display: block;
-    }
-    .next-name {
-      font-family: var(--font-head);
-      font-size: 20px;
-      letter-spacing: 0.5px;
-      color: var(--accent);
-      display: block;
-      line-height: 1.1;
-    }
+    .next-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+    .next-name { font-family: var(--font-head); font-size: 15px; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
   </style>
 </head>
 <body>
@@ -398,11 +279,9 @@
   <div class="page active" id="page-home">
     <div class="header">
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" /></div>
-      <button class="btn-icon" onclick="openHelpModal()" title="Aide">❓</button>
+      <button class="btn-icon" onclick="openHelpModal()">❓</button>
     </div>
-    <div class="scroll-area">
-      <div id="home-content"></div>
-    </div>
+    <div class="scroll-area"><div id="home-content"></div></div>
     <div class="sticky-bottom">
       <button class="btn btn-primary" onclick="openCreatePage()">＋ &nbsp;Nouvelle séance</button>
     </div>
@@ -425,7 +304,7 @@
         <button class="btn btn-secondary btn-sm" style="width:auto" onclick="addExercise()">＋ Ajouter</button>
       </div>
       <div id="exercises-list"></div>
-      <div class="duration-bar" id="duration-bar">
+      <div class="duration-bar">
         <div class="form-label" style="margin:0 0 4px">Durée estimée</div>
         <div class="duration-val" id="duration-val">0 min</div>
       </div>
@@ -435,21 +314,13 @@
     </div>
   </div>
 
-  <div class="page" id="page-sessions">
-    <div class="header">
-      <button class="btn-icon" onclick="goTo('page-home')">←</button>
-      <div class="header-logo"><img src="logo.png" alt="Pause du Champion" style="height:24px" /></div>
-      <div style="width:40px"></div>
-    </div>
-    <div class="scroll-area" id="sessions-list"></div>
-  </div>
-
   <div class="page" id="page-timer">
     <div class="timer-page" id="timer-main"></div>
   </div>
 
 </div>
 
+<!-- MODAL AIDE -->
 <div class="modal-overlay" id="help-modal" onclick="closeHelpModal(event)">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -458,13 +329,11 @@
       <h4>📱 Installer sur iPhone</h4>
       <ol>
         <li>Ouvre ce site dans <strong>Safari</strong></li>
-        <li>Appuie sur l'icône <strong>Partager</strong> (carré avec flèche)</li>
-        <li>Fais défiler et appuie sur <strong>« En voir plus »</strong> si nécessaire</li>
+        <li>Appuie sur l'icône <strong>Partager</strong></li>
         <li>Choisis <strong>« Sur l'écran d'accueil »</strong></li>
         <li>Appuie sur <strong>Ajouter</strong> — c'est tout ! 🎉</li>
       </ol>
       <h4>🤖 Obtenir tes temps avec une IA</h4>
-      <p>Copie le prompt ci-dessous, colle-le dans ChatGPT (ou toute autre IA) et remplace l'exemple par tes exercices et ton objectif :</p>
       <div class="copy-block" id="copy-prompt">Voici ma séance :
 [ta séance]
 
@@ -487,36 +356,86 @@ Je veux donc cette forme :
 [temps de récupération]</div>
       <button class="copy-block-btn" onclick="copyPrompt()">📋 &nbsp;Copier le prompt</button>
     </div>
-    <div style="margin-top:24px">
-      <button class="btn btn-secondary" onclick="closeHelpModal()">Fermer</button>
-    </div>
+    <div style="margin-top:24px"><button class="btn btn-secondary" onclick="closeHelpModal()">Fermer</button></div>
   </div>
 </div>
 
+<!-- MODAL QUITTER -->
 <div class="modal-overlay" id="quit-modal" onclick="closeQuitModal(event)">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">Quitter la séance ?</div>
-    <div class="modal-body">
-      <p>Ta progression sera perdue. Tu veux vraiment arrêter ?</p>
-    </div>
-    <div style="display:flex; gap:10px; margin-top:20px;">
+    <div class="modal-body"><p>Ta progression sera perdue.</p></div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
       <button class="btn btn-secondary" style="flex:1" onclick="closeQuitModal()">Continuer</button>
       <button class="btn btn-danger" style="flex:1" onclick="confirmQuit()">Quitter</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL SUPPRIMER -->
 <div class="modal-overlay" id="delete-modal" onclick="closeDeleteModal(event)">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">Supprimer la séance ?</div>
-    <div class="modal-body">
-      <p>Cette action est irréversible. La séance sera supprimée définitivement.</p>
-    </div>
-    <div style="display:flex; gap:10px; margin-top:20px;">
+    <div class="modal-body"><p>Cette action est irréversible.</p></div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
       <button class="btn btn-secondary" style="flex:1" onclick="closeDeleteModal()">Annuler</button>
       <button class="btn btn-danger" style="flex:1" onclick="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ÉDITION EN COURS DE SÉANCE -->
+<div class="modal-overlay" id="live-edit-modal" onclick="closeLiveEditModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="le-title">Modifier l'exercice</div>
+    <div class="modal-subtitle" id="le-subtitle"></div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Nom de l'exercice</div>
+      <input class="form-input" id="le-name" type="text" maxlength="60" autocomplete="off"
+        oninput="liveShowSuggestions(this.value)" />
+      <div class="live-suggestions" id="le-suggestions"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Nombre de séries (total)</div>
+      <div class="time-grid time-grid-6" id="le-sets-grid"></div>
+      <div class="custom-input-wrap" id="le-sets-custom">
+        <input class="form-input" type="number" min="1" id="le-sets-custom-input"
+          placeholder="Nombre personnalisé" oninput="leDraftSetSets(parseInt(this.value))" />
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Répétitions</div>
+      <div class="time-grid time-grid-6" id="le-reps-grid"></div>
+      <div class="custom-input-wrap" id="le-reps-custom">
+        <input class="form-input" type="number" min="1" id="le-reps-custom-input"
+          placeholder="Répétitions personnalisées" oninput="leDraftSetReps(parseInt(this.value))" />
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Charge</div>
+      <input class="form-input" id="le-load" type="text" placeholder="Ex : 40 kg, 20 kg x 2" />
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">⚡ Temps de série</div>
+      <div class="time-grid" id="le-work-grid"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">😮‍💨 Temps de récupération</div>
+      <div class="time-grid" id="le-rest-grid"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="closeLiveEditModal()">Annuler</button>
+      <button class="btn btn-primary" style="flex:1" onclick="applyLiveEdit()">✓ &nbsp;Appliquer</button>
     </div>
   </div>
 </div>
@@ -526,85 +445,61 @@ Je veux donc cette forme :
    DATA LAYER
 ================================================================ */
 const STORAGE_KEY = 'pause_champion_sessions';
-
 function loadSessions() {
-  const sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  return sessions.map(s => ({
-    ...s,
-    exercises: s.exercises.map(e => ({
-      ...e,
-      reps: e.reps ?? null,
-      load: e.load ?? null,
-    }))
+  return (JSON.parse(localStorage.getItem(STORAGE_KEY)) || []).map(s => ({
+    ...s, exercises: s.exercises.map(e => ({ ...e, reps: e.reps ?? null, load: e.load ?? null }))
   }));
 }
-
-function saveSessions(sessions) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-}
-
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
+function saveSessions(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 
 /* ================================================================
    ROUTER
 ================================================================ */
 let pageHistory = ['page-home'];
-
-function goTo(pageId, pushHistory = true) {
+function goTo(pageId, push = true) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
-  if (pushHistory) pageHistory.push(pageId);
+  if (push) pageHistory.push(pageId);
   if (pageId === 'page-home') renderHome();
-  if (pageId === 'page-sessions') renderSessions();
-  const scroll = document.querySelector('#' + pageId + ' .scroll-area');
-  if (scroll) scroll.scrollTop = 0;
+  const sc = document.querySelector('#' + pageId + ' .scroll-area');
+  if (sc) sc.scrollTop = 0;
 }
-
 function goBack() {
   pageHistory.pop();
-  const prev = pageHistory[pageHistory.length - 1] || 'page-home';
-  goTo(prev, false);
+  goTo(pageHistory[pageHistory.length - 1] || 'page-home', false);
 }
 
 /* ================================================================
-   HOME PAGE
+   HOME
 ================================================================ */
 function renderHome() {
   const sessions = loadSessions();
   const el = document.getElementById('home-content');
-  if (sessions.length === 0) {
-    el.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">🏋️</div>
-        <h3>Aucune séance pour l'instant</h3>
-        <p>Crée ta première séance pour commencer à t'entraîner avec un minuteur intelligent.</p>
-      </div>`;
+  if (!sessions.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🏋️</div>
+      <h3>Aucune séance pour l'instant</h3>
+      <p>Crée ta première séance pour commencer à t'entraîner avec un minuteur intelligent.</p></div>`;
     return;
   }
-  let html = `<div class="section-title">Mes <span>séances</span></div>`;
-  sessions.forEach(s => {
-    const dur = formatDuration(calcSessionDuration(s));
-    const exCount = s.exercises.length;
-    html += `
-    <div class="card">
-      <div class="card-title">${escHtml(s.name)}</div>
-      <div class="card-meta">
-        <span class="pill">⚡ ${exCount} exercice${exCount > 1 ? 's' : ''}</span>
-        &nbsp;<span class="pill">⏱ ${dur}</span>
-      </div>
-      <div class="card-actions">
-        <button class="btn btn-primary btn-sm" onclick="startSession('${s.id}')">▶ Lancer</button>
-        <button class="btn btn-secondary btn-sm" onclick="editSession('${s.id}')">✏️ Modifier</button>
-<button class="btn btn-danger btn-sm" style="flex:0;padding:10px 14px;" onclick="openDeleteModal('${s.id}')">🗑</button>
-      </div>
-    </div>`;
-  });
-  el.innerHTML = html;
+  el.innerHTML = `<div class="section-title">Mes <span>séances</span></div>` +
+    sessions.map(s => {
+      const dur = formatDuration(calcSessionDuration(s));
+      const n = s.exercises.length;
+      return `<div class="card">
+        <div class="card-title">${escHtml(s.name)}</div>
+        <div class="card-meta">
+          <span class="pill">⚡ ${n} exercice${n>1?'s':''}</span>&nbsp;
+          <span class="pill">⏱ ${dur}</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" onclick="startSession('${s.id}')">▶ Lancer</button>
+          <button class="btn btn-secondary btn-sm" onclick="editSession('${s.id}')">✏️ Modifier</button>
+          <button class="btn btn-danger btn-sm" style="flex:0;padding:10px 14px" onclick="openDeleteModal('${s.id}')">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
 }
-
-function renderSessions() { renderHome(); }
 
 /* ================================================================
    CREATE / EDIT SESSION
@@ -612,16 +507,8 @@ function renderSessions() { renderHome(); }
 let editingSessionId = null;
 let exercises = [];
 
-const TIME_PRESETS_WORK = [
-  {label:'20 s', val:20}, {label:'30 s', val:30}, {label:'40 s', val:40},
-  {label:'45 s', val:45}, {label:'1 min', val:60}, {label:'1 min 15', val:75},
-];
-
-const TIME_PRESETS_REST = [
-  {label:'30 s', val:30}, {label:'45 s', val:45}, {label:'1 min', val:60},
-  {label:'1 min 30', val:90}, {label:'2 min', val:120}, {label:'2 min 30', val:150},
-];
-
+const TIME_PRESETS_WORK = [{label:'20 s',val:20},{label:'30 s',val:30},{label:'40 s',val:40},{label:'45 s',val:45},{label:'1 min',val:60},{label:'1 min 15',val:75}];
+const TIME_PRESETS_REST = [{label:'30 s',val:30},{label:'45 s',val:45},{label:'1 min',val:60},{label:'1 min 30',val:90},{label:'2 min',val:120},{label:'2 min 30',val:150}];
 const SETS_PRESETS = [1,2,3,4,5];
 const REPS_PRESETS = [4,5,10,12,15];
 
@@ -639,147 +526,104 @@ const EXERCISE_SUGGESTIONS = [
 ];
 
 function openCreatePage() {
-  editingSessionId = null;
-  exercises = [];
+  editingSessionId = null; exercises = [];
   document.getElementById('session-name').value = '';
-  renderExercises();
-  goTo('page-create');
+  renderExercises(); goTo('page-create');
 }
-
 function editSession(id) {
-  const sessions = loadSessions();
-  const s = sessions.find(x => x.id === id);
+  const s = loadSessions().find(x => x.id === id);
   if (!s) return;
   editingSessionId = id;
-  exercises = s.exercises.map(e => ({...e, reps: e.reps ?? null, load: e.load ?? null}));
+  exercises = s.exercises.map(e => ({...e}));
   document.getElementById('session-name').value = s.name;
-  renderExercises();
-  goTo('page-create');
+  renderExercises(); goTo('page-create');
 }
-
 function addExercise() {
   exercises.push({ id: generateId(), name: '', sets: 3, reps: null, load: null, workTime: 45, restTime: 90 });
   renderExercises();
-  setTimeout(() => {
-    const el = document.getElementById('create-scroll');
-    el.scrollTop = el.scrollHeight;
-  }, 50);
+  setTimeout(() => { const el = document.getElementById('create-scroll'); el.scrollTop = el.scrollHeight; }, 50);
 }
-
 function addExerciseAfter(afterId) {
-  const index = exercises.findIndex(e => e.id === afterId);
-  if (index === -1) return;
-  const newEx = { id: generateId(), name: '', sets: 3, reps: null, load: null, workTime: 45, restTime: 90 };
-  exercises.splice(index + 1, 0, newEx);
+  const i = exercises.findIndex(e => e.id === afterId);
+  if (i < 0) return;
+  exercises.splice(i+1, 0, { id: generateId(), name: '', sets: 3, reps: null, load: null, workTime: 45, restTime: 90 });
   renderExercises();
-  setTimeout(() => {
-    const el = document.getElementById('create-scroll');
-    el.scrollTop = el.scrollHeight;
-  }, 50);
+  setTimeout(() => { const el = document.getElementById('create-scroll'); el.scrollTop = el.scrollHeight; }, 50);
 }
-
-function removeExercise(id) {
-  exercises = exercises.filter(e => e.id !== id);
-  renderExercises();
-}
+function removeExercise(id) { exercises = exercises.filter(e => e.id !== id); renderExercises(); }
 
 function renderExercises() {
   const list = document.getElementById('exercises-list');
-  if (exercises.length === 0) {
+  if (!exercises.length) {
     list.innerHTML = `<div class="text-muted" style="text-align:center;padding:24px 0;">Aucun exercice. Appuie sur + Ajouter.</div>`;
-    updateDuration();
-    return;
+    updateDuration(); return;
   }
-
   list.innerHTML = exercises.map((ex, i) => `
     <div class="exercise-card" id="excard-${ex.id}">
       <div class="exercise-card-header">
         <div class="exercise-number">${String(i+1).padStart(2,'0')}</div>
-        <button class="exercise-delete" onclick="removeExercise('${ex.id}')" title="Supprimer">✕</button>
+        <button class="exercise-delete" onclick="removeExercise('${ex.id}')">✕</button>
       </div>
-
       <div class="form-group">
         <label class="form-label">Nom de l'exercice</label>
         <div class="exercise-input-wrap">
           <input class="form-input" type="text" placeholder="Ex : Développé couché"
             value="${escHtml(ex.name)}"
-            oninput="updateExerciseField('${ex.id}','name',this.value); showSuggestions('${ex.id}', this.value)"
+            oninput="updateExField('${ex.id}','name',this.value); showSuggestions('${ex.id}',this.value)"
             maxlength="60" autocomplete="off" />
           <div class="exercise-suggestions" id="suggestions-${ex.id}"></div>
         </div>
       </div>
-
       <div class="form-group">
         <label class="form-label">Nombre de séries</label>
         <div class="time-grid time-grid-6">
-          ${SETS_PRESETS.map(n => `
-            <button class="time-btn ${ex.sets===n?'selected':''}" onclick="selectPreset('${ex.id}','sets',${n},this)">
-              ${n}
-            </button>`).join('')}
-          <button class="time-btn" onclick="showCustomInput('${ex.id}','sets')">CUSTOM</button>
+          ${SETS_PRESETS.map(n=>`<button class="time-btn ${ex.sets===n?'selected':''}" onclick="selPreset('${ex.id}','sets',${n},this)">${n}</button>`).join('')}
+          <button class="time-btn" onclick="showCustom('${ex.id}','sets')">CUSTOM</button>
         </div>
         <div class="custom-input-wrap" id="custom-${ex.id}-sets">
-          <input class="form-input" type="number" min="1" placeholder="Nombre de séries personnalisé"
-            onchange="setCustomValue('${ex.id}','sets',this.value)" />
+          <input class="form-input" type="number" min="1" placeholder="Nombre personnalisé"
+            onchange="setCustomVal('${ex.id}','sets',this.value)" />
         </div>
       </div>
-
       <div class="form-group">
         <label class="form-label">Répétitions (facultatif)</label>
         <div class="time-grid time-grid-6">
-          ${REPS_PRESETS.map(n => `
-            <button class="time-btn ${ex.reps===n?'selected':''}" onclick="selectPreset('${ex.id}','reps',${n},this)">
-              ${n}
-            </button>`).join('')}
-          <button class="time-btn" onclick="showCustomInput('${ex.id}','reps')">CUSTOM</button>
+          ${REPS_PRESETS.map(n=>`<button class="time-btn ${ex.reps===n?'selected':''}" onclick="selPreset('${ex.id}','reps',${n},this)">${n}</button>`).join('')}
+          <button class="time-btn" onclick="showCustom('${ex.id}','reps')">CUSTOM</button>
         </div>
         <div class="custom-input-wrap" id="custom-${ex.id}-reps">
           <input class="form-input" type="number" min="1" placeholder="Répétitions personnalisées"
-            onchange="setCustomValue('${ex.id}','reps',this.value)" />
+            onchange="setCustomVal('${ex.id}','reps',this.value)" />
         </div>
       </div>
-
       <div class="form-group">
         <label class="form-label">Charge (facultatif)</label>
         <input class="form-input" type="text" placeholder="Ex: 40kg, 20kg x 2"
-          value="${escHtml(ex.load || '')}"
-          oninput="updateExerciseField('${ex.id}','load',this.value)" />
+          value="${escHtml(ex.load||'')}" oninput="updateExField('${ex.id}','load',this.value)" />
       </div>
-
       <div class="form-group">
         <label class="form-label">⚡ Temps de série</label>
         <div class="time-grid">
-          ${TIME_PRESETS_WORK.map(p => `
-            <button class="time-btn ${ex.workTime === p.val ? 'selected' : ''}"
-              onclick="selectPreset('${ex.id}','workTime',${p.val},this)">
-              ${p.label}
-            </button>`).join('')}
+          ${TIME_PRESETS_WORK.map(p=>`<button class="time-btn ${ex.workTime===p.val?'selected':''}" onclick="selPreset('${ex.id}','workTime',${p.val},this)">${p.label}</button>`).join('')}
         </div>
       </div>
-
       <div class="form-group" style="margin-bottom:0">
         <label class="form-label">😮‍💨 Temps de récupération</label>
         <div class="time-grid">
-          ${TIME_PRESETS_REST.map(p => `
-            <button class="time-btn ${ex.restTime === p.val ? 'selected' : ''}"
-              onclick="selectPreset('${ex.id}','restTime',${p.val},this)">
-              ${p.label}
-            </button>`).join('')}
+          ${TIME_PRESETS_REST.map(p=>`<button class="time-btn ${ex.restTime===p.val?'selected':''}" onclick="selPreset('${ex.id}','restTime',${p.val},this)">${p.label}</button>`).join('')}
         </div>
       </div>
     </div>
     <button class="btn btn-secondary btn-sm mt-8" onclick="addExerciseAfter('${ex.id}')" style="margin-bottom:20px">＋ Ajouter un exercice</button>
   `).join('');
-
   updateDuration();
 }
 
-function updateExerciseField(id, field, value) {
+function updateExField(id, field, value) {
   const ex = exercises.find(e => e.id === id);
   if (ex) { ex[field] = value; updateDuration(); }
 }
-
-function selectPreset(id, field, value, btn) {
+function selPreset(id, field, value, btn) {
   const ex = exercises.find(e => e.id === id);
   if (!ex) return;
   ex[field] = value;
@@ -787,22 +631,16 @@ function selectPreset(id, field, value, btn) {
   btn.classList.add('selected');
   updateDuration();
 }
-
-function showCustomInput(id, field) {
+function showCustom(id, field) {
   const wrap = document.getElementById(`custom-${id}-${field}`);
-  if (!wrap) return;
-  wrap.classList.add('show');
-  const input = wrap.querySelector('input');
-  if (input) setTimeout(() => input.focus(), 50);
+  if (wrap) { wrap.classList.add('show'); setTimeout(() => wrap.querySelector('input').focus(), 50); }
 }
-
-function setCustomValue(id, field, valueStr) {
+function setCustomVal(id, field, str) {
   const ex = exercises.find(e => e.id === id);
   if (!ex) return;
-  const val = parseInt(valueStr);
-  if (!isNaN(val) && val >= 1) {
-    ex[field] = val;
-    // Deselect all preset buttons for this field
+  const v = parseInt(str);
+  if (!isNaN(v) && v >= 1) {
+    ex[field] = v;
     const wrap = document.getElementById(`custom-${id}-${field}`);
     if (wrap) wrap.previousElementSibling.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
   }
@@ -810,395 +648,449 @@ function setCustomValue(id, field, valueStr) {
 }
 
 /* ================================================================
-   EXERCISE SUGGESTIONS
+   SUGGESTIONS (page création)
 ================================================================ */
-function removeAccents(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-let suggestionTimeout;
+function removeAccents(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+let sugTimeout;
 function showSuggestions(exId, query) {
-  if (suggestionTimeout) clearTimeout(suggestionTimeout);
-
-  suggestionTimeout = setTimeout(() => {
-    const container = document.getElementById('suggestions-' + exId);
-    if (!container) return;
-    if (!query || query.length < 1) { 
-      container.classList.remove('show'); 
-      return; 
-    }
-
-    const q = query.toLowerCase(); // Keep original q for prefix matching
-    const normQ = removeAccents(q);
-
-    const matches = EXERCISE_SUGGESTIONS.filter(name => {
-      const normName = removeAccents(name.toLowerCase());
-      return normName.startsWith(normQ); // Prefix matching for better UX
-    }).slice(0, 8);
-
-    if (matches.length === 0) { 
-      container.classList.remove('show'); 
-      return; 
-    }
-
-    container.innerHTML = matches.map(name => {
-      const normName = removeAccents(name.toLowerCase());
-      const idx = normName.indexOf(normQ);
-      let display;
-      if (idx === -1 || idx > 3) { // If not prefix-ish
-        display = escHtml(name);
-      } else {
-        // Highlight prefix length
-        const highlightLen = Math.max(1, Math.min(normQ.length, 10));
-        display = '<mark>' + escHtml(name.slice(0, highlightLen)) + '</mark>'
-          + escHtml(name.slice(highlightLen));
-      }
-      return `<div class="exercise-suggestion" data-value="${escHtml(name)}" data-exid="${exId}">${display}</div>`;
+  clearTimeout(sugTimeout);
+  sugTimeout = setTimeout(() => {
+    const el = document.getElementById('suggestions-' + exId);
+    if (!el) return;
+    if (!query) { el.classList.remove('show'); return; }
+    const q = removeAccents(query.toLowerCase());
+    const matches = EXERCISE_SUGGESTIONS.filter(n => removeAccents(n.toLowerCase()).startsWith(q)).slice(0,8);
+    if (!matches.length) { el.classList.remove('show'); return; }
+    el.innerHTML = matches.map(name => {
+      const hl = Math.min(q.length,10);
+      return `<div class="exercise-suggestion" onmousedown="e.preventDefault();pickSuggestion('${exId}','${escHtml(name)}')"
+        onclick="pickSuggestion('${exId}','${escHtml(name)}')"
+        ><mark>${escHtml(name.slice(0,hl))}</mark>${escHtml(name.slice(hl))}</div>`;
     }).join('');
-
-    // Event listeners
-    container.querySelectorAll('.exercise-suggestion').forEach(el => {
-      el.removeEventListener('mousedown', suggestionClickHandler); // Prevent duplicates
-      el.addEventListener('mousedown', suggestionClickHandler);
-    });
-
-    container.classList.add('show');
-  }, 50); // Faster debounce
+    el.classList.add('show');
+  }, 50);
 }
-
-function suggestionClickHandler(e) {
-  e.preventDefault();
-  const exId = this.dataset.exid;
-  const value = this.dataset.value;
-  selectSuggestion(exId, value);
-}
-
-function selectSuggestion(exId, value) {
+function pickSuggestion(exId, value) {
   const ex = exercises.find(e => e.id === exId);
   if (!ex) return;
   ex.name = value;
   const card = document.getElementById('excard-' + exId);
-  const input = card.querySelector('input[type="text"]');
-  if (input) input.value = value;
-  const container = document.getElementById('suggestions-' + exId);
-  if (container) container.classList.remove('show');
+  if (card) card.querySelector('input[type="text"]').value = value;
+  const el = document.getElementById('suggestions-' + exId);
+  if (el) el.classList.remove('show');
   updateDuration();
 }
-
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.exercise-input-wrap') && !e.target.closest('.exercise-suggestion')) {
+document.addEventListener('click', e => {
+  if (!e.target.closest('.exercise-input-wrap'))
     document.querySelectorAll('.exercise-suggestions').forEach(el => el.classList.remove('show'));
-  }
+  if (!e.target.closest('#le-name') && !e.target.closest('#le-suggestions'))
+    document.getElementById('le-suggestions').classList.remove('show');
 });
 
 /* ================================================================
    DURATION
 ================================================================ */
 function calcSessionDuration(session) {
-  let total = 0;
-  const exCount = session.exercises.length;
-  session.exercises.forEach((ex, exIdx) => {
-    total += ex.workTime * ex.sets;
-    if (ex.sets > 1) total += ex.restTime * (ex.sets - 1);
-    if (exIdx < exCount - 1) total += ex.restTime;
+  let t = 0;
+  session.exercises.forEach((ex, i) => {
+    t += ex.workTime * ex.sets;
+    if (ex.sets > 1) t += ex.restTime * (ex.sets - 1);
+    if (i < session.exercises.length - 1) t += ex.restTime;
   });
-  return Math.max(0, total);
+  return Math.max(0, t);
 }
-
 function updateDuration() {
-  const fakeSession = { exercises };
-  const secs = calcSessionDuration(fakeSession);
-  document.getElementById('duration-val').textContent = formatDuration(secs);
+  document.getElementById('duration-val').textContent = formatDuration(calcSessionDuration({ exercises }));
 }
-
-function formatDuration(secs) {
-  if (secs < 60) return `${secs} s`;
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  return s > 0 ? `${m} min ${s} s` : `${m} min`;
-}
-
-function scrollToError(input) {
-  if (!input) return;
-  
-  // On s'assure que l'input est bien visible avec une animation fluide
-  input.scrollIntoView({ 
-    behavior: 'smooth', 
-    block: 'center' 
-  });
-  
-  // On attend un peu que l'animation commence pour donner le focus
-  setTimeout(() => {
-    input.focus();
-    input.select();
-    
-    // Effet visuel discret pour attirer l'attention
-    input.style.transform = 'scale(1.02)';
-    input.style.transition = 'transform 0.3s ease';
-    setTimeout(() => input.style.transform = 'scale(1)', 300);
-  }, 300);
+function formatDuration(s) {
+  if (s < 60) return `${s} s`;
+  const m = Math.floor(s/60), r = s%60;
+  return r ? `${m} min ${r} s` : `${m} min`;
 }
 
 function saveSession() {
   document.querySelectorAll('.form-input.error').forEach(el => el.classList.remove('error'));
   document.querySelectorAll('.exercise-card').forEach(el => el.classList.remove('error-card'));
-
-  const nameInput = document.getElementById('session-name');
-  const name = nameInput.value.trim();
-  if (!name) {
-    nameInput.classList.add('error');
-    nameInput.placeholder = "⚠ Nom séance requis";
-    setTimeout(() => scrollToError(nameInput), 100);
-    return;
+  const nameEl = document.getElementById('session-name');
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.classList.add('error'); nameEl.placeholder = '⚠ Nom requis'; nameEl.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  if (!exercises.length) { document.getElementById('create-scroll').scrollTo({top:99999,behavior:'smooth'}); return; }
+  const bad = exercises.find(e => !e.name.trim());
+  if (bad) {
+    const card = document.getElementById('excard-'+bad.id);
+    card.classList.add('error-card');
+    const inp = card.querySelector('input[type="text"]');
+    inp.classList.add('error'); inp.placeholder = '⚠ Nom requis';
+    inp.scrollIntoView({behavior:'smooth',block:'center'}); return;
   }
-  if (exercises.length === 0) {
-    const scrollEl = document.getElementById('create-scroll');
-    scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
-    return;
-  }
-  const invalids = exercises.filter(e => !e.name.trim());
-  if (invalids.length > 0) {
-    const card = document.getElementById('excard-' + invalids[0].id);
-    if (card) {
-      card.classList.add('error-card');
-      const input = card.querySelector('input[type="text"]');
-      if (input) { 
-        input.classList.add('error'); 
-        input.placeholder = "⚠ Nom exercice requis"; 
-        setTimeout(() => scrollToError(input), 100);
-        return;
-      }
-    }
-    return;
-  }
-
   const sessions = loadSessions();
   if (editingSessionId) {
-    const idx = sessions.findIndex(s => s.id === editingSessionId);
-    if (idx !== -1) sessions[idx] = { id: editingSessionId, name, exercises: exercises.map(e => ({...e})) };
+    const i = sessions.findIndex(s => s.id === editingSessionId);
+    if (i >= 0) sessions[i] = { id: editingSessionId, name, exercises: exercises.map(e=>({...e})) };
   } else {
-    sessions.push({ id: generateId(), name, exercises: exercises.map(e => ({...e})) });
+    sessions.push({ id: generateId(), name, exercises: exercises.map(e=>({...e})) });
   }
   saveSessions(sessions);
-  goTo('page-home', false);
-  pageHistory = ['page-home'];
+  goTo('page-home', false); pageHistory = ['page-home'];
 }
 
 let pendingDeleteId = null;
-
-function deleteSession(id) {
-  saveSessions(loadSessions().filter(s => s.id !== id));
-  renderHome();
-}
-
-function openDeleteModal(id) {
-  pendingDeleteId = id;
-  document.getElementById('delete-modal').classList.add('open');
-}
-
+function openDeleteModal(id) { pendingDeleteId = id; document.getElementById('delete-modal').classList.add('open'); }
 function closeDeleteModal(e) {
-  if (!e || e.target === document.getElementById('delete-modal'))
-    document.getElementById('delete-modal').classList.remove('open');
-  pendingDeleteId = null;
+  if (!e || e.target === document.getElementById('delete-modal')) {
+    document.getElementById('delete-modal').classList.remove('open'); pendingDeleteId = null;
+  }
 }
-
 function confirmDelete() {
-  if (pendingDeleteId) deleteSession(pendingDeleteId);
+  if (pendingDeleteId) { saveSessions(loadSessions().filter(s => s.id !== pendingDeleteId)); renderHome(); }
   closeDeleteModal();
 }
 
 /* ================================================================
    TIMER ENGINE
 ================================================================ */
-let timerState = {
-  session: null,
-  exIndex: 0,
-  setIndex: 0,
-  phase: 'work',
-  timeLeft: 0,
-  totalLeft: 0,
-  totalDuration: 0,
-  paused: false,
-  finished: false,
-  intervalId: null,
-  lastTimestamp: null,
-};
+let T = { session:null, exIndex:0, setIndex:0, phase:'work', timeLeft:0, totalLeft:0, totalDuration:0, paused:false, finished:false, intervalId:null, lastTs:null };
 
 function startSession(id) {
-  const sessions = loadSessions();
-  const session = sessions.find(s => s.id === id);
+  const session = loadSessions().find(s => s.id === id);
   if (!session) return;
-  clearInterval(timerState.intervalId);
-  timerState.session = session;
-  timerState.exIndex = 0;
-  timerState.setIndex = 0;
-  timerState.phase = 'work';
-  timerState.paused = false;
-  timerState.finished = false;
-  timerState.totalDuration = calcSessionDuration(session);
-  timerState.totalLeft = timerState.totalDuration;
-  timerState.timeLeft = session.exercises[0].workTime;
-  timerState.lastTimestamp = Date.now();
-  goTo('page-timer');
-  renderTimer();
-  timerState.intervalId = setInterval(timerTick, 1000);
+  clearInterval(T.intervalId);
+  T = { session, exIndex:0, setIndex:0, phase:'work', paused:false, finished:false,
+    totalDuration: calcSessionDuration(session), intervalId:null, lastTs: Date.now() };
+  T.totalLeft = T.totalDuration;
+  T.timeLeft = session.exercises[0].workTime;
+  goTo('page-timer'); renderTimer();
+  T.intervalId = setInterval(timerTick, 1000);
 }
 
 function timerTick() {
-  if (timerState.paused || timerState.finished) {
-    timerState.lastTimestamp = Date.now();
-    return;
-  }
-  
+  if (T.paused || T.finished) { T.lastTs = Date.now(); return; }
   const now = Date.now();
-  let elapsed = Math.floor((now - timerState.lastTimestamp) / 1000);
-  if (elapsed < 1) return; // Pas encore une seconde
-  
-  timerState.lastTimestamp = now;
-
-  while (elapsed > 0 && !timerState.finished) {
-    if (elapsed >= timerState.timeLeft) {
-      elapsed -= timerState.timeLeft;
-      timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
-      timerState.timeLeft = 0;
-      advancePhase();
+  let elapsed = Math.floor((now - T.lastTs) / 1000);
+  if (elapsed < 1) return;
+  T.lastTs = now;
+  while (elapsed > 0 && !T.finished) {
+    if (elapsed >= T.timeLeft) {
+      elapsed -= T.timeLeft;
+      T.totalLeft = Math.max(0, T.totalLeft - T.timeLeft);
+      T.timeLeft = 0; advancePhase();
     } else {
-      timerState.timeLeft -= elapsed;
-      timerState.totalLeft = Math.max(0, timerState.totalLeft - elapsed);
-      elapsed = 0;
+      T.timeLeft -= elapsed; T.totalLeft = Math.max(0, T.totalLeft - elapsed); elapsed = 0;
     }
   }
-
-  if (!timerState.finished) {
-    renderTimerCountdown();
-  }
+  if (!T.finished) renderTimerCountdown();
 }
 
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && timerState.session && !timerState.paused && !timerState.finished) {
-    timerTick();
-  }
+  if (document.visibilityState === 'visible' && T.session && !T.paused && !T.finished) timerTick();
 });
 
 function advancePhase() {
-  const { session, exIndex, setIndex, phase } = timerState;
-  const ex = session.exercises[exIndex];
-
-  if (phase === 'work') {
-    const isLastSet = (setIndex + 1 >= ex.sets);
-    const isLastEx  = (exIndex + 1 >= session.exercises.length);
-    if (isLastSet && isLastEx) {
-      timerState.finished = true;
-      clearInterval(timerState.intervalId);
-      playBeep('done');
-      renderTimerDone();
-      return;
+  const ex = T.session.exercises[T.exIndex];
+  if (T.phase === 'work') {
+    if (T.setIndex + 1 >= ex.sets && T.exIndex + 1 >= T.session.exercises.length) {
+      T.finished = true; clearInterval(T.intervalId); playBeep('done'); renderTimerDone(); return;
     }
-    timerState.phase = 'rest';
-    timerState.timeLeft = ex.restTime;
-    playBeep('rest');
-    renderTimer();
+    T.phase = 'rest'; T.timeLeft = ex.restTime; playBeep('rest'); renderTimer();
   } else {
-    const isLastSet = (setIndex + 1 >= ex.sets);
-    if (isLastSet) {
-      timerState.exIndex++;
-      timerState.setIndex = 0;
-    } else {
-      timerState.setIndex++;
-    }
-    timerState.phase = 'work';
-    const newEx = session.exercises[timerState.exIndex];
-    timerState.timeLeft = newEx.workTime;
-    playBeep('restEnd');
-    renderTimer();
+    if (T.setIndex + 1 >= ex.sets) { T.exIndex++; T.setIndex = 0; } else { T.setIndex++; }
+    T.phase = 'work'; T.timeLeft = T.session.exercises[T.exIndex].workTime; playBeep('restEnd'); renderTimer();
   }
 }
 
 function skipPhase() {
-  timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
-  timerState.timeLeft = 0;
-  timerState.lastTimestamp = Date.now();
-  advancePhase();
+  T.totalLeft = Math.max(0, T.totalLeft - T.timeLeft);
+  T.timeLeft = 0; T.lastTs = Date.now(); advancePhase();
+}
+function togglePause() {
+  T.paused = !T.paused;
+  if (!T.paused) T.lastTs = Date.now();
+  renderTimerControls();
+}
+function resetCurrentPhase() {
+  const ex = T.session.exercises[T.exIndex];
+  const full = T.phase === 'work' ? ex.workTime : ex.restTime;
+  T.totalLeft = Math.min(T.totalDuration, T.totalLeft + (full - T.timeLeft));
+  T.timeLeft = full; T.lastTs = Date.now();
+  renderTimerCountdown(); playBeep(T.phase);
+}
+function openQuitModal() { document.getElementById('quit-modal').classList.add('open'); }
+function closeQuitModal(e) {
+  if (!e || e.target === document.getElementById('quit-modal')) document.getElementById('quit-modal').classList.remove('open');
+}
+function confirmQuit() {
+  clearInterval(T.intervalId); document.getElementById('quit-modal').classList.remove('open');
+  goTo('page-home', false); pageHistory = ['page-home'];
 }
 
-function togglePause() {
-  timerState.paused = !timerState.paused;
-  if (!timerState.paused) {
-    timerState.lastTimestamp = Date.now();
+/* ================================================================
+   RECALC TOTAL LEFT (après modif live)
+================================================================ */
+function recalcTotalLeft() {
+  // Repart de zéro : calcule tout ce qui reste à partir de l'instant courant.
+  // On reconstruit la séquence exacte des phases restantes et on les additionne.
+  const { session, exIndex, setIndex, phase, timeLeft } = T;
+  const ex = session.exercises[exIndex];
+  let total = timeLeft; // temps restant dans la phase en cours (déjà en train de tourner)
+
+  if (phase === 'work') {
+    // Après la série en cours : repos puis séries suivantes de cet exo
+    const sRem = ex.sets - setIndex - 1; // séries encore à faire après celle-ci
+    for (let s = 0; s < sRem; s++) {
+      total += ex.restTime + ex.workTime;
+    }
+    // Repos de transition vers l'exo suivant (si il existe)
+    if (exIndex + 1 < session.exercises.length) total += ex.restTime;
+  } else {
+    // phase === 'rest'
+    const isLastSet = (setIndex + 1) >= ex.sets;
+    if (!isLastSet) {
+      // Repos inter-série : après ce repos, il reste des séries dans cet exo
+      const sRem = ex.sets - setIndex - 1;
+      for (let s = 0; s < sRem; s++) {
+        total += ex.workTime; // la série
+        if (s < sRem - 1) total += ex.restTime; // repos après (sauf après la dernière)
+      }
+      // Repos de transition vers l'exo suivant (si il existe)
+      if (exIndex + 1 < session.exercises.length) total += ex.restTime;
+    }
+    // Si isLastSet : timeLeft EST le repos de transition, rien à ajouter pour cet exo
   }
+
+  // Tous les exercices suivants
+  for (let i = exIndex + 1; i < session.exercises.length; i++) {
+    const e = session.exercises[i];
+    for (let s = 0; s < e.sets; s++) {
+      total += e.workTime;
+      if (s < e.sets - 1) total += e.restTime; // repos inter-série
+    }
+    // Repos de transition vers l'exo d'après
+    if (i < session.exercises.length - 1) total += e.restTime;
+  }
+
+  return Math.max(0, total);
+}
+
+/* ================================================================
+   LIVE EDIT — draft (objet simple, mis à jour par fonctions nommées)
+================================================================ */
+const leDraft = { name:'', reps:null, load:'', workTime:0, restTime:0, setsRemaining:1 };
+
+function leDraftSetSets(v)     { if (!isNaN(v) && v >= 1) leDraft.sets = v; }
+function leDraftSetReps(v)     { leDraft.reps = (!isNaN(v) && v >= 1) ? v : null; }
+function leDraftSetWork(v)     { leDraft.workTime = v; }
+function leDraftSetRest(v)     { leDraft.restTime = v; }
+
+/* Rendu d'une grille de boutons preset — version PROPRE sans inline callback */
+function buildLeGrid(containerId, values, currentVal, draftFn, customWrapId) {
+  const container = document.getElementById(containerId);
+  const customWrap = document.getElementById(customWrapId);
+  if (customWrap) customWrap.classList.remove('show');
+  container.innerHTML = '';
+
+  values.forEach(v => {
+    const btn = document.createElement('button');
+    btn.className = 'time-btn' + (currentVal === v ? ' selected' : '');
+    btn.textContent = v;
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      if (customWrap) customWrap.classList.remove('show');
+      draftFn(v);
+    });
+    container.appendChild(btn);
+  });
+
+  if (customWrapId) {
+    const customBtn = document.createElement('button');
+    const isCustom = currentVal !== null && !values.includes(currentVal);
+    customBtn.className = 'time-btn' + (isCustom ? ' selected' : '');
+    customBtn.textContent = 'CUSTOM';
+    customBtn.addEventListener('click', () => {
+      container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      customBtn.classList.add('selected');
+      if (customWrap) {
+        customWrap.classList.add('show');
+        setTimeout(() => customWrap.querySelector('input').focus(), 50);
+      }
+    });
+    container.appendChild(customBtn);
+
+    if (isCustom && customWrap) {
+      customWrap.classList.add('show');
+      const inp = customWrap.querySelector('input');
+      if (inp) inp.value = currentVal;
+    }
+  }
+}
+
+function buildLeGridTime(containerId, presets, currentVal, draftFn) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  presets.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'time-btn' + (currentVal === p.val ? ' selected' : '');
+    btn.textContent = p.label;
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      draftFn(p.val);
+    });
+    container.appendChild(btn);
+  });
+}
+
+function openLiveEditModal() {
+  if (T.phase !== 'rest') return; // uniquement pendant le repos
+  const ex = T.session.exercises[T.exIndex];
+  const setsRemaining = ex.sets - T.setIndex;
+
+  // Mémoriser l'état pause/play sans le changer
+  leDraft._wasPaused = T.paused;
+
+  // Init draft
+  leDraft.name     = ex.name;
+  leDraft.reps     = ex.reps;
+  leDraft.load     = ex.load || '';
+  leDraft.workTime = ex.workTime;
+  leDraft.restTime = ex.restTime;
+  leDraft.sets     = ex.sets;  // total définitif de l'exercice
+
+  // Titre
+  document.getElementById('le-title').textContent = ex.name || 'Modifier l\'exercice';
+  document.getElementById('le-subtitle').textContent =
+    `Exercice ${T.exIndex+1} • Série ${T.setIndex+1}/${ex.sets} • ${T.phase==='work'?'⚡ Travail':'😮‍💨 Repos'}`;
+
+  // Champs texte
+  document.getElementById('le-name').value = ex.name;
+  document.getElementById('le-load').value = ex.load || '';
+
+  // Suggestions
+  document.getElementById('le-suggestions').classList.remove('show');
+  document.getElementById('le-suggestions').innerHTML = '';
+
+  // Grilles
+  buildLeGrid('le-sets-grid', SETS_PRESETS, ex.sets, leDraftSetSets, 'le-sets-custom');
+  buildLeGrid('le-reps-grid', REPS_PRESETS, ex.reps, leDraftSetReps, 'le-reps-custom');
+  buildLeGridTime('le-work-grid', TIME_PRESETS_WORK, ex.workTime, leDraftSetWork);
+  buildLeGridTime('le-rest-grid', TIME_PRESETS_REST, ex.restTime, leDraftSetRest);
+
+  // Reset inputs custom
+  const setsInp = document.getElementById('le-sets-custom-input');
+  const repsInp = document.getElementById('le-reps-custom-input');
+  if (!SETS_PRESETS.includes(ex.sets)) setsInp.value = ex.sets;
+  else setsInp.value = '';
+  if (ex.reps !== null && !REPS_PRESETS.includes(ex.reps)) repsInp.value = ex.reps;
+  else repsInp.value = '';
+
+  document.getElementById('live-edit-modal').classList.add('open');
+}
+
+/* Suggestions dans le live edit */
+function liveShowSuggestions(query) {
+  const el = document.getElementById('le-suggestions');
+  if (!query) { el.classList.remove('show'); return; }
+  const q = removeAccents(query.toLowerCase());
+  const matches = EXERCISE_SUGGESTIONS.filter(n => removeAccents(n.toLowerCase()).startsWith(q)).slice(0,6);
+  if (!matches.length) { el.classList.remove('show'); return; }
+  el.innerHTML = matches.map(name => {
+    const hl = Math.min(q.length, 10);
+    return `<div class="live-suggestion"><mark>${escHtml(name.slice(0,hl))}</mark>${escHtml(name.slice(hl))}</div>`;
+  }).join('');
+  el.querySelectorAll('.live-suggestion').forEach((div, idx) => {
+    div.addEventListener('mousedown', e => e.preventDefault());
+    div.addEventListener('click', () => {
+      document.getElementById('le-name').value = matches[idx];
+      leDraft.name = matches[idx];
+      el.classList.remove('show');
+    });
+  });
+  el.classList.add('show');
+}
+
+function closeLiveEditModal(e) {
+  if (e && e.target !== document.getElementById('live-edit-modal')) return;
+  document.getElementById('live-edit-modal').classList.remove('open');
+  T.paused = leDraft._wasPaused;
+  if (!T.paused) T.lastTs = Date.now();
   renderTimerControls();
 }
 
-/* ----------------------------------------------------------------
-   FIX 2 : resetCurrentPhase recalcule correctement totalLeft.
-   On ajoute au totalLeft le temps déjà écoulé sur cette phase
-   (= durée totale de la phase - timeLeft restant) avant de remettre
-   le timer à sa durée initiale.
----------------------------------------------------------------- */
-function resetCurrentPhase() {
-  const { exIndex, phase } = timerState;
-  const ex = timerState.session.exercises[exIndex];
-  const fullDuration = phase === 'work' ? ex.workTime : ex.restTime;
-  const elapsed = fullDuration - timerState.timeLeft;
+function applyLiveEdit() {
+  const ex = T.session.exercises[T.exIndex];
 
-  // Restore the elapsed time to the total remaining
-  timerState.totalLeft = Math.min(timerState.totalDuration, timerState.totalLeft + elapsed);
-  timerState.timeLeft = fullDuration;
-  timerState.lastTimestamp = Date.now();
+  // Nom
+  const newName = document.getElementById('le-name').value.trim();
+  if (newName) ex.name = newName;
 
-  renderTimerCountdown();
-  playBeep(phase === 'work' ? 'work' : 'rest');
-}
+  // Charge
+  ex.load = document.getElementById('le-load').value.trim() || null;
 
-function openQuitModal() {
-  document.getElementById('quit-modal').classList.add('open');
-}
-function closeQuitModal(e) {
-  if (!e || e.target === document.getElementById('quit-modal'))
-    document.getElementById('quit-modal').classList.remove('open');
-}
-function confirmQuit() {
-  clearInterval(timerState.intervalId);
-  document.getElementById('quit-modal').classList.remove('open');
-  goTo('page-home', false);
-  pageHistory = ['page-home'];
+  // Reps
+  ex.reps = leDraft.reps;
+
+  // Temps de série et de repos
+  ex.workTime = leDraft.workTime;
+  ex.restTime = leDraft.restTime;
+
+  // Nombre de séries TOTAL définitif
+  if (leDraft.sets >= 1) ex.sets = leDraft.sets;
+
+  // Recalcul durée totale et temps restant
+  T.totalDuration = calcSessionDuration(T.session);
+  T.totalLeft = recalcTotalLeft();
+
+  // Sauvegarde définitive → la séance est modifiée pour les prochaines fois
+  const sessions = loadSessions();
+  const sIdx = sessions.findIndex(s => s.id === T.session.id);
+  if (sIdx >= 0) {
+    sessions[sIdx].exercises = T.session.exercises.map(e => ({...e}));
+    saveSessions(sessions);
+  }
+
+  document.getElementById('live-edit-modal').classList.remove('open');
+  // Restaurer exactement l'état d'avant l'ouverture
+  T.paused = leDraft._wasPaused;
+  if (!T.paused) T.lastTs = Date.now();
+  renderTimer();
 }
 
 /* ================================================================
    TIMER RENDER
 ================================================================ */
 function renderTimer() {
-  const { session, exIndex, setIndex, phase, timeLeft, totalLeft, totalDuration } = timerState;
+  const { session, exIndex, setIndex, phase, timeLeft, totalLeft, totalDuration } = T;
   const ex = session.exercises[exIndex];
-  const progress = totalDuration > 0 ? ((totalDuration - totalLeft) / totalDuration) * 100 : 0;
   const exCount = session.exercises.length;
-
-  const isLastSetRest = (phase === 'rest' && setIndex + 1 === ex.sets);
+  const progress = totalDuration > 0 ? (totalDuration - totalLeft) / totalDuration * 100 : 0;
+  const isLastSetRest = phase === 'rest' && setIndex + 1 === ex.sets;
   const nextEx = session.exercises[exIndex + 1];
-  const nextExHtml = (isLastSetRest && nextEx) ? `
-    <div class="next-exercise-tip">
-      <span class="next-label">À VENIR</span>
-      <span class="next-name">${escHtml(nextEx.name)}</span>
-    </div>` : '';
 
   document.getElementById('timer-main').innerHTML = `
     <div class="timer-header">
       <button class="btn-icon" onclick="openQuitModal()">✕</button>
       <div class="timer-session-name">${escHtml(session.name)}</div>
-      <div class="pill">${exIndex + 1}/${exCount}</div>
+      <div class="pill">${exIndex+1}/${exCount}</div>
     </div>
     <div class="timer-progress-wrap">
       <div class="timer-progress-bar" id="timer-progress-bar" style="width:${progress}%"></div>
     </div>
-    <div class="timer-exercise-label">Exercice ${exIndex + 1} sur ${exCount}</div>
-    <div class="timer-exercise-name">${escHtml(ex.name)}</div>
-    <div class="timer-series-info">
-      Série ${setIndex + 1} sur ${ex.sets}${ex.reps ? ` • ${ex.reps} reps` : ''}${ex.load ? ` • ${escHtml(ex.load)}` : ''}
+    <div class="timer-exercise-label">Exercice ${exIndex+1} sur ${exCount}</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin-bottom:4px;">
+      <div style="font-family:var(--font-head);font-size:32px;letter-spacing:.5px;line-height:1.1;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(ex.name)}</div>
+      ${T.phase === 'rest' ? `<button class="timer-edit-btn" onclick="openLiveEditModal()" title="Modifier">✏️</button>` : ''}
+      ${isLastSetRest && nextEx ? `<div class="next-exercise-tip">
+        <span style="font-size:12px;opacity:.7">⏭</span>
+        <span class="next-label">Prochain</span>
+        <span class="next-name">${escHtml(nextEx.name)}</span>
+      </div>` : ''}
     </div>
-    <div class="series-dots" id="series-dots">${buildSeriesDots(ex.sets, setIndex)}</div>
-    ${nextExHtml}
+    <div class="timer-series-info">
+      Série ${setIndex+1} sur ${ex.sets}${ex.reps ? ` • ${ex.reps} reps` : ''}${ex.load ? ` • ${escHtml(ex.load)}` : ''}
+    </div>
+    <div class="series-dots">${buildSeriesDots(ex.sets, setIndex)}</div>
     <div class="timer-ring-wrap">
-      <div class="timer-ring" id="timer-ring">${buildRing(phase, timeLeft, ex)}</div>
+      <div class="timer-ring">${buildRing(phase, timeLeft, ex)}</div>
     </div>
     <div class="timer-total-remaining" id="timer-total">
       Séance terminée dans <strong>${formatDuration(totalLeft)}</strong>
@@ -1209,99 +1101,65 @@ function renderTimer() {
 }
 
 function buildSeriesDots(total, current) {
-  let html = '';
+  let h = '';
   for (let i = 0; i < total; i++) {
-    if (i < current) html += `<div class="series-dot done"></div>`;
-    else if (i === current) html += `<div class="series-dot current"></div>`;
-    else html += `<div class="series-dot"></div>`;
+    h += `<div class="series-dot${i < current ? ' done' : i === current ? ' current' : ''}"></div>`;
   }
-  return html;
+  return h;
 }
-
 function buildRing(phase, timeLeft, ex) {
-  const total  = phase === 'work' ? ex.workTime : ex.restTime;
-  const radius = 110;
-  const circ   = 2 * Math.PI * radius;
+  const total = phase === 'work' ? ex.workTime : ex.restTime;
+  const r = 110, circ = 2 * Math.PI * r;
   const offset = circ - (timeLeft / total) * circ;
-  const color  = phase === 'work' ? 'var(--accent)' : 'var(--accent2)';
-  const label  = phase === 'work' ? '⚡ SÉRIE' : '😮‍💨 REPOS';
-  const cls    = phase === 'work' ? 'work' : 'rest';
-  return `
-    <svg viewBox="0 0 280 280">
-      <circle class="timer-ring-bg" cx="140" cy="140" r="${radius}" stroke-width="12"/>
-      <circle class="timer-ring-progress" cx="140" cy="140" r="${radius}"
-        stroke="${color}" stroke-width="12"
-        stroke-dasharray="${circ}" stroke-dashoffset="${offset}" id="ring-progress"/>
-    </svg>
-    <div class="timer-ring-center">
-      <div class="timer-phase-label">${label}</div>
-      <div class="timer-countdown ${cls}" id="timer-cd">${formatTime(timeLeft)}</div>
-    </div>`;
+  const color = phase === 'work' ? 'var(--accent)' : 'var(--accent2)';
+  const label = phase === 'work' ? '⚡ SÉRIE' : '😮‍💨 REPOS';
+  const cls   = phase === 'work' ? 'work' : 'rest';
+  return `<svg viewBox="0 0 280 280">
+    <circle class="timer-ring-bg" cx="140" cy="140" r="${r}" stroke-width="12"/>
+    <circle class="timer-ring-progress" cx="140" cy="140" r="${r}"
+      stroke="${color}" stroke-width="12"
+      stroke-dasharray="${circ}" stroke-dashoffset="${offset}" id="ring-progress"/>
+  </svg>
+  <div class="timer-ring-center">
+    <div class="timer-phase-label">${label}</div>
+    <div class="timer-countdown ${cls}" id="timer-cd">${formatTime(timeLeft)}</div>
+  </div>`;
 }
-
 function buildControls() {
-  const icon = timerState.paused ? '▶' : '⏸';
-  return `
-    <button class="btn-icon" onclick="resetCurrentPhase()" title="Recommencer">↺</button>
-    <button class="btn-icon accent" onclick="togglePause()" id="pause-btn">${icon}</button>
-    <button class="btn-icon" onclick="openQuitModal()" title="Quitter">✕</button>
-  `;
+  return `<button class="btn-icon" onclick="resetCurrentPhase()">↺</button>
+    <button class="btn-icon accent" onclick="togglePause()" id="pause-btn">${T.paused?'▶':'⏸'}</button>
+    <button class="btn-icon" onclick="openQuitModal()">✕</button>`;
 }
-
 function renderTimerCountdown() {
-  const { phase, timeLeft, totalLeft, totalDuration, session, exIndex } = timerState;
-  const ex = session.exercises[exIndex];
-
+  const ex = T.session.exercises[T.exIndex];
   const cd = document.getElementById('timer-cd');
-  if (cd) cd.textContent = formatTime(timeLeft);
-
-  const total  = phase === 'work' ? ex.workTime : ex.restTime;
-  const radius = 110;
-  const circ   = 2 * Math.PI * radius;
-  const offset = circ - (timeLeft / total) * circ;
+  if (cd) cd.textContent = formatTime(T.timeLeft);
+  const total = T.phase === 'work' ? ex.workTime : ex.restTime;
+  const circ = 2 * Math.PI * 110;
   const ring = document.getElementById('ring-progress');
-  if (ring) ring.setAttribute('stroke-dashoffset', offset);
-
-  const progress = totalDuration > 0 ? ((totalDuration - totalLeft) / totalDuration) * 100 : 0;
+  if (ring) ring.setAttribute('stroke-dashoffset', circ - (T.timeLeft / total) * circ);
   const pb = document.getElementById('timer-progress-bar');
-  if (pb) pb.style.width = progress + '%';
-
+  if (pb) pb.style.width = (T.totalDuration > 0 ? (T.totalDuration - T.totalLeft) / T.totalDuration * 100 : 0) + '%';
   const tot = document.getElementById('timer-total');
-  if (tot) tot.innerHTML = `Séance terminée dans <strong>${formatDuration(totalLeft)}</strong>`;
+  if (tot) tot.innerHTML = `Séance terminée dans <strong>${formatDuration(T.totalLeft)}</strong>`;
 }
-
 function renderTimerControls() {
   const el = document.getElementById('timer-controls');
   if (el) el.innerHTML = buildControls();
 }
-
 function renderTimerDone() {
-  const dur = formatDuration(timerState.totalDuration);
   document.getElementById('timer-main').innerHTML = `
     <div class="done-screen">
       <div class="trophy">🏆</div>
       <h2>SÉANCE<br/><span>TERMINÉE !</span></h2>
-      <p>Tu as bouclé ta séance <strong>${escHtml(timerState.session.name)}</strong> en ${dur}.<br/>Champion.</p>
+      <p>Tu as bouclé <strong>${escHtml(T.session.name)}</strong> en ${formatDuration(T.totalDuration)}.<br/>Champion.</p>
       <button class="btn btn-primary mt-16" style="width:100%;max-width:280px" onclick="goHome()">🏠 &nbsp;Retour à l'accueil</button>
-      <button class="btn btn-secondary mt-8" style="width:100%;max-width:280px" onclick="restartSession()">🔁 &nbsp;Relancer la séance</button>
+      <button class="btn btn-secondary mt-8" style="width:100%;max-width:280px" onclick="restartSession()">🔁 &nbsp;Relancer</button>
     </div>`;
 }
-
-function goHome() {
-  clearInterval(timerState.intervalId);
-  goTo('page-home', false);
-  pageHistory = ['page-home'];
-}
-
-function restartSession() {
-  startSession(timerState.session.id);
-}
-
-function formatTime(secs) {
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  return m > 0 ? `${m}:${String(s).padStart(2,'0')}` : `${s}`;
-}
+function goHome() { clearInterval(T.intervalId); goTo('page-home', false); pageHistory = ['page-home']; }
+function restartSession() { startSession(T.session.id); }
+function formatTime(s) { const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')}` : `${r}`; }
 
 /* ================================================================
    AUDIO
@@ -1309,47 +1167,27 @@ function formatTime(secs) {
 function playBeep(type) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
     if (type === 'rest') {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(300, ctx.currentTime);
-      o.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.5);
-      g.gain.setValueAtTime(0.5, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-      o.connect(g); g.connect(ctx.destination);
-      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.5);
+      o.type='sine'; o.frequency.setValueAtTime(300,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(150,ctx.currentTime+.5);
+      g.gain.setValueAtTime(.5,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.5);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime+.5);
     } else if (type === 'restEnd') {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(300, ctx.currentTime);
-      o.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
-      g.gain.setValueAtTime(0.4, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-      o.connect(g); g.connect(ctx.destination);
-      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.4);
+      o.type='sine'; o.frequency.setValueAtTime(300,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(600,ctx.currentTime+.3);
+      g.gain.setValueAtTime(.4,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.4);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime+.4);
     } else if (type === 'work') {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.frequency.value = 660;
-      g.gain.setValueAtTime(.4, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .25);
-      o.connect(g); g.connect(ctx.destination);
-      o.start(ctx.currentTime); o.stop(ctx.currentTime + .25);
+      o.frequency.value=660; g.gain.setValueAtTime(.4,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime+.25);
     } else if (type === 'done') {
-      [440, 550, 660].forEach((freq, i) => {
-        const o = ctx.createOscillator(), g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.frequency.value = freq;
-        g.gain.setValueAtTime(.4, ctx.currentTime + i * .18);
-        g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + i * .18 + .25);
-        o.start(ctx.currentTime + i * .18);
-        o.stop(ctx.currentTime + i * .18 + .25);
+      [440,550,660].forEach((f,i)=>{
+        const o2=ctx.createOscillator(),g2=ctx.createGain(); o2.connect(g2); g2.connect(ctx.destination);
+        o2.frequency.value=f; g2.gain.setValueAtTime(.4,ctx.currentTime+i*.18); g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.18+.25);
+        o2.start(ctx.currentTime+i*.18); o2.stop(ctx.currentTime+i*.18+.25);
       });
     }
-    if (navigator.vibrate) {
-      if (type === 'done') navigator.vibrate([200, 100, 200, 100, 400]);
-      else if (type === 'restEnd') navigator.vibrate(150);
-      else navigator.vibrate(100);
-    }
+    if (navigator.vibrate) navigator.vibrate(type==='done'?[200,100,200,100,400]:type==='restEnd'?150:100);
   } catch(e) {}
 }
 
@@ -1358,43 +1196,27 @@ function playBeep(type) {
 ================================================================ */
 function openHelpModal() { document.getElementById('help-modal').classList.add('open'); }
 function closeHelpModal(e) {
-  if (!e || e.target === document.getElementById('help-modal'))
-    document.getElementById('help-modal').classList.remove('open');
+  if (!e || e.target===document.getElementById('help-modal')) document.getElementById('help-modal').classList.remove('open');
 }
-
 function copyPrompt() {
   const text = document.getElementById('copy-prompt').textContent;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.querySelector('.copy-block-btn');
-    btn.textContent = '✅ Copié !';
-    setTimeout(() => btn.textContent = '📋 Copier le prompt', 2000);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-  });
+    btn.textContent='✅ Copié !'; setTimeout(()=>btn.textContent='📋 Copier le prompt',2000);
+  }).catch(()=>{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); });
 }
 
 /* ================================================================
    UTILS
 ================================================================ */
-function escHtml(str) {
-  return String(str)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
 /* ================================================================
    BOOT
 ================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
   renderHome();
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 });
 </script>
 </body>
