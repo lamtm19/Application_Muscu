@@ -362,6 +362,34 @@
     .text-muted { color: var(--text-muted); font-size: 13px; }
     .divider { height: 1px; background: var(--border); margin: 20px 0; }
     .scroll-area:focus { outline: none; }
+
+    .next-exercise-tip {
+      margin-bottom: 24px;
+      padding: 14px 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      animation: fadeSlideIn 0.3s ease;
+      text-align: left;
+    }
+    .next-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .next-name {
+      font-family: var(--font-head);
+      font-size: 20px;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      display: block;
+      line-height: 1.1;
+    }
   </style>
 </head>
 <body>
@@ -993,6 +1021,7 @@ let timerState = {
   paused: false,
   finished: false,
   intervalId: null,
+  lastTimestamp: null,
 };
 
 function startSession(id) {
@@ -1009,21 +1038,47 @@ function startSession(id) {
   timerState.totalDuration = calcSessionDuration(session);
   timerState.totalLeft = timerState.totalDuration;
   timerState.timeLeft = session.exercises[0].workTime;
+  timerState.lastTimestamp = Date.now();
   goTo('page-timer');
   renderTimer();
   timerState.intervalId = setInterval(timerTick, 1000);
 }
 
 function timerTick() {
-  if (timerState.paused || timerState.finished) return;
-  timerState.timeLeft--;
-  timerState.totalLeft = Math.max(0, timerState.totalLeft - 1);
-  if (timerState.timeLeft <= 0) {
-    advancePhase();
-  } else {
+  if (timerState.paused || timerState.finished) {
+    timerState.lastTimestamp = Date.now();
+    return;
+  }
+  
+  const now = Date.now();
+  let elapsed = Math.floor((now - timerState.lastTimestamp) / 1000);
+  if (elapsed < 1) return; // Pas encore une seconde
+  
+  timerState.lastTimestamp = now;
+
+  while (elapsed > 0 && !timerState.finished) {
+    if (elapsed >= timerState.timeLeft) {
+      elapsed -= timerState.timeLeft;
+      timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
+      timerState.timeLeft = 0;
+      advancePhase();
+    } else {
+      timerState.timeLeft -= elapsed;
+      timerState.totalLeft = Math.max(0, timerState.totalLeft - elapsed);
+      elapsed = 0;
+    }
+  }
+
+  if (!timerState.finished) {
     renderTimerCountdown();
   }
 }
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && timerState.session && !timerState.paused && !timerState.finished) {
+    timerTick();
+  }
+});
 
 function advancePhase() {
   const { session, exIndex, setIndex, phase } = timerState;
@@ -1062,11 +1117,15 @@ function advancePhase() {
 function skipPhase() {
   timerState.totalLeft = Math.max(0, timerState.totalLeft - timerState.timeLeft);
   timerState.timeLeft = 0;
+  timerState.lastTimestamp = Date.now();
   advancePhase();
 }
 
 function togglePause() {
   timerState.paused = !timerState.paused;
+  if (!timerState.paused) {
+    timerState.lastTimestamp = Date.now();
+  }
   renderTimerControls();
 }
 
@@ -1085,6 +1144,7 @@ function resetCurrentPhase() {
   // Restore the elapsed time to the total remaining
   timerState.totalLeft = Math.min(timerState.totalDuration, timerState.totalLeft + elapsed);
   timerState.timeLeft = fullDuration;
+  timerState.lastTimestamp = Date.now();
 
   renderTimerCountdown();
   playBeep(phase === 'work' ? 'work' : 'rest');
@@ -1113,6 +1173,14 @@ function renderTimer() {
   const progress = totalDuration > 0 ? ((totalDuration - totalLeft) / totalDuration) * 100 : 0;
   const exCount = session.exercises.length;
 
+  const isLastSetRest = (phase === 'rest' && setIndex + 1 === ex.sets);
+  const nextEx = session.exercises[exIndex + 1];
+  const nextExHtml = (isLastSetRest && nextEx) ? `
+    <div class="next-exercise-tip">
+      <span class="next-label">À VENIR</span>
+      <span class="next-name">${escHtml(nextEx.name)}</span>
+    </div>` : '';
+
   document.getElementById('timer-main').innerHTML = `
     <div class="timer-header">
       <button class="btn-icon" onclick="openQuitModal()">✕</button>
@@ -1128,6 +1196,7 @@ function renderTimer() {
       Série ${setIndex + 1} sur ${ex.sets}${ex.reps ? ` • ${ex.reps} reps` : ''}${ex.load ? ` • ${escHtml(ex.load)}` : ''}
     </div>
     <div class="series-dots" id="series-dots">${buildSeriesDots(ex.sets, setIndex)}</div>
+    ${nextExHtml}
     <div class="timer-ring-wrap">
       <div class="timer-ring" id="timer-ring">${buildRing(phase, timeLeft, ex)}</div>
     </div>
