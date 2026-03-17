@@ -171,6 +171,83 @@
     }
     .duration-bar .duration-val { font-family: var(--font-head); font-size: 36px; color: var(--accent); letter-spacing: 2px; }
 
+    /* ── PAGE RECAP ─────────────────────────────────────── */
+    .recap-hero {
+      padding: 24px 16px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .recap-session-name {
+      font-family: var(--font-head);
+      font-size: 38px;
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .recap-session-name span { color: var(--accent); }
+    .recap-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .recap-ex-list {
+      padding: 0 16px;
+    }
+    .recap-ex-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeSlideIn .2s ease both;
+    }
+    .recap-ex-row:last-child { border-bottom: none; }
+    .recap-ex-num {
+      font-family: var(--font-head);
+      font-size: 22px;
+      color: var(--accent);
+      min-width: 32px;
+      line-height: 1;
+      opacity: .6;
+    }
+    .recap-ex-info { flex: 1; min-width: 0; }
+    .recap-ex-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .recap-ex-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .recap-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .recap-tag.accent { color: var(--accent); border-color: rgba(232,255,0,.3); background: rgba(232,255,0,.06); }
+    .recap-tag.red { color: var(--accent2); border-color: rgba(255,77,77,.3); background: rgba(255,77,77,.06); }
+    .recap-ex-duration {
+      font-family: var(--font-head);
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: .5px;
+      white-space: nowrap;
+    }
+
+    /* ── TIMER ──────────────────────────────────────────── */
     .timer-page { flex: 1; display: flex; flex-direction: column; padding: 0 20px; padding-bottom: calc(20px + var(--safe-bottom)); }
     .timer-header { display: flex; align-items: center; gap: 12px; padding: 18px 0 14px; }
     .timer-session-name { font-family: var(--font-head); font-size: 18px; letter-spacing: .5px; color: var(--text-muted); flex: 1; }
@@ -233,7 +310,6 @@
     .modal-section { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; }
     .modal-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
 
-    /* suggestions dans live edit */
     .live-suggestions {
       background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
       max-height: 180px; overflow-y: auto; display: none; margin-top: 4px;
@@ -277,6 +353,7 @@
 <audio id="silent-audio" loop preload="auto" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="></audio>
 <div id="app">
 
+  <!-- PAGE HOME -->
   <div class="page active" id="page-home">
     <div class="header">
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" /></div>
@@ -288,6 +365,28 @@
     </div>
   </div>
 
+  <!-- PAGE RECAP -->
+  <div class="page" id="page-recap">
+    <div class="header" style="padding-bottom:0">
+      <button class="btn-icon" onclick="goBack()">←</button>
+      <div style="width:40px"></div>
+    </div>
+    <div class="scroll-area" style="padding-bottom:120px">
+      <div class="recap-hero">
+        <div class="recap-session-name" id="recap-name"></div>
+        <div class="recap-meta" id="recap-meta"></div>
+      </div>
+      <div class="recap-ex-list" id="recap-ex-list"></div>
+    </div>
+    <div class="sticky-bottom" style="display:flex;gap:10px;">
+      <button class="btn btn-secondary" style="flex:0;padding:16px 18px" onclick="editSessionFromRecap()">✏️</button>
+      <button class="btn btn-primary" style="flex:1;font-size:18px;letter-spacing:.5px" onclick="launchFromRecap()">
+        ▶ &nbsp;C'est parti !
+      </button>
+    </div>
+  </div>
+
+  <!-- PAGE CREATE -->
   <div class="page" id="page-create">
     <div class="header">
       <button class="btn-icon" onclick="goBack()">←</button>
@@ -315,6 +414,7 @@
     </div>
   </div>
 
+  <!-- PAGE TIMER -->
   <div class="page" id="page-timer">
     <div class="timer-page" id="timer-main"></div>
   </div>
@@ -465,9 +565,9 @@ const DEFAULT_SESSIONS = [
     name: 'Fonte',
     exercises: [
       {id: 'dev_couch', name: 'Développé couché', sets: 4, reps: 10, load: '20kg par haltères', workTime: 30, restTime: 150},
-      {id: 'curl_barre', name: 'Curl biceps haltères', sets: 3, reps: 10, load: '10kg par haltère', workTime: 30, restTime: 90},
-      {id: 'curl_marteau', name: 'Curl marteau', sets: 3, reps: 10, load: '10kg par haltère', workTime: 30, restTime: 90},
-      {id: 'elev_lat', name: 'Élévations latérales', sets: 3, reps: 12, load: '10kg par haltère', workTime: 40, restTime: 90},
+      {id: 'curl_barre', name: 'Curl biceps haltères', sets: 4, reps: 10, load: '10kg par haltère', workTime: 20, restTime: 90},
+      {id: 'curl_marteau', name: 'Curl marteau', sets: 3, reps: 10, load: '10kg par haltère', workTime: 20, restTime: 90},
+      {id: 'elev_lat', name: 'Élévations latérales', sets: 3, reps: 12, load: '10kg par haltère', workTime: 30, restTime: 90},
       {id: 'barre_front', name: 'Barre au front', sets: 3, reps: 10, load: '20kg', workTime: 30, restTime: 90},
       {id: 'face_pull_f', name: 'Face pull', sets: 2, reps: 15, load: '', workTime: 40, restTime: 90}
     ]
@@ -479,27 +579,26 @@ const DEFAULT_SESSIONS = [
       {id: 'tractions_mix', name: 'Tractions', sets: 4, reps: 5, load: '', workTime: 15, restTime: 120},
       {id: 'dips_mix', name: 'Dips', sets: 3, reps: 10, load: '', workTime: 30, restTime: 120},
       {id: 'pom_larg_mix', name: 'Pompes larges', sets: 3, reps: 15, load: '', workTime: 40, restTime: 90},
-      {id: 'curl_biceps_mix', name: 'Curl biceps', sets: 3, reps: 10, load: '10kg par haltère', workTime: 30, restTime: 90},
+      {id: 'curl_biceps_mix', name: 'Curl biceps', sets: 4, reps: 10, load: '10kg par haltère', workTime: 20, restTime: 90},
       {id: 'dev_couch_mix', name: 'Développé couché', sets: 3, reps: 10, load: '20kg par haltère', workTime: 30, restTime: 120},
       {id: 'face_ext_mix', name: 'Face pull ou extensions lombaires', sets: 2, reps: 15, load: '', workTime: 40, restTime: 90}
     ]
   },
   {
-      id: 'express',
-      name: 'express',
-      exercises: [
-        {id: 'tractions_express', name: 'Tractions', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
-        {id: 'dips_express', name: 'Dips', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
-        {id: 'pompes_express', name: 'Pompes normales', sets: 4, reps: '', load: '', workTime: 20, restTime: 60}
-      ]
-    }
+    id: 'express',
+    name: 'express',
+    exercises: [
+      {id: 'tractions_express', name: 'Tractions', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+      {id: 'dips_express', name: 'Dips', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+      {id: 'pompes_express', name: 'Pompes normales', sets: 4, reps: '', load: '', workTime: 20, restTime: 60}
+    ]
+  }
 ];
+
 function loadSessions() {
   let sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   if (!sessions.length) {
-    sessions = DEFAULT_SESSIONS.map(s => ({
-      ...s, exercises: s.exercises.map(e => ({ ...e }))
-    }));
+    sessions = DEFAULT_SESSIONS.map(s => ({ ...s, exercises: s.exercises.map(e => ({ ...e })) }));
     saveSessions(sessions);
   }
   return sessions.map(s => ({
@@ -549,12 +648,71 @@ function renderHome() {
           <span class="pill">⏱ ${dur}</span>
         </div>
         <div class="card-actions">
-          <button class="btn btn-primary btn-sm" onclick="startSession('${s.id}')">▶ Lancer</button>
+          <button class="btn btn-primary btn-sm" onclick="openRecap('${s.id}')">▶ Lancer</button>
           <button class="btn btn-secondary btn-sm" onclick="editSession('${s.id}')">✏️ Modifier</button>
           <button class="btn btn-danger btn-sm" style="flex:0;padding:10px 14px" onclick="openDeleteModal('${s.id}')">🗑</button>
         </div>
       </div>`;
     }).join('');
+}
+
+/* ================================================================
+   RECAP PAGE
+================================================================ */
+let recapSessionId = null;
+
+function openRecap(id) {
+  const session = loadSessions().find(s => s.id === id);
+  if (!session) return;
+  recapSessionId = id;
+
+  const totalDur = calcSessionDuration(session);
+
+  // Hero
+  const nameParts = session.name.split(' ');
+  const lastWord = nameParts.pop();
+  document.getElementById('recap-name').innerHTML =
+    (nameParts.length ? escHtml(nameParts.join(' ')) + ' ' : '') +
+    `<span>${escHtml(lastWord)}</span>`;
+
+  document.getElementById('recap-meta').innerHTML = `
+    <span class="pill">⚡ ${session.exercises.length} exercice${session.exercises.length>1?'s':''}</span>
+    <span class="pill">⏱ ${formatDuration(totalDur)}</span>
+    <span class="pill">🔁 ${session.exercises.reduce((a,e)=>a+e.sets,0)} séries au total</span>
+  `;
+
+  // Exercice list
+  const list = document.getElementById('recap-ex-list');
+  list.innerHTML = session.exercises.map((ex, i) => {
+    // durée de l'exercice seul (sans le repos de transition)
+    const exDur = ex.workTime * ex.sets + (ex.sets > 1 ? ex.restTime * (ex.sets - 1) : 0);
+    const tags = [];
+    tags.push(`<span class="recap-tag accent">⚡ ${ex.sets} × ${formatTime(ex.workTime)}</span>`);
+    if (ex.reps) tags.push(`<span class="recap-tag">${ex.reps} reps</span>`);
+    if (ex.load) tags.push(`<span class="recap-tag">${escHtml(ex.load)}</span>`);
+    tags.push(`<span class="recap-tag red">😮‍💨 ${formatTime(ex.restTime)}</span>`);
+    return `<div class="recap-ex-row" style="animation-delay:${i*0.04}s">
+      <div class="recap-ex-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="recap-ex-info">
+        <div class="recap-ex-name">${escHtml(ex.name)}</div>
+        <div class="recap-ex-details">${tags.join('')}</div>
+      </div>
+      <div class="recap-ex-duration">${formatDuration(exDur)}</div>
+    </div>`;
+  }).join('');
+
+  goTo('page-recap');
+}
+
+function launchFromRecap() {
+  if (recapSessionId) startSession(recapSessionId);
+}
+
+function editSessionFromRecap() {
+  if (recapSessionId) {
+    goBack(); // retour home
+    editSession(recapSessionId);
+  }
 }
 
 /* ================================================================
@@ -719,7 +877,7 @@ function showSuggestions(exId, query) {
     if (!matches.length) { el.classList.remove('show'); return; }
     el.innerHTML = matches.map(name => {
       const hl = Math.min(q.length,10);
-      return `<div class="exercise-suggestion" onmousedown="e.preventDefault();pickSuggestion('${exId}','${escHtml(name)}')"
+      return `<div class="exercise-suggestion" onmousedown="event.preventDefault();pickSuggestion('${exId}','${escHtml(name)}')"
         onclick="pickSuggestion('${exId}','${escHtml(name)}')"
         ><mark>${escHtml(name.slice(0,hl))}</mark>${escHtml(name.slice(hl))}</div>`;
     }).join('');
@@ -902,44 +1060,32 @@ function confirmQuit() {
    RECALC TOTAL LEFT (après modif live)
 ================================================================ */
 function recalcTotalLeft() {
-  // Repart de zéro : calcule tout ce qui reste à partir de l'instant courant.
-  // On reconstruit la séquence exacte des phases restantes et on les additionne.
   const { session, exIndex, setIndex, phase, timeLeft } = T;
   const ex = session.exercises[exIndex];
-  let total = timeLeft; // temps restant dans la phase en cours (déjà en train de tourner)
+  let total = timeLeft;
 
   if (phase === 'work') {
-    // Après la série en cours : repos puis séries suivantes de cet exo
-    const sRem = ex.sets - setIndex - 1; // séries encore à faire après celle-ci
-    for (let s = 0; s < sRem; s++) {
-      total += ex.restTime + ex.workTime;
-    }
-    // Repos de transition vers l'exo suivant (si il existe)
+    const sRem = ex.sets - setIndex - 1;
+    for (let s = 0; s < sRem; s++) total += ex.restTime + ex.workTime;
     if (exIndex + 1 < session.exercises.length) total += ex.restTime;
   } else {
-    // phase === 'rest'
     const isLastSet = (setIndex + 1) >= ex.sets;
     if (!isLastSet) {
-      // Repos inter-série : après ce repos, il reste des séries dans cet exo
       const sRem = ex.sets - setIndex - 1;
       for (let s = 0; s < sRem; s++) {
-        total += ex.workTime; // la série
-        if (s < sRem - 1) total += ex.restTime; // repos après (sauf après la dernière)
+        total += ex.workTime;
+        if (s < sRem - 1) total += ex.restTime;
       }
-      // Repos de transition vers l'exo suivant (si il existe)
       if (exIndex + 1 < session.exercises.length) total += ex.restTime;
     }
-    // Si isLastSet : timeLeft EST le repos de transition, rien à ajouter pour cet exo
   }
 
-  // Tous les exercices suivants
   for (let i = exIndex + 1; i < session.exercises.length; i++) {
     const e = session.exercises[i];
     for (let s = 0; s < e.sets; s++) {
       total += e.workTime;
-      if (s < e.sets - 1) total += e.restTime; // repos inter-série
+      if (s < e.sets - 1) total += e.restTime;
     }
-    // Repos de transition vers l'exo d'après
     if (i < session.exercises.length - 1) total += e.restTime;
   }
 
@@ -947,22 +1093,20 @@ function recalcTotalLeft() {
 }
 
 /* ================================================================
-   LIVE EDIT — draft (objet simple, mis à jour par fonctions nommées)
+   LIVE EDIT
 ================================================================ */
-const leDraft = { name:'', reps:null, load:'', workTime:0, restTime:0, setsRemaining:1 };
+const leDraft = { name:'', reps:null, load:'', workTime:0, restTime:0, sets:1, _wasPaused:false };
 
-function leDraftSetSets(v)     { if (!isNaN(v) && v >= 1) leDraft.sets = v; }
-function leDraftSetReps(v)     { leDraft.reps = (!isNaN(v) && v >= 1) ? v : null; }
-function leDraftSetWork(v)     { leDraft.workTime = v; }
-function leDraftSetRest(v)     { leDraft.restTime = v; }
+function leDraftSetSets(v)  { if (!isNaN(v) && v >= 1) leDraft.sets = v; }
+function leDraftSetReps(v)  { leDraft.reps = (!isNaN(v) && v >= 1) ? v : null; }
+function leDraftSetWork(v)  { leDraft.workTime = v; }
+function leDraftSetRest(v)  { leDraft.restTime = v; }
 
-/* Rendu d'une grille de boutons preset — version PROPRE sans inline callback */
 function buildLeGrid(containerId, values, currentVal, draftFn, customWrapId) {
   const container = document.getElementById(containerId);
   const customWrap = document.getElementById(customWrapId);
   if (customWrap) customWrap.classList.remove('show');
   container.innerHTML = '';
-
   values.forEach(v => {
     const btn = document.createElement('button');
     btn.className = 'time-btn' + (currentVal === v ? ' selected' : '');
@@ -975,7 +1119,6 @@ function buildLeGrid(containerId, values, currentVal, draftFn, customWrapId) {
     });
     container.appendChild(btn);
   });
-
   if (customWrapId) {
     const customBtn = document.createElement('button');
     const isCustom = currentVal !== null && !values.includes(currentVal);
@@ -984,13 +1127,9 @@ function buildLeGrid(containerId, values, currentVal, draftFn, customWrapId) {
     customBtn.addEventListener('click', () => {
       container.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
       customBtn.classList.add('selected');
-      if (customWrap) {
-        customWrap.classList.add('show');
-        setTimeout(() => customWrap.querySelector('input').focus(), 50);
-      }
+      if (customWrap) { customWrap.classList.add('show'); setTimeout(() => customWrap.querySelector('input').focus(), 50); }
     });
     container.appendChild(customBtn);
-
     if (isCustom && customWrap) {
       customWrap.classList.add('show');
       const inp = customWrap.querySelector('input');
@@ -1016,52 +1155,37 @@ function buildLeGridTime(containerId, presets, currentVal, draftFn) {
 }
 
 function openLiveEditModal() {
-  if (T.phase !== 'rest') return; // uniquement pendant le repos
+  if (T.phase !== 'rest') return;
   const ex = T.session.exercises[T.exIndex];
-  const setsRemaining = ex.sets - T.setIndex;
-
-  // Mémoriser l'état pause/play sans le changer
   leDraft._wasPaused = T.paused;
-
-  // Init draft
   leDraft.name     = ex.name;
   leDraft.reps     = ex.reps;
   leDraft.load     = ex.load || '';
   leDraft.workTime = ex.workTime;
   leDraft.restTime = ex.restTime;
-  leDraft.sets     = ex.sets;  // total définitif de l'exercice
+  leDraft.sets     = ex.sets;
 
-  // Titre
   document.getElementById('le-title').textContent = ex.name || 'Modifier l\'exercice';
   document.getElementById('le-subtitle').textContent =
-    `Exercice ${T.exIndex+1} • Série ${T.setIndex+1}/${ex.sets} • ${T.phase==='work'?'⚡ Travail':'😮‍💨 Repos'}`;
-
-  // Champs texte
+    `Exercice ${T.exIndex+1} • Série ${T.setIndex+1}/${ex.sets} • 😮‍💨 Repos`;
   document.getElementById('le-name').value = ex.name;
   document.getElementById('le-load').value = ex.load || '';
-
-  // Suggestions
   document.getElementById('le-suggestions').classList.remove('show');
   document.getElementById('le-suggestions').innerHTML = '';
 
-  // Grilles
   buildLeGrid('le-sets-grid', SETS_PRESETS, ex.sets, leDraftSetSets, 'le-sets-custom');
   buildLeGrid('le-reps-grid', REPS_PRESETS, ex.reps, leDraftSetReps, 'le-reps-custom');
   buildLeGridTime('le-work-grid', TIME_PRESETS_WORK, ex.workTime, leDraftSetWork);
   buildLeGridTime('le-rest-grid', TIME_PRESETS_REST, ex.restTime, leDraftSetRest);
 
-  // Reset inputs custom
   const setsInp = document.getElementById('le-sets-custom-input');
   const repsInp = document.getElementById('le-reps-custom-input');
-  if (!SETS_PRESETS.includes(ex.sets)) setsInp.value = ex.sets;
-  else setsInp.value = '';
-  if (ex.reps !== null && !REPS_PRESETS.includes(ex.reps)) repsInp.value = ex.reps;
-  else repsInp.value = '';
+  setsInp.value = !SETS_PRESETS.includes(ex.sets) ? ex.sets : '';
+  repsInp.value = (ex.reps !== null && !REPS_PRESETS.includes(ex.reps)) ? ex.reps : '';
 
   document.getElementById('live-edit-modal').classList.add('open');
 }
 
-/* Suggestions dans le live edit */
 function liveShowSuggestions(query) {
   const el = document.getElementById('le-suggestions');
   if (!query) { el.classList.remove('show'); return; }
@@ -1093,29 +1217,17 @@ function closeLiveEditModal(e) {
 
 function applyLiveEdit() {
   const ex = T.session.exercises[T.exIndex];
-
-  // Nom
   const newName = document.getElementById('le-name').value.trim();
   if (newName) ex.name = newName;
-
-  // Charge
   ex.load = document.getElementById('le-load').value.trim() || null;
-
-  // Reps
   ex.reps = leDraft.reps;
-
-  // Temps de série et de repos
   ex.workTime = leDraft.workTime;
   ex.restTime = leDraft.restTime;
-
-  // Nombre de séries TOTAL définitif
   if (leDraft.sets >= 1) ex.sets = leDraft.sets;
 
-  // Recalcul durée totale et temps restant
   T.totalDuration = calcSessionDuration(T.session);
   T.totalLeft = recalcTotalLeft();
 
-  // Sauvegarde définitive → la séance est modifiée pour les prochaines fois
   const sessions = loadSessions();
   const sIdx = sessions.findIndex(s => s.id === T.session.id);
   if (sIdx >= 0) {
@@ -1124,7 +1236,6 @@ function applyLiveEdit() {
   }
 
   document.getElementById('live-edit-modal').classList.remove('open');
-  // Restaurer exactement l'état d'avant l'ouverture
   T.paused = leDraft._wasPaused;
   if (!T.paused) T.lastTs = Date.now();
   renderTimer();
@@ -1249,6 +1360,18 @@ function formatTime(s) { const m = Math.floor(s/60), r = s%60; return m ? `${m}:
 /* ================================================================
    AUDIO
 ================================================================ */
+let audioUnlocked = false;
+function unlockAudio() {
+  if (audioUnlocked) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx.resume();
+    const silent = document.getElementById('silent-audio');
+    if (silent) silent.play().catch(()=>{});
+    audioUnlocked = true;
+  } catch(e) {}
+}
+
 function playBeep(type) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
