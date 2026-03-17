@@ -273,7 +273,8 @@
     .next-name { font-family: var(--font-head); font-size: 15px; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
   </style>
 </head>
-<body>
+<body onclick="unlockAudio()">
+<audio id="silent-audio" loop preload="auto" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="></audio>
 <div id="app">
 
   <div class="page active" id="page-home">
@@ -451,12 +452,12 @@ const DEFAULT_SESSIONS = [
     id: 'poids_corps',
     name: 'Poids de corps',
     exercises: [
-      {id: 'tr_pron', name: 'Tractions pronation', sets: 4, reps: 5, load: '', workTime: 15, restTime: 150},
-      {id: 'tr_sup', name: 'Tractions supination', sets: 3, reps: 5, load: '', workTime: 15, restTime: 120},
+      {id: 'tr_pron', name: 'Tractions pronation', sets: 4, reps: 5, load: '', workTime: 20, restTime: 120},
+      {id: 'tr_sup', name: 'Tractions supination', sets: 3, reps: 5, load: '', workTime: 20, restTime: 120},
       {id: 'dips_pc', name: 'Dips', sets: 4, reps: 10, load: '', workTime: 30, restTime: 120},
-      {id: 'pom_norm', name: 'Pompes normales', sets: 3, reps: 15, load: '', workTime: 40, restTime: 90},
-      {id: 'pom_larg', name: 'Pompes larges', sets: 2, reps: 'max (~15-20 estimé)', load: '', workTime: 45, restTime: 90},
-      {id: 'ext_lomb', name: 'Extensions lombaires', sets: 2, reps: 12, load: '', workTime: 35, restTime: 90}
+      {id: 'pom_norm', name: 'Pompes normales', sets: 3, reps: 15, load: '', workTime: 30, restTime: 90},
+      {id: 'pom_larg', name: 'Pompes larges', sets: 2, reps: 15, load: '', workTime: 30, restTime: 90},
+      {id: 'ext_lomb', name: 'Extensions lombaires', sets: 2, reps: 15, load: '', workTime: 40, restTime: 90}
     ]
   },
   {
@@ -466,7 +467,7 @@ const DEFAULT_SESSIONS = [
       {id: 'dev_couch', name: 'Développé couché', sets: 4, reps: 10, load: '20kg par haltères', workTime: 30, restTime: 150},
       {id: 'curl_barre', name: 'Curl biceps haltères', sets: 3, reps: 10, load: '10kg par haltère', workTime: 30, restTime: 90},
       {id: 'curl_marteau', name: 'Curl marteau', sets: 3, reps: 10, load: '10kg par haltère', workTime: 30, restTime: 90},
-      {id: 'elev_lat', name: 'Élévations latérales', sets: 3, reps: 12, load: '10kg par haltère', workTime: 35, restTime: 90},
+      {id: 'elev_lat', name: 'Élévations latérales', sets: 3, reps: 12, load: '10kg par haltère', workTime: 40, restTime: 90},
       {id: 'barre_front', name: 'Barre au front', sets: 3, reps: 10, load: '20kg', workTime: 30, restTime: 90},
       {id: 'face_pull_f', name: 'Face pull', sets: 2, reps: 15, load: '', workTime: 40, restTime: 90}
     ]
@@ -484,12 +485,12 @@ const DEFAULT_SESSIONS = [
     ]
   },
   {
-      id: 'bonus',
-      name: 'Bonus',
+      id: 'express',
+      name: 'express',
       exercises: [
-        {id: 'tractions_bonus', name: 'Tractions', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
-        {id: 'dips_bonus', name: 'Dips', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
-        {id: 'pompes_bonus', name: 'Pompes normales', sets: 4, reps: '', load: '', workTime: 20, restTime: 60}
+        {id: 'tractions_express', name: 'Tractions', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+        {id: 'dips_express', name: 'Dips', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+        {id: 'pompes_express', name: 'Pompes normales', sets: 4, reps: '', load: '', workTime: 20, restTime: 60}
       ]
     }
 ];
