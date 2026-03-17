@@ -484,17 +484,14 @@ const DEFAULT_SESSIONS = [
     ]
   },
   {
-    id: 'bonus',
-    name: 'Bonus',
-    exercises: [
-      {id: 'tr_sup_bonus', name: 'Tractions supination', sets: 3, reps: 5, load: '', workTime: 15, restTime: 120},
-      {id: 'dips_bonus', name: 'Dips', sets: 3, reps: 8, load: '', workTime: 25, restTime: 120},
-      {id: 'pom_norm_bonus', name: 'Pompes normales', sets: 3, reps: 15, load: '', workTime: 40, restTime: 90},
-      {id: 'curl_bonus', name: 'Curl biceps', sets: 3, reps: 10, load: '10kg par haltères', workTime: 30, restTime: 90},
-      {id: 'elev_lat_bonus', name: 'Élévations latérales', sets: 3, reps: 12, load: '10kg haltères', workTime: 35, restTime: 90},
-      {id: 'face_bonus', name: 'Face pull', sets: 2, reps: 15, load: '', workTime: 40, restTime: 90}
-    ]
-  }
+      id: 'bonus',
+      name: 'Bonus',
+      exercises: [
+        {id: 'tractions_bonus', name: 'Tractions', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+        {id: 'dips_bonus', name: 'Dips', sets: 4, reps: '', load: '', workTime: 20, restTime: 60},
+        {id: 'pompes_bonus', name: 'Pompes normales', sets: 4, reps: '', load: '', workTime: 20, restTime: 60}
+      ]
+    }
 ];
 function loadSessions() {
   let sessions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -809,6 +806,22 @@ function confirmDelete() {
 ================================================================ */
 let T = { session:null, exIndex:0, setIndex:0, phase:'work', timeLeft:0, totalLeft:0, totalDuration:0, paused:false, finished:false, intervalId:null, lastTs:null };
 
+/* ================================================================
+   SCREEN WAKE LOCK
+================================================================ */
+let wakeLock = null;
+async function requestWakeLock() {
+  if ('wakeLock' in navigator) {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } catch (err) {}
+  }
+}
+function releaseWakeLock() {
+  if (wakeLock) { wakeLock.release().then(() => { wakeLock = null; }); }
+}
+
 function startSession(id) {
   const session = loadSessions().find(s => s.id === id);
   if (!session) return;
@@ -819,6 +832,7 @@ function startSession(id) {
   T.timeLeft = session.exercises[0].workTime;
   goTo('page-timer'); renderTimer();
   T.intervalId = setInterval(timerTick, 1000);
+  requestWakeLock();
 }
 
 function timerTick() {
@@ -828,26 +842,27 @@ function timerTick() {
   if (elapsed < 1) return;
   T.lastTs = now;
   while (elapsed > 0 && !T.finished) {
-    if (elapsed >= T.timeLeft) {
-      elapsed -= T.timeLeft;
-      T.totalLeft = Math.max(0, T.totalLeft - T.timeLeft);
-      T.timeLeft = 0; advancePhase();
-    } else {
-      T.timeLeft -= elapsed; T.totalLeft = Math.max(0, T.totalLeft - elapsed); elapsed = 0;
-    }
+    if (T.phase === 'rest' && T.timeLeft <= 3 && T.timeLeft > 0) playBeep('countdown');
+    T.timeLeft--;
+    T.totalLeft = Math.max(0, T.totalLeft - 1);
+    elapsed--;
+    if (T.timeLeft <= 0) advancePhase();
   }
   if (!T.finished) renderTimerCountdown();
 }
 
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && T.session && !T.paused && !T.finished) timerTick();
+  if (document.visibilityState === 'visible' && T.session && !T.paused && !T.finished) {
+    timerTick();
+    requestWakeLock();
+  }
 });
 
 function advancePhase() {
   const ex = T.session.exercises[T.exIndex];
   if (T.phase === 'work') {
     if (T.setIndex + 1 >= ex.sets && T.exIndex + 1 >= T.session.exercises.length) {
-      T.finished = true; clearInterval(T.intervalId); playBeep('done'); renderTimerDone(); return;
+      T.finished = true; clearInterval(T.intervalId); playBeep('done'); renderTimerDone(); releaseWakeLock(); return;
     }
     T.phase = 'rest'; T.timeLeft = ex.restTime; playBeep('rest'); renderTimer();
   } else {
@@ -879,6 +894,7 @@ function closeQuitModal(e) {
 function confirmQuit() {
   clearInterval(T.intervalId); document.getElementById('quit-modal').classList.remove('open');
   goTo('page-home', false); pageHistory = ['page-home'];
+  releaseWakeLock();
 }
 
 /* ================================================================
@@ -1191,7 +1207,17 @@ function buildControls() {
 function renderTimerCountdown() {
   const ex = T.session.exercises[T.exIndex];
   const cd = document.getElementById('timer-cd');
-  if (cd) cd.textContent = formatTime(T.timeLeft);
+  if (cd) {
+    cd.textContent = formatTime(T.timeLeft);
+    if (T.phase === 'rest' && T.timeLeft <= 3 && T.timeLeft > 0) {
+      cd.style.color = 'var(--accent)';
+      cd.style.transform = 'scale(1.2)';
+      cd.style.transition = 'all 0.1s';
+    } else {
+      cd.style.color = '';
+      cd.style.transform = '';
+    }
+  }
   const total = T.phase === 'work' ? ex.workTime : ex.restTime;
   const circ = 2 * Math.PI * 110;
   const ring = document.getElementById('ring-progress');
@@ -1215,7 +1241,7 @@ function renderTimerDone() {
       <button class="btn btn-secondary mt-8" style="width:100%;max-width:280px" onclick="restartSession()">🔁 &nbsp;Relancer</button>
     </div>`;
 }
-function goHome() { clearInterval(T.intervalId); goTo('page-home', false); pageHistory = ['page-home']; }
+function goHome() { clearInterval(T.intervalId); goTo('page-home', false); pageHistory = ['page-home']; releaseWakeLock(); }
 function restartSession() { startSession(T.session.id); }
 function formatTime(s) { const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')}` : `${r}`; }
 
@@ -1238,6 +1264,10 @@ function playBeep(type) {
     } else if (type === 'work') {
       o.frequency.value=660; g.gain.setValueAtTime(.4,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
       o.start(ctx.currentTime); o.stop(ctx.currentTime+.25);
+    } else if (type === 'countdown') {
+      o.type='sine'; o.frequency.setValueAtTime(440,ctx.currentTime);
+      g.gain.setValueAtTime(.3,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.15);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime+.15);
     } else if (type === 'done') {
       [440,550,660].forEach((f,i)=>{
         const o2=ctx.createOscillator(),g2=ctx.createGain(); o2.connect(g2); g2.connect(ctx.destination);
@@ -1245,7 +1275,7 @@ function playBeep(type) {
         o2.start(ctx.currentTime+i*.18); o2.stop(ctx.currentTime+i*.18+.25);
       });
     }
-    if (navigator.vibrate) navigator.vibrate(type==='done'?[200,100,200,100,400]:type==='restEnd'?150:100);
+    if (navigator.vibrate) navigator.vibrate(type==='done'?[200,100,200,100,400]:type==='restEnd'?150:type==='countdown'?50:100);
   } catch(e) {}
 }
 
