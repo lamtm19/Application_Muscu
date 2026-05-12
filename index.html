@@ -347,17 +347,83 @@
     }
     .next-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
     .next-name { font-family: var(--font-head); font-size: 15px; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+
+    /* ── LANDSCAPE BLOCK ─────────────────────────────────── */
+    .landscape-overlay {
+      display: none; position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      align-items: center; justify-content: center; flex-direction: column;
+      gap: 16px; text-align: center; padding: 40px;
+    }
+    @media (orientation: landscape) { .landscape-overlay { display: flex; } }
+
+    /* ── TOGGLE SWITCH ───────────────────────────────────── */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-label { font-size: 15px; font-weight: 500; }
+    .toggle-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .toggle { position: relative; width: 50px; height: 28px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: var(--surface2);
+      border: 1.5px solid var(--border); border-radius: 100px; cursor: pointer; transition: all .2s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 50%;
+      transform: translateY(-50%); background: var(--text-muted); border-radius: 50%; transition: all .2s;
+    }
+    .toggle input:checked + .toggle-slider { background: rgba(232,255,0,.12); border-color: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translate(22px,-50%); background: var(--accent); }
+
+    /* ── SESSION OVERVIEW (in-timer) ─────────────────────── */
+    .overview-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border); transition: opacity .2s;
+    }
+    .overview-row:last-child { border-bottom: none; }
+    .overview-row.done { opacity: 0.3; }
+    .overview-row.current { padding: 12px 10px; margin: 0 -10px; border-radius: var(--radius-sm); background: rgba(232,255,0,.04); }
+    .overview-num { font-family: var(--font-head); font-size: 20px; min-width: 28px; line-height: 1; color: var(--text-muted); }
+    .overview-row.current .overview-num { color: var(--accent); }
+    .overview-info { flex: 1; min-width: 0; }
+    .overview-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .overview-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .overview-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px;
+      white-space: nowrap; flex-shrink: 0; letter-spacing: .5px;
+    }
+    .overview-badge.current { background: rgba(232,255,0,.1); color: var(--accent); border: 1px solid rgba(232,255,0,.3); }
+    .overview-badge.done { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+    .pill-btn {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 100px;
+      padding: 4px 10px; font-size: 12px; color: var(--text-muted); font-family: var(--font-body);
+      cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all .15s;
+    }
+    .pill-btn:hover, .pill-btn:active { border-color: var(--accent); color: var(--accent); }
   </style>
 </head>
 <body onclick="unlockAudio()">
 <audio id="silent-audio" loop preload="auto" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=="></audio>
+
+<!-- OVERLAY PAYSAGE -->
+<div class="landscape-overlay">
+  <div style="font-size:52px">📱</div>
+  <div style="font-family:var(--font-head);font-size:30px;letter-spacing:1px;line-height:1.2">TOURNE<br/><span style="color:var(--accent)">TON ÉCRAN</span></div>
+  <div style="color:var(--text-muted);font-size:14px;line-height:1.6">Cette app est conçue<br/>pour le mode portrait</div>
+</div>
+
 <div id="app">
 
   <!-- PAGE HOME -->
   <div class="page active" id="page-home">
     <div class="header">
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" /></div>
-      <button class="btn-icon" onclick="openHelpModal()">❓</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-icon" onclick="openSettingsModal()">⚙️</button>
+        <button class="btn-icon" onclick="openHelpModal()">❓</button>
+      </div>
     </div>
     <div class="scroll-area"><div id="home-content"></div></div>
     <div class="sticky-bottom">
@@ -419,6 +485,40 @@
     <div class="timer-page" id="timer-main"></div>
   </div>
 
+</div>
+
+<!-- MODAL PARAMÈTRES -->
+<div class="modal-overlay" id="settings-modal" onclick="closeSettingsModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Paramètres</div>
+    <div style="margin-top:16px">
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Son de l'application</div>
+          <div class="toggle-sub">Bips et alertes sonores pendant la séance</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="setting-sound" onchange="toggleSoundSetting(this.checked)" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div style="margin-top:24px"><button class="btn btn-secondary" onclick="closeSettingsModal()">Fermer</button></div>
+  </div>
+</div>
+
+<!-- MODAL OVERVIEW SÉANCE (pendant timer) -->
+<div class="modal-overlay" id="overview-modal" onclick="closeSessionOverview(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+      <div class="modal-title" id="overview-title"></div>
+      <div id="overview-progress" style="font-family:var(--font-head);font-size:22px;color:var(--accent);letter-spacing:1px"></div>
+    </div>
+    <div id="overview-list" style="margin-top:4px"></div>
+    <div style="margin-top:20px"><button class="btn btn-secondary" onclick="closeSessionOverview()">Fermer</button></div>
+  </div>
 </div>
 
 <!-- MODAL AIDE -->
@@ -548,6 +648,43 @@ Je veux donc cette forme :
 const STORAGE_KEY = 'pause_champion_sessions';
 
 const DEFAULT_SESSIONS = [
+  {
+  id: 'pecs_biceps',
+  name: 'Pecs biceps',
+  exercises: [
+    {id: 'pom_lestes', name: 'Pompes lestées ou dips', sets: 3, reps: 10, load: '', workTime: 30, restTime: 90},
+    {id: 'pom_eleves', name: 'Pompes élevées', sets: 3, reps: 12, load: '', workTime: 35, restTime: 90},
+    {id: 'pecs_fly', name: 'Pecs fly', sets: 3, reps: 12, load: '', workTime: 40, restTime: 90},
+    {id: 'curl_incline', name: 'Curl incliné ou normal', sets: 3, reps: 8, load: '', workTime: 30, restTime: 90},
+    {id: 'curl_marteau', name: 'Curl marteau', sets: 3, reps: 8, load: '', workTime: 30, restTime: 90}
+  ]
+},
+
+{
+  id: 'dos_triceps',
+  name: 'Dos triceps',
+  exercises: [
+    {id: 'tractions', name: 'Tractions', sets: 3, reps: 8, load: '', workTime: 30, restTime: 90},
+    {id: 'dips', name: 'Dips', sets: 3, reps: 10, load: '', workTime: 30, restTime: 90},
+    {id: 'rowing_haltere', name: 'Rowing haltère', sets: 3, reps: 10, load: '', workTime: 40, restTime: 90},
+    {id: 'pull_over', name: 'Pull over', sets: 3, reps: 12, load: '', workTime: 40, restTime: 90},
+    {id: 'barre_front', name: 'Barre au front', sets: 3, reps: 10, load: '', workTime: 35, restTime: 90}
+  ]
+},
+
+{
+  id: 'epaules_bras',
+  name: 'Épaule bras',
+  exercises: [
+    {id: 'developpe_militaire', name: 'Développé militaire', sets: 3, reps: 10, load: '', workTime: 40, restTime: 90},
+    {id: 'dips_ep', name: 'Dips', sets: 3, reps: 10, load: '', workTime: 30, restTime: 90},
+    {id: 'elevations_laterales', name: 'Élévations latérales', sets: 3, reps: 12, load: '', workTime: 35, restTime: 90},
+    {id: 'curl_marteau_ep', name: 'Curl marteau', sets: 3, reps: 8, load: '', workTime: 30, restTime: 90},
+    {id: 'curl_biceps', name: 'Curl biceps', sets: 3, reps: 8, load: '', workTime: 30, restTime: 90},
+    {id: 'oiseaux_poulie', name: 'Oiseaux poulie', sets: 3, reps: 12, load: '', workTime: 35, restTime: 90}
+  ]
+},
+  
   {
     id: 'poids_corps',
     name: 'Poids de corps',
@@ -1256,7 +1393,7 @@ function renderTimer() {
     <div class="timer-header">
       <button class="btn-icon" onclick="openQuitModal()">✕</button>
       <div class="timer-session-name">${escHtml(session.name)}</div>
-      <div class="pill">${exIndex+1}/${exCount}</div>
+      <button class="pill-btn" onclick="openSessionOverview()">${exIndex+1}/${exCount} <span style="font-size:10px;opacity:.6">▾</span></button>
     </div>
     <div class="timer-progress-wrap">
       <div class="timer-progress-bar" id="timer-progress-bar" style="width:${progress}%"></div>
@@ -1358,6 +1495,69 @@ function restartSession() { startSession(T.session.id); }
 function formatTime(s) { const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')}` : `${r}`; }
 
 /* ================================================================
+   SETTINGS
+================================================================ */
+const SETTINGS_KEY = 'pause_champion_settings';
+function loadSettings() {
+  const defaults = { soundEnabled: true };
+  try { return { ...defaults, ...JSON.parse(localStorage.getItem(SETTINGS_KEY)) }; }
+  catch { return defaults; }
+}
+function saveSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+
+function openSettingsModal() {
+  document.getElementById('setting-sound').checked = loadSettings().soundEnabled;
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettingsModal(e) {
+  if (!e || e.target === document.getElementById('settings-modal'))
+    document.getElementById('settings-modal').classList.remove('open');
+}
+function toggleSoundSetting(enabled) {
+  const s = loadSettings(); s.soundEnabled = enabled; saveSettings(s);
+}
+
+/* ================================================================
+   SESSION OVERVIEW (in-timer)
+================================================================ */
+function openSessionOverview() {
+  const { session, exIndex, setIndex, phase } = T;
+  document.getElementById('overview-title').textContent = session.name;
+  document.getElementById('overview-progress').textContent = `${exIndex+1}/${session.exercises.length}`;
+
+  const list = document.getElementById('overview-list');
+  list.innerHTML = session.exercises.map((ex, i) => {
+    const status = i < exIndex ? 'done' : i === exIndex ? 'current' : '';
+    let detail;
+    if (i === exIndex) {
+      detail = `Série ${setIndex+1} / ${ex.sets}${phase === 'rest' ? ' · 😮‍💨 repos' : ''}`;
+    } else if (i < exIndex) {
+      detail = `${ex.sets} séries — terminé`;
+    } else {
+      detail = `${ex.sets} série${ex.sets>1?'s':''}${ex.reps ? ` × ${ex.reps} reps` : ''}`;
+    }
+    let badge = '';
+    if (status === 'current') badge = `<span class="overview-badge current">EN COURS</span>`;
+    else if (status === 'done') badge = `<span class="overview-badge done">✓</span>`;
+
+    return `<div class="overview-row ${status}">
+      <div class="overview-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="overview-info">
+        <div class="overview-name">${escHtml(ex.name)}</div>
+        <div class="overview-detail">${detail}</div>
+      </div>
+      ${badge}
+    </div>`;
+  }).join('');
+
+  document.getElementById('overview-modal').classList.add('open');
+}
+function closeSessionOverview(e) {
+  if (!e || e.target === document.getElementById('overview-modal'))
+    document.getElementById('overview-modal').classList.remove('open');
+}
+
+/* ================================================================
    AUDIO
 ================================================================ */
 let audioUnlocked = false;
@@ -1373,6 +1573,7 @@ function unlockAudio() {
 }
 
 function playBeep(type) {
+  if (!loadSettings().soundEnabled) return;
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const o = ctx.createOscillator(), g = ctx.createGain();
@@ -1429,6 +1630,9 @@ function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'
 document.addEventListener('DOMContentLoaded', () => {
   renderHome();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('portrait').catch(() => {});
+  }
 });
 </script>
 </body>
