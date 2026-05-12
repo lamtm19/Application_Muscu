@@ -402,6 +402,16 @@
       cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all .15s;
     }
     .pill-btn:hover, .pill-btn:active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── HISTORIQUE ──────────────────────────────────────── */
+    .history-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 0; border-bottom: 1px solid var(--border); gap: 12px;
+    }
+    .history-row:last-child { border-bottom: none; }
+    .history-row-name { font-size: 14px; font-weight: 600; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .history-row-meta { font-size: 12px; color: var(--text-muted); text-align: right; flex-shrink: 0; line-height: 1.6; }
+    .history-row-dur { color: var(--text); font-weight: 600; }
   </style>
 </head>
 <body onclick="unlockAudio()">
@@ -421,8 +431,9 @@
     <div class="header">
       <div class="header-logo"><img src="logo.png" alt="Pause du Champion" /></div>
       <div style="display:flex;gap:8px">
-        <button class="btn-icon" onclick="openSettingsModal()">⚙️</button>
-        <button class="btn-icon" onclick="openHelpModal()">❓</button>
+        <button class="btn-icon" onclick="openHistoryModal()" title="Historique">🕐</button>
+        <button class="btn-icon" onclick="openSettingsModal()" title="Paramètres">⚙️</button>
+        <button class="btn-icon" onclick="openHelpModal()" title="Aide">❓</button>
       </div>
     </div>
     <div class="scroll-area"><div id="home-content"></div></div>
@@ -485,6 +496,19 @@
     <div class="timer-page" id="timer-main"></div>
   </div>
 
+</div>
+
+<!-- MODAL HISTORIQUE -->
+<div class="modal-overlay" id="history-modal" onclick="closeHistoryModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px">
+      <div class="modal-title">Historique</div>
+      <div id="history-count" style="font-size:13px;color:var(--text-muted)"></div>
+    </div>
+    <div id="history-list"></div>
+    <div style="margin-top:20px"><button class="btn btn-secondary" onclick="closeHistoryModal()">Fermer</button></div>
+  </div>
 </div>
 
 <!-- MODAL PARAMÈTRES -->
@@ -791,6 +815,7 @@ function renderHome() {
         </div>
       </div>`;
     }).join('');
+
 }
 
 /* ================================================================
@@ -1100,7 +1125,23 @@ function confirmDelete() {
 /* ================================================================
    TIMER ENGINE
 ================================================================ */
-let T = { session:null, exIndex:0, setIndex:0, phase:'work', timeLeft:0, totalLeft:0, totalDuration:0, paused:false, finished:false, intervalId:null, lastTs:null };
+let T = { session:null, exIndex:0, setIndex:0, phase:'work', timeLeft:0, totalLeft:0, totalDuration:0, paused:false, finished:false, lastTs:null };
+let _timerWorker = null;
+
+function startTimerWorker() {
+  stopTimerWorker();
+  try {
+    _timerWorker = new Worker('./timerWorker.js');
+    _timerWorker.onmessage = () => timerTick();
+    _timerWorker.postMessage('start');
+  } catch(e) {
+    T._fallbackId = setInterval(timerTick, 1000);
+  }
+}
+function stopTimerWorker() {
+  if (_timerWorker) { _timerWorker.postMessage('stop'); _timerWorker.terminate(); _timerWorker = null; }
+  if (T._fallbackId) { clearInterval(T._fallbackId); T._fallbackId = null; }
+}
 
 /* ================================================================
    SCREEN WAKE LOCK
@@ -1121,13 +1162,13 @@ function releaseWakeLock() {
 function startSession(id) {
   const session = loadSessions().find(s => s.id === id);
   if (!session) return;
-  clearInterval(T.intervalId);
+  stopTimerWorker();
   T = { session, exIndex:0, setIndex:0, phase:'work', paused:false, finished:false,
-    totalDuration: calcSessionDuration(session), intervalId:null, lastTs: Date.now() };
+    totalDuration: calcSessionDuration(session), lastTs: Date.now() };
   T.totalLeft = T.totalDuration;
   T.timeLeft = session.exercises[0].workTime;
   goTo('page-timer'); renderTimer();
-  T.intervalId = setInterval(timerTick, 1000);
+  startTimerWorker();
   requestWakeLock();
 }
 
@@ -1158,7 +1199,7 @@ function advancePhase() {
   const ex = T.session.exercises[T.exIndex];
   if (T.phase === 'work') {
     if (T.setIndex + 1 >= ex.sets && T.exIndex + 1 >= T.session.exercises.length) {
-      T.finished = true; clearInterval(T.intervalId); playBeep('done'); renderTimerDone(); releaseWakeLock(); return;
+      T.finished = true; stopTimerWorker(); addHistoryEntry(); playBeep('done'); renderTimerDone(); releaseWakeLock(); return;
     }
     T.phase = 'rest'; T.timeLeft = ex.restTime; playBeep('rest'); renderTimer();
   } else {
@@ -1188,7 +1229,7 @@ function closeQuitModal(e) {
   if (!e || e.target === document.getElementById('quit-modal')) document.getElementById('quit-modal').classList.remove('open');
 }
 function confirmQuit() {
-  clearInterval(T.intervalId); document.getElementById('quit-modal').classList.remove('open');
+  stopTimerWorker(); document.getElementById('quit-modal').classList.remove('open');
   goTo('page-home', false); pageHistory = ['page-home'];
   releaseWakeLock();
 }
@@ -1490,9 +1531,66 @@ function renderTimerDone() {
       <button class="btn btn-secondary mt-8" style="width:100%;max-width:280px" onclick="restartSession()">🔁 &nbsp;Relancer</button>
     </div>`;
 }
-function goHome() { clearInterval(T.intervalId); goTo('page-home', false); pageHistory = ['page-home']; releaseWakeLock(); }
+function goHome() { stopTimerWorker(); goTo('page-home', false); pageHistory = ['page-home']; releaseWakeLock(); }
 function restartSession() { startSession(T.session.id); }
 function formatTime(s) { const m = Math.floor(s/60), r = s%60; return m ? `${m}:${String(r).padStart(2,'0')}` : `${r}`; }
+
+/* ================================================================
+   HISTORY
+================================================================ */
+const HISTORY_KEY = 'pause_champion_history';
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch { return []; }
+}
+function saveHistory(h) { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); }
+function addHistoryEntry() {
+  const cutoff = Date.now() - 7 * 24 * 3600 * 1000;
+  const h = loadHistory().filter(e => e.date >= cutoff);
+  h.unshift({ id: generateId(), sessionName: T.session.name, date: Date.now(), duration: T.totalDuration });
+  saveHistory(h);
+}
+function formatHistoryDate(ts) {
+  const d = new Date(ts), now = new Date();
+  const diff = Math.floor((now - d) / 86400000);
+  const hhmm = d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  if (diff === 0) return `Aujourd'hui · ${hhmm}`;
+  if (diff === 1) return `Hier · ${hhmm}`;
+  if (diff < 7) return `${['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][d.getDay()]} · ${hhmm}`;
+  const months = ['jan','fév','mar','avr','mai','juin','juil','aoû','sep','oct','nov','déc'];
+  return `${d.getDate()} ${months[d.getMonth()]} · ${hhmm}`;
+}
+
+/* ================================================================
+   HISTORY MODAL
+================================================================ */
+function openHistoryModal() {
+  const history = loadHistory();
+  document.getElementById('history-count').textContent = history.length ? `${history.length} séance${history.length > 1 ? 's' : ''}` : '';
+  const list = document.getElementById('history-list');
+  if (!history.length) {
+    list.innerHTML = `<div class="empty-state" style="padding:40px 0">
+      <div class="empty-state-icon">🕐</div>
+      <h3>Aucune séance terminée</h3>
+      <p>Ton historique apparaîtra ici après ta première séance.</p>
+    </div>`;
+  } else {
+    list.innerHTML = `<div style="padding:0 0 4px">` +
+      history.map(h => `
+        <div class="history-row">
+          <div class="history-row-name">${escHtml(h.sessionName)}</div>
+          <div class="history-row-meta">
+            <span class="history-row-dur">${formatDuration(h.duration)}</span><br/>
+            ${formatHistoryDate(h.date)}
+          </div>
+        </div>`).join('') +
+      `</div>`;
+  }
+  document.getElementById('history-modal').classList.add('open');
+}
+function closeHistoryModal(e) {
+  if (!e || e.target === document.getElementById('history-modal'))
+    document.getElementById('history-modal').classList.remove('open');
+}
 
 /* ================================================================
    SETTINGS
