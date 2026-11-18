@@ -1,0 +1,750 @@
+{
+  "dossiers": [
+    {
+      "id": "perso",
+      "nom": "Mes séances",
+      "preset": false,
+      "masque": false,
+      "ouvert": true
+    },
+    {
+      "id": "debut",
+      "nom": "Muscu débutant",
+      "preset": true,
+      "masque": false,
+      "ouvert": false
+    },
+    {
+      "id": "street",
+      "nom": "Street débutant",
+      "preset": true,
+      "masque": false,
+      "ouvert": false
+    }
+  ],
+  "seances": [
+    {
+      "dureeEstimeeMin": 36,
+      "id": "sa",
+      "dossier": "perso",
+      "nom": "Séance A — Pecs, triceps, dos",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x1",
+          "key": "ech",
+          "nom": "Échauffement",
+          "kind": "warmup",
+          "muscle": "Épaules, articulations",
+          "series": 1,
+          "serie": 240,
+          "repos": 0,
+          "reposApres": 60,
+          "note": "Rotations d’épaules, pull-apart élastique 2 × 20, 10 pompes faciles, 3 dips"
+        },
+        {
+          "type": "circuit",
+          "id": "c2",
+          "nom": "Bloc 1",
+          "tours": 4,
+          "reposTour": 75,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x3",
+              "key": "dpl",
+              "nom": "Dips buste penché",
+              "kind": "dipsLean",
+              "muscle": "Pectoraux, triceps",
+              "series": 4,
+              "serie": 40,
+              "repos": 75,
+              "reposApres": 120,
+              "note": "6-10 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x4",
+              "key": "tr",
+              "nom": "Tractions pronation",
+              "kind": "pullup",
+              "muscle": "Dos, biceps",
+              "series": 3,
+              "serie": 40,
+              "repos": 75,
+              "reposApres": 120,
+              "note": "6-10 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c5",
+          "nom": "Bloc 2",
+          "tours": 3,
+          "reposTour": 60,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x6",
+              "key": "pdd",
+              "nom": "Pompes pieds surélevés en déficit",
+              "kind": "pushupDeclineDeficit",
+              "muscle": "Haut des pectoraux, épaules",
+              "series": 3,
+              "serie": 40,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "8-15 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x7",
+              "key": "el",
+              "nom": "Élévations latérales haltères",
+              "kind": "raise",
+              "muscle": "Épaules",
+              "series": 3,
+              "serie": 45,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "12-20 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c8",
+          "nom": "Bloc 3",
+          "tours": 3,
+          "reposTour": 45,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x9",
+              "key": "en",
+              "nom": "Extension triceps nuque haltère",
+              "kind": "overheadExt",
+              "muscle": "Triceps (longue portion)",
+              "series": 3,
+              "serie": 40,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "10-15 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x10",
+              "key": "cs",
+              "nom": "Curl haltères en supination",
+              "kind": "curl",
+              "muscle": "Biceps",
+              "series": 3,
+              "serie": 35,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "8-12 reps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 36,
+      "id": "sb",
+      "dossier": "perso",
+      "nom": "Séance B — Pecs, biceps, dos",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x11",
+          "key": "ech",
+          "nom": "Échauffement",
+          "kind": "warmup",
+          "muscle": "Épaules, articulations",
+          "series": 1,
+          "serie": 240,
+          "repos": 0,
+          "reposApres": 60,
+          "note": "Comme la séance A, plus 1 série de rowing léger"
+        },
+        {
+          "type": "circuit",
+          "id": "c12",
+          "nom": "Bloc 1",
+          "tours": 4,
+          "reposTour": 75,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x13",
+              "key": "pld",
+              "nom": "Pompes lestées en déficit",
+              "kind": "pushupDeficit",
+              "muscle": "Pectoraux, triceps",
+              "series": 4,
+              "serie": 40,
+              "repos": 75,
+              "reposApres": 120,
+              "note": "6-12 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x14",
+              "key": "rb",
+              "nom": "Rowing buste penché 2 haltères",
+              "kind": "row",
+              "muscle": "Dos, arrière d’épaule",
+              "series": 3,
+              "serie": 40,
+              "repos": 75,
+              "reposApres": 120,
+              "note": "8-12 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c15",
+          "nom": "Bloc 2",
+          "tours": 3,
+          "reposTour": 60,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x16",
+              "key": "eeb",
+              "nom": "Écartés élastique de bas en haut",
+              "kind": "flyLowHigh",
+              "muscle": "Haut des pectoraux",
+              "series": 3,
+              "serie": 45,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "12-20 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x17",
+              "key": "cba",
+              "nom": "Curl Bayesian à l’élastique",
+              "kind": "bayesian",
+              "muscle": "Biceps (étirement)",
+              "series": 3,
+              "serie": 40,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "10-15 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c18",
+          "nom": "Bloc 3",
+          "tours": 3,
+          "reposTour": 45,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x19",
+              "key": "bfh",
+              "nom": "Barre au front haltères au sol",
+              "kind": "skullFloor",
+              "muscle": "Triceps",
+              "series": 3,
+              "serie": 40,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "10-15 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x20",
+              "key": "cm",
+              "nom": "Curl marteau",
+              "kind": "hammer",
+              "muscle": "Brachial, avant-bras",
+              "series": 3,
+              "serie": 35,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "8-12 reps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 29,
+      "id": "sc",
+      "dossier": "perso",
+      "nom": "Séance C — Pecs, bras (bonus)",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x21",
+          "key": "ech",
+          "nom": "Échauffement",
+          "kind": "warmup",
+          "muscle": "Épaules, articulations",
+          "series": 1,
+          "serie": 180,
+          "repos": 0,
+          "reposApres": 60,
+          "note": "3 min"
+        },
+        {
+          "type": "circuit",
+          "id": "c22",
+          "nom": "Bloc 1",
+          "tours": 3,
+          "reposTour": 60,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x23",
+              "key": "dp",
+              "nom": "Dips",
+              "kind": "dips",
+              "muscle": "Triceps, pectoraux",
+              "series": 3,
+              "serie": 40,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "8-12 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x24",
+              "key": "cs",
+              "nom": "Curl haltères en supination",
+              "kind": "curl",
+              "muscle": "Biceps",
+              "series": 3,
+              "serie": 35,
+              "repos": 60,
+              "reposApres": 120,
+              "note": "8-12 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c25",
+          "nom": "Bloc 2",
+          "tours": 3,
+          "reposTour": 45,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x26",
+              "key": "pds",
+              "nom": "Pompes pieds surélevés",
+              "kind": "pushupDecline",
+              "muscle": "Haut des pectoraux, épaules",
+              "series": 3,
+              "serie": 40,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "Max moins 1 rep"
+            },
+            {
+              "type": "exo",
+              "id": "x27",
+              "key": "ene",
+              "nom": "Extension triceps nuque à l’élastique",
+              "kind": "overheadExtBand",
+              "muscle": "Triceps (longue portion)",
+              "series": 3,
+              "serie": 40,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "12-20 reps"
+            }
+          ]
+        },
+        {
+          "type": "circuit",
+          "id": "c28",
+          "nom": "Bloc 3",
+          "tours": 2,
+          "reposTour": 45,
+          "reposApres": 60,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x29",
+              "key": "eeh",
+              "nom": "Écartés élastique de haut en bas",
+              "kind": "flyHighLow",
+              "muscle": "Bas des pectoraux",
+              "series": 2,
+              "serie": 45,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "15-20 reps"
+            },
+            {
+              "type": "exo",
+              "id": "x30",
+              "key": "cm",
+              "nom": "Curl marteau",
+              "kind": "hammer",
+              "muscle": "Brachial, avant-bras",
+              "series": 2,
+              "serie": 40,
+              "repos": 45,
+              "reposApres": 120,
+              "note": "12-15 reps"
+            }
+          ]
+        },
+        {
+          "type": "exo",
+          "id": "x31",
+          "key": "pdm",
+          "nom": "Pompes diamant",
+          "kind": "pushup",
+          "muscle": "Triceps, pectoraux",
+          "series": 1,
+          "serie": 45,
+          "repos": 60,
+          "reposApres": 120,
+          "note": "Finisher · 1 série jusqu’à l’échec"
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 40,
+      "id": "s1",
+      "dossier": "perso",
+      "nom": "Push – Haut du corps",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x32",
+          "key": "dc",
+          "nom": "Développé couché",
+          "kind": "press",
+          "muscle": "Pectoraux, triceps",
+          "series": 4,
+          "serie": 40,
+          "repos": 120,
+          "reposApres": 120,
+          "note": "60 kg · 10 reps"
+        },
+        {
+          "type": "exo",
+          "id": "x33",
+          "key": "cb",
+          "nom": "Curl biceps haltères",
+          "kind": "curl",
+          "muscle": "Biceps",
+          "series": 3,
+          "serie": 35,
+          "repos": 75,
+          "reposApres": 120,
+          "note": "12 kg"
+        },
+        {
+          "type": "exo",
+          "id": "x34",
+          "key": "cm",
+          "nom": "Curl marteau",
+          "kind": "hammer",
+          "muscle": "Brachial, avant-bras",
+          "series": 3,
+          "serie": 35,
+          "repos": 75,
+          "reposApres": 120,
+          "note": "12 kg"
+        },
+        {
+          "type": "exo",
+          "id": "x35",
+          "key": "el",
+          "nom": "Élévations latérales haltères",
+          "kind": "raise",
+          "muscle": "Épaules",
+          "series": 3,
+          "serie": 45,
+          "repos": 60,
+          "reposApres": 120,
+          "note": "8 kg"
+        },
+        {
+          "type": "exo",
+          "id": "x36",
+          "key": "bf",
+          "nom": "Barre au front",
+          "kind": "skull",
+          "muscle": "Triceps",
+          "series": 3,
+          "serie": 35,
+          "repos": 75,
+          "reposApres": 120,
+          "note": "20 kg"
+        },
+        {
+          "type": "exo",
+          "id": "x37",
+          "key": "fp",
+          "nom": "Face pull",
+          "kind": "facepull",
+          "muscle": "Arrière d’épaule, haut du dos",
+          "series": 3,
+          "serie": 40,
+          "repos": 60,
+          "reposApres": 120,
+          "note": "15 reps"
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 20,
+      "id": "e1",
+      "dossier": "debut",
+      "nom": "Full body A",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x38",
+          "key": "sqp",
+          "nom": "Squat poids du corps",
+          "kind": "squatBw",
+          "muscle": "Cuisses, fessiers",
+          "series": 3,
+          "serie": 40,
+          "repos": 60,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x39",
+          "key": "pin",
+          "nom": "Pompes inclinées (mains surélevées)",
+          "kind": "pushupIncline",
+          "muscle": "Bas des pectoraux",
+          "series": 3,
+          "serie": 30,
+          "repos": 60,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x40",
+          "key": "ra",
+          "nom": "Rowing australien",
+          "kind": "invrow",
+          "muscle": "Dos, biceps",
+          "series": 3,
+          "serie": 40,
+          "repos": 75,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x41",
+          "key": "gn",
+          "nom": "Gainage",
+          "kind": "plank",
+          "muscle": "Abdos, sangle abdominale",
+          "series": 2,
+          "serie": 45,
+          "repos": 45,
+          "reposApres": 120,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 24,
+      "id": "e2",
+      "dossier": "debut",
+      "nom": "Full body B",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x42",
+          "key": "fe",
+          "nom": "Fentes",
+          "kind": "lunge",
+          "muscle": "Cuisses, fessiers",
+          "series": 3,
+          "serie": 45,
+          "repos": 90,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x43",
+          "key": "dch",
+          "nom": "Développé couché haltères",
+          "kind": "pressDb",
+          "muscle": "Pectoraux, triceps",
+          "series": 3,
+          "serie": 40,
+          "repos": 105,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x44",
+          "key": "ro",
+          "nom": "Rowing haltère unilatéral",
+          "kind": "rowOne",
+          "muscle": "Dos, arrière d’épaule",
+          "series": 3,
+          "serie": 40,
+          "repos": 90,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x45",
+          "key": "cb",
+          "nom": "Curl biceps haltères",
+          "kind": "curl",
+          "muscle": "Biceps",
+          "series": 2,
+          "serie": 35,
+          "repos": 75,
+          "reposApres": 120,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 14,
+      "id": "e3",
+      "dossier": "street",
+      "nom": "Circuit poids du corps",
+      "items": [
+        {
+          "type": "circuit",
+          "id": "c46",
+          "nom": "Circuit",
+          "tours": 3,
+          "reposTour": 120,
+          "reposApres": 120,
+          "exos": [
+            {
+              "type": "exo",
+              "id": "x47",
+              "key": "po",
+              "nom": "Pompes",
+              "kind": "pushup",
+              "muscle": "Pectoraux, triceps",
+              "series": 3,
+              "serie": 30,
+              "repos": 15,
+              "reposApres": 120,
+              "note": ""
+            },
+            {
+              "type": "exo",
+              "id": "x48",
+              "key": "sqp",
+              "nom": "Squat poids du corps",
+              "kind": "squatBw",
+              "muscle": "Cuisses, fessiers",
+              "series": 3,
+              "serie": 40,
+              "repos": 15,
+              "reposApres": 120,
+              "note": ""
+            },
+            {
+              "type": "exo",
+              "id": "x49",
+              "key": "fe",
+              "nom": "Fentes",
+              "kind": "lunge",
+              "muscle": "Cuisses, fessiers",
+              "series": 3,
+              "serie": 45,
+              "repos": 15,
+              "reposApres": 120,
+              "note": ""
+            },
+            {
+              "type": "exo",
+              "id": "x50",
+              "key": "gn",
+              "nom": "Gainage",
+              "kind": "plank",
+              "muscle": "Abdos, sangle abdominale",
+              "series": 3,
+              "serie": 45,
+              "repos": 15,
+              "reposApres": 120,
+              "note": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dureeEstimeeMin": 19,
+      "id": "e4",
+      "dossier": "street",
+      "nom": "Tractions & dips",
+      "items": [
+        {
+          "type": "exo",
+          "id": "x51",
+          "key": "tre",
+          "nom": "Tractions avec élastique",
+          "kind": "pullup",
+          "muscle": "Dos, biceps",
+          "series": 4,
+          "serie": 40,
+          "repos": 90,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x52",
+          "key": "dp",
+          "nom": "Dips",
+          "kind": "dips",
+          "muscle": "Triceps, pectoraux",
+          "series": 3,
+          "serie": 35,
+          "repos": 90,
+          "reposApres": 120,
+          "note": ""
+        },
+        {
+          "type": "exo",
+          "id": "x53",
+          "key": "po",
+          "nom": "Pompes",
+          "kind": "pushup",
+          "muscle": "Pectoraux, triceps",
+          "series": 3,
+          "serie": 30,
+          "repos": 60,
+          "reposApres": 120,
+          "note": ""
+        }
+      ]
+    }
+  ]
+}
