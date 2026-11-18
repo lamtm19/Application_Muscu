@@ -7,8 +7,11 @@
 ================================================================ */
 import lib from '../data/exercices.json' with { type: 'json' };
 
-// Flash gratuit le plus récent (ai.google.dev/gemini-api/docs/models, nov. 2026)
-const MODELE = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+// Flash gratuit le plus récent (ai.google.dev/gemini-api/docs/models, nov. 2026),
+// puis des modèles Flash-Lite gratuits en secours si Google est saturé (erreur 503/429 ou trop lent).
+const MODELES = (process.env.GEMINI_MODEL ? [process.env.GEMINI_MODEL] : [])
+  .concat(['gemini-3.8-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite']);
+const DELAI_MAX = [15000, 20000, 20000]; // ms par tentative
 const CLES = lib.map(e => e.key).concat('perso');
 
 const INSTRUCTIONS = `Tu es un coach de musculation et de street workout dans l'app « Pause du Champion » (minuteur de séries et de repos).
@@ -20,6 +23,8 @@ Règles :
 - "reposApres" = pause avant l'élément suivant (souvent 60 à 120 s).
 - Tu peux créer des circuits (type "circuit", "tours", "reposTour", et dans chaque exo "repos" = repos avant l'exo suivant du circuit, "series" ≤ "tours").
 - Mets les répétitions ou la charge dans "note" (ex : "8-12 reps").
+- Un exercice seul = un élément type "exo" avec key, series, serie, repos, reposApres DIRECTEMENT dedans (jamais de "exos"). "exos" sert uniquement aux circuits.
+- N’invente pas d’"id" : mets un "id" seulement pour modifier une séance existante (son id exact).
 - Trois parcours possibles : 1) créer de zéro : demande l'objectif, le niveau, les jours par semaine, le matériel, puis les contraintes (une question à la fois), puis propose les séances ; 2) importer une séance écrite : l'utilisateur colle son texte, tu reconnais les exercices, demande l'objectif si besoin, puis renvoie la séance ; 3) adapter une séance existante : demande laquelle (choix = noms de ses séances), puis ce qu'il veut changer, puis renvoie la séance modifiée EN GARDANT SON "id".
 - Quand tu proposes des séances : type "seances", "texte" = une phrase de résumé, "seances" = la liste.
 
@@ -104,24 +109,28 @@ export async function POST(request) {
     generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, temperature: 0.6 },
   };
 
-  try {
-    const rep = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODELE}:generateContent`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': cle },
-      body: JSON.stringify(corps),
-    });
-    if (!rep.ok) {
-      const detail = await rep.text();
-      console.error('Gemini', rep.status, detail.slice(0, 500));
-      return json({ erreur: rep.status === 429 ? 'Limite gratuite atteinte, réessaie plus tard' : 'Coach indisponible' }, 502);
+  let derniere = 502;
+  for (let i = 0; i < MODELES.length; i++) {
+    try {
+      const rep = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODELES[i]}:generateContent`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': cle },
+        body: JSON.stringify(corps),
+        signal: AbortSignal.timeout(DELAI_MAX[i] || 20000),
+      });
+      if (!rep.ok) {
+        derniere = rep.status;
+        console.error('Gemini', MODELES[i], rep.status, (await rep.text()).slice(0, 300));
+        continue; // on essaie le modèle suivant
+      }
+      const d = await rep.json();
+      const texte = d?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
+      const sortie = JSON.parse(texte);
+      if (!sortie.texte) throw new Error('Réponse vide');
+      return json(sortie);
+    } catch (e) {
+      console.error('Coach', MODELES[i], e.name, e.message);
     }
-    const d = await rep.json();
-    const texte = d?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-    const sortie = JSON.parse(texte);
-    if (!sortie.texte) throw new Error('Réponse vide');
-    return json(sortie);
-  } catch (e) {
-    console.error('Coach', e);
-    return json({ erreur: 'Coach indisponible' }, 502);
   }
+  return json({ erreur: derniere === 429 ? 'Limite gratuite atteinte, réessaie plus tard' : 'Coach indisponible' }, 502);
 }

@@ -63,7 +63,9 @@ function exoDepuisIA(e, enCircuit, tours) {
 }
 
 function seanceDepuisIA(s) {
-  const items = (s.items || []).map(it => {
+  // Tolérance : un « exo » mal formé dont les exercices sont dans « exos » devient plusieurs exos
+  const bruts = (s.items || []).flatMap(it => (it && it.type !== 'circuit' && !it.key && Array.isArray(it.exos)) ? it.exos.map(e => ({ type: 'exo', ...e })) : [it]);
+  const items = bruts.filter(it => it && (it.type === 'circuit' || it.key)).map(it => {
     if (it.type === 'circuit') {
       const tours = entier(it.tours, 1, 10, 3);
       return creerCircuit({
