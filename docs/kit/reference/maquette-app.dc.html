@@ -1,0 +1,1111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Pause du Champion — prototype</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#e8ff00}a:hover{color:#f3ff80}
+.pdc-scroll{scrollbar-width:none}
+.pdc-scroll::-webkit-scrollbar{display:none}
+@keyframes pdcSlide{from{transform:translateY(-24px);opacity:0}to{transform:translateY(0);opacity:1}}
+input,textarea,button,select{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0a0a0a; color: #f0f0f0; font-family: 'DM Sans', system-ui, sans-serif">
+
+<!-- ================= ACCUEIL ================= -->
+<sc-if value="{{is.accueil}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 22px 20px 14px">
+    <img src="/_blob/35b36997dfe0ab878ee4f61dc0a63dd3" alt="Pause du Champion" style="height: 40px; width: 90px; object-fit: contain; object-position: left center">
+    <div style="display: flex; gap: 8px">
+      <button aria-label="Historique" onClick="{{go.historique}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></button>
+      <button aria-label="Notifications et son" onClick="{{go.reglages}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg></button>
+      <button aria-label="Aide" onClick="{{go.aide}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"></path><path d="M12 17h.01"></path></svg></button>
+    </div>
+  </header>
+
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 0 20px 110px; display: flex; flex-direction: column; gap: 14px">
+    <button onClick="{{go.coach}}" style="display: flex; gap: 14px; align-items: center; height: 64px; padding: 0 16px 0 12px; border-radius: 18px; border: 1px solid #3a4000; background: #121400; color: #f0f0f0; cursor: pointer; text-align: left">
+      <span style="width: 40px; height: 40px; flex: 0 0 40px; border-radius: 12px; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></span>
+      <span style="flex: 1; font-size: 16px; font-weight: 700">Coach IA</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+    </button>
+
+    <sc-for list="{{dossiers}}" as="d" hint-placeholder-count="2">
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; align-items: center; gap: 4px; margin-top: 4px">
+          <button onClick="{{d.basculer}}" aria-label="{{d.toggleLabel}}" style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; height: 44px; background: transparent; border: none; color: #f0f0f0; cursor: pointer; padding: 0; text-align: left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate({{d.rot}}deg); transition: transform 0.2s"><path d="M9 6l6 6-6 6"></path></svg>
+            <span style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.nom}}</span>
+            <span style="font-size: 13px; color: #888888">{{d.nb}}</span>
+            <sc-if value="{{d.preset}}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 999px; border: 1px solid #4a5200; color: #e8ff00">EXEMPLES</span></sc-if>
+          </button>
+          <button aria-label="Options du dossier" onClick="{{d.options}}" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: transparent; color: #888888; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+        </div>
+        <sc-if value="{{d.ouvert}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <sc-if value="{{d.vide}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; padding: 14px 16px; border-radius: 16px; border: 1.5px dashed #3a3a3a; font-size: 14px; color: #888888">Aucune séance ici pour l’instant.</p></sc-if>
+            <sc-for list="{{d.seances}}" as="s" hint-placeholder-count="2">
+              <article style="background: #141414; border: 1px solid #2a2a2a; border-radius: 18px; padding: 14px 14px 14px 16px; display: flex; flex-direction: column; gap: 12px">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+                  <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                    <h3 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.02em; font-weight: 400">{{s.nom}}</h3>
+                    <span style="font-size: 13px; color: #888888">{{s.resume}}</span>
+                  </div>
+                  <span style="font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8ff00; white-space: nowrap">{{s.dureeTxt}}</span>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <button onClick="{{s.lancer}}" style="flex: 1; height: 46px; border: none; border-radius: 14px; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z"></path></svg>Lancer</button>
+                  <button onClick="{{s.modifier}}" style="height: 46px; padding: 0 16px; border: 1px solid #2a2a2a; background: transparent; color: #f0f0f0; border-radius: 14px; font-weight: 600; font-size: 15px; cursor: pointer">Modifier</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </sc-if>
+      </section>
+    </sc-for>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px">
+      <button onClick="{{nouveauDossier}}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px dashed #444444; background: transparent; color: #cfcfcf; font-size: 14px; font-weight: 600; cursor: pointer">+ Nouveau dossier</button>
+      <sc-if value="{{aMasques}}" hint-placeholder-val="{{ false }}"><button onClick="{{afficherMasques}}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #2a2a2a; background: transparent; color: #888888; font-size: 14px; cursor: pointer">{{masquesTxt}}</button></sc-if>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px 24px; background: #0a0a0a; border-top: 1px solid #1e1e1e">
+    <button onClick="{{nouvelle}}" style="width: 100%; height: 54px; border: 1.5px solid #e8ff00; border-radius: 16px; background: #161800; color: #e8ff00; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nouvelle séance</button>
+  </div>
+
+  <sc-if value="{{ds.open}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: flex-end">
+      <button aria-label="Fermer" onClick="{{ds.fermer}}" style="flex: 1; background: transparent; border: none; cursor: pointer"></button>
+      <div role="dialog" aria-label="Options du dossier" style="background: #141414; border-top: 1px solid #2a2a2a; border-radius: 24px 24px 0 0; padding: 12px 20px 30px; display: flex; flex-direction: column; gap: 14px">
+        <div style="width: 40px; height: 5px; border-radius: 3px; background: #3a3a3a; align-self: center"></div>
+        <sc-if value="{{ds.perso}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #888888">Nom du dossier</span><input value="{{ds.nom}}" onChange="{{ds.setNom}}" style="height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 17px; padding: 0 14px"></label>
+            <div style="display: flex; gap: 10px">
+              <sc-if value="{{ds.supprimable}}" hint-placeholder-val="{{ true }}"><button onClick="{{ds.supprimer}}" style="height: 52px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #ff4d4d; background: transparent; color: #ff4d4d; font-weight: 600; font-size: 15px; cursor: pointer">Supprimer</button></sc-if>
+              <button onClick="{{ds.fermer}}" style="flex: 1; height: 52px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">OK</button>
+            </div>
+            <sc-if value="{{ds.supprimable}}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-size: 13px; color: #888888">Si tu le supprimes, ses séances retournent dans « Mes séances ».</p></sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ds.preset}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 28px; font-weight: 400">{{ds.nom}}</h2>
+            <p style="margin: 0; font-size: 14px; color: #888888; line-height: 1.45">Des séances d’exemple pour bien démarrer. Si tu en modifies une, une copie est enregistrée dans « Mes séances ».</p>
+            <button onClick="{{ds.masquer}}" style="height: 52px; border-radius: 14px; border: 1px solid #2a2a2a; background: #1e1e1e; color: #f0f0f0; font-weight: 700; font-size: 16px; cursor: pointer">Masquer ce dossier</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ================= ÉDITEUR (chemin) ================= -->
+<sc-if value="{{is.editeur}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: flex-start; gap: 10px; padding: 18px 16px 12px; border-bottom: 1px solid #1e1e1e">
+    <button aria-label="Retour" onClick="{{go.accueil}}" style="width: 44px; height: 44px; flex: 0 0 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+      <input aria-label="Nom de la séance" value="{{ed.nom}}" onChange="{{ed.setNom}}" style="background: transparent; border: none; color: #f0f0f0; font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.02em; padding: 0; outline: none; width: 100%; height: 36px">
+      <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #888888">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6l2 2h10v10H3z"></path></svg>
+        <select aria-label="Dossier" value="{{ed.dossier}}" onChange="{{ed.setDossier}}" style="background: transparent; border: none; color: #cfcfcf; font-size: 16px; padding: 0; outline: none">
+          <sc-for list="{{ed.dossiers}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.nom}}</option></sc-for>
+        </select>
+      </label>
+    </div>
+    <button aria-label="Adapter avec le coach IA" onClick="{{go.coach}}" style="width: 44px; height: 44px; flex: 0 0 44px; border-radius: 14px; border: 1px solid #4a5200; background: #161800; color: #e8ff00; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></button>
+  </header>
+
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 16px 16px 150px">
+    <sc-if value="{{ed.copie}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 14px; padding: 10px 12px; border-radius: 12px; background: #161800; border: 1px solid #4a5200; font-size: 13px; color: #f3ff80">Copie d’une séance d’exemple : elle sera enregistrée dans tes dossiers.</p></sc-if>
+    <sc-if value="{{ed.vide}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 14px; font-size: 14px; color: #888888; line-height: 1.45">Ajoute un exercice ou un circuit pour commencer.</p></sc-if>
+    <sc-for list="{{ed.items}}" as="x" hint-placeholder-count="3">
+      <div style="display: flex; flex-direction: column">
+        <sc-if value="{{x.estExo}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div style="width: 64px; height: 64px; flex: 0 0 64px; border-radius: 20px; background: #141414; border: 2px solid #e8ff00; display: flex; align-items: center; justify-content: center; overflow: hidden">
+              <dc-import name="Illu" kind="{{x.kind}}" w="60" h="45" hint-size="60px,45px"></dc-import>
+            </div>
+            <div style="flex: 1; min-width: 0; height: 64px; box-sizing: border-box; background: #141414; border: 1px solid #2a2a2a; border-radius: 18px; padding: 0 8px 0 14px; display: flex; gap: 8px; align-items: center">
+              <span style="flex: 1; min-width: 0; font-weight: 600; font-size: 15px; line-height: 1.25">{{x.nom}}</span>
+              <span style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; padding: 0 2px">x{{x.series}}</span>
+              <button aria-label="Réglages de l’exercice" onClick="{{x.ouvrir}}" style="width: 44px; height: 44px; flex: 0 0 44px; border-radius: 12px; border: 1px solid #2a2a2a; background: #1e1e1e; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{x.estCircuit}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 12px; align-items: stretch">
+            <div style="width: 64px; flex: 0 0 64px; display: flex; flex-direction: column; align-items: center">
+              <div style="width: 64px; height: 64px; border-radius: 20px; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12"></path><path d="M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div>
+              <div style="flex: 1; width: 0; border-left: 2px solid #e8ff00; margin-top: 4px"></div>
+            </div>
+            <div style="flex: 1; min-width: 0; background: #141414; border: 1px solid #4a5200; border-radius: 18px; padding: 10px 8px 12px 14px; display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; align-items: center; gap: 8px">
+                <span style="flex: 1; min-width: 0; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8ff00; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{x.nomCircuit}}</span>
+                <span style="font-family: 'Bebas Neue', sans-serif; font-size: 26px">x{{x.tours}}</span>
+                <button aria-label="Réglages du circuit" onClick="{{x.ouvrirCircuit}}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #2a2a2a; background: #1e1e1e; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></button>
+              </div>
+              <sc-for list="{{x.exos}}" as="c" hint-placeholder-count="3">
+                <div style="display: flex; align-items: center; gap: 10px; padding: 4px 0">
+                  <span style="width: 48px; height: 36px; flex: 0 0 48px; border-radius: 10px; background: #0a0a0a; display: flex; align-items: center; justify-content: center"><dc-import name="Illu" kind="{{c.kind}}" w="46" h="34" hint-size="46px,34px"></dc-import></span>
+                  <span style="flex: 1; min-width: 0; font-size: 14px; font-weight: 600">{{c.nom}}</span>
+                  <button aria-label="Réglages de l’exercice" onClick="{{c.ouvrir}}" style="width: 40px; height: 40px; border-radius: 10px; border: none; background: transparent; color: #888888; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"></path><circle cx="16" cy="6" r="2"></circle><circle cx="10" cy="12" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></button>
+                </div>
+              </sc-for>
+              <button onClick="{{x.ajouter}}" style="height: 40px; border-radius: 12px; border: 1px dashed #444444; background: transparent; color: #cfcfcf; font-size: 14px; font-weight: 600; cursor: pointer">+ Ajouter au circuit</button>
+              <div style="display: flex; align-items: center; gap: 4px; align-self: flex-start; background: #2a0f0f; border: 1px solid #5c2323; border-radius: 999px; padding: 4px">
+                <button aria-label="Moins 15 secondes" onClick="{{x.rtMoins}}" style="width: 34px; height: 34px; border-radius: 50%; border: none; background: #3d1616; color: #f0f0f0; font-size: 18px; cursor: pointer; padding: 0">−</button>
+                <span style="font-size: 13px; color: #ffc2c2; padding: 0 6px; white-space: nowrap">Entre tours : <strong style="color: #ff4d4d; font-family: 'Bebas Neue', sans-serif; font-size: 17px; font-weight: 400">{{x.rtTxt}}</strong></span>
+                <button aria-label="Plus 15 secondes" onClick="{{x.rtPlus}}" style="width: 34px; height: 34px; border-radius: 50%; border: none; background: #3d1616; color: #f0f0f0; font-size: 18px; cursor: pointer; padding: 0">+</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{x.pasDernier}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; gap: 12px; align-items: center; height: 66px">
+            <div style="width: 64px; flex: 0 0 64px; height: 66px; display: flex; justify-content: center"><div style="width: 0; height: 66px; border-left: 2px dashed #ff4d4d"></div></div>
+            <div style="display: flex; align-items: center; gap: 4px; background: #2a0f0f; border: 1px solid #5c2323; border-radius: 999px; padding: 4px">
+              <button aria-label="Moins 15 secondes" onClick="{{x.transMoins}}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: #3d1616; color: #f0f0f0; font-size: 18px; cursor: pointer; padding: 0">−</button>
+              <span style="font-size: 14px; color: #ffc2c2; padding: 0 8px; white-space: nowrap">Pause : <strong style="color: #ff4d4d; font-family: 'Bebas Neue', sans-serif; font-size: 18px; font-weight: 400">{{x.transTxt}}</strong></span>
+              <button aria-label="Plus 15 secondes" onClick="{{x.transPlus}}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: #3d1616; color: #f0f0f0; font-size: 18px; cursor: pointer; padding: 0">+</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+
+    <div style="display: flex; gap: 10px; margin-top: 16px">
+      <button onClick="{{ed.ajouterExo}}" style="flex: 1; height: 56px; border: 1.5px dashed #444444; background: transparent; color: #f0f0f0; border-radius: 18px; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Exercice</button>
+      <button onClick="{{ed.ajouterCircuit}}" style="flex: 1; height: 56px; border: 1.5px dashed #4a5200; background: transparent; color: #e8ff00; border-radius: 18px; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Circuit</button>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 16px 24px; background: #0a0a0a; border-top: 1px solid #1e1e1e; display: flex; align-items: center; gap: 12px">
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 0">
+      <span style="font-size: 12px; color: #888888">Durée totale estimée</span>
+      <span style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1.05">{{ed.dureeTxt}}</span>
+      <span style="font-size: 12px; color: #888888">{{ed.compo}}</span>
+    </div>
+    <button onClick="{{ed.enregistrer}}" style="height: 54px; padding: 0 24px; border: none; border-radius: 16px; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">Enregistrer</button>
+  </div>
+
+  <!-- réglages d'un exercice -->
+  <sc-if value="{{sx.open}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.65); display: flex; flex-direction: column; justify-content: flex-end">
+      <button aria-label="Fermer les réglages" onClick="{{fermerSheet}}" style="flex: 1; background: transparent; border: none; cursor: pointer"></button>
+      <div class="pdc-scroll" style="background: #141414; border-radius: 26px 26px 0 0; border-top: 1px solid #2a2a2a; max-height: 740px; overflow-y: auto; padding: 10px 18px 26px; display: flex; flex-direction: column; gap: 18px">
+        <div style="width: 40px; height: 5px; border-radius: 3px; background: #3a3a3a; align-self: center"></div>
+        <div style="display: flex; gap: 14px; align-items: center">
+          <div style="width: 132px; height: 99px; flex: 0 0 132px; background: #0a0a0a; border-radius: 16px; display: flex; align-items: center; justify-content: center">
+            <dc-import name="Illu" kind="{{sx.kind}}" w="128" h="96" hint-size="128px,96px"></dc-import>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+            <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 28px; line-height: 1; font-weight: 400">{{sx.nom}}</h2>
+            <span style="font-size: 13px; color: #888888">{{sx.muscle}}</span>
+          </div>
+        </div>
+        <sc-if value="{{sx.perso}}" hint-placeholder-val="{{ false }}"><label style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #888888">Nom de l’exercice</span><input value="{{sx.nom}}" onChange="{{sx.setNomExo}}" style="height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 17px; padding: 0 14px"></label></sc-if>
+        <sc-if value="{{sx.open}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-weight: 600; font-size: 15px">{{sx.seriesLabel}}</span>
+            <div style="display: flex; align-items: center; gap: 4px; background: #0a0a0a; border-radius: 14px; padding: 4px">
+              <button aria-label="Une série de moins" onClick="{{sx.moins}}" style="width: 44px; height: 44px; border-radius: 10px; border: none; background: #1e1e1e; color: #f0f0f0; font-size: 20px; cursor: pointer; padding: 0">−</button>
+              <span style="min-width: 48px; text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 28px">x{{sx.series}}</span>
+              <button aria-label="Une série de plus" onClick="{{sx.plus}}" style="width: 44px; height: 44px; border-radius: 10px; border: none; background: #1e1e1e; color: #f0f0f0; font-size: 20px; cursor: pointer; padding: 0">+</button>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; align-items: center; justify-content: space-between">
+            <span style="font-weight: 600; font-size: 15px; color: #e8ff00">Temps de série</span>
+            <button onClick="{{sx.conseil}}" style="background: transparent; border: none; color: #888888; font-size: 12px; cursor: pointer; text-decoration: underline; padding: 6px 0">Conseillé : {{sx.conseilTxt}}</button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{sx.serieM}}" onChange="{{sx.setSerieM}}" aria-label="Minutes de série" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">min</span></label>
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{sx.serieS}}" onChange="{{sx.setSerieS}}" aria-label="Secondes de série" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">s</span></label>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-weight: 600; font-size: 15px; color: #ff4d4d">{{sx.reposLabel}}</span>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{sx.reposM}}" onChange="{{sx.setReposM}}" aria-label="Minutes de repos" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">min</span></label>
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{sx.reposS}}" onChange="{{sx.setReposS}}" aria-label="Secondes de repos" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">s</span></label>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap">
+            <sc-for list="{{sx.chips}}" as="c" hint-placeholder-count="4">
+              <button onClick="{{c.pick}}" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-size: 13px; font-weight: 600; cursor: pointer">{{c.txt}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #888888">Notes</span><textarea value="{{sx.note}}" onChange="{{sx.setNote}}" placeholder="Charge, répétitions, prise… (ex : 60 kg · 10 reps)" rows="2" style="border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 16px; padding: 10px 12px; resize: none"></textarea></label>
+        <div style="display: flex; gap: 10px">
+          <button onClick="{{sx.supprimer}}" style="height: 52px; padding: 0 18px; border-radius: 14px; border: 1.5px solid #ff4d4d; background: transparent; color: #ff4d4d; font-weight: 600; font-size: 15px; cursor: pointer">Retirer</button>
+          <button onClick="{{fermerSheet}}" style="flex: 1; height: 52px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">Appliquer</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- réglages d'un circuit -->
+  <sc-if value="{{cx.open}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.65); display: flex; flex-direction: column; justify-content: flex-end">
+      <button aria-label="Fermer les réglages" onClick="{{fermerSheet}}" style="flex: 1; background: transparent; border: none; cursor: pointer"></button>
+      <div style="background: #141414; border-radius: 26px 26px 0 0; border-top: 1px solid #2a2a2a; padding: 10px 18px 26px; display: flex; flex-direction: column; gap: 18px">
+        <div style="width: 40px; height: 5px; border-radius: 3px; background: #3a3a3a; align-self: center"></div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <input aria-label="Nom du circuit" value="{{cx.nom}}" onChange="{{cx.setNom}}" style="background: transparent; border: none; border-bottom: 1px solid #2a2a2a; color: #e8ff00; font-family: 'Bebas Neue', sans-serif; font-size: 30px; padding: 0 0 4px; outline: none">
+          <p style="margin: 0; font-size: 14px; color: #888888; line-height: 1.45">Tu alternes les exercices du bloc : pendant que tu fais l’un, les muscles de l’autre récupèrent. Un exercice peut avoir moins de séries que les autres (il saute alors les derniers tours).</p>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span style="font-weight: 600; font-size: 15px">Nombre de tours</span>
+          <div style="display: flex; align-items: center; gap: 4px; background: #0a0a0a; border-radius: 14px; padding: 4px">
+            <button aria-label="Un tour de moins" onClick="{{cx.moins}}" style="width: 44px; height: 44px; border-radius: 10px; border: none; background: #1e1e1e; color: #f0f0f0; font-size: 20px; cursor: pointer; padding: 0">−</button>
+            <span style="min-width: 48px; text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 28px">x{{cx.tours}}</span>
+            <button aria-label="Un tour de plus" onClick="{{cx.plus}}" style="width: 44px; height: 44px; border-radius: 10px; border: none; background: #1e1e1e; color: #f0f0f0; font-size: 20px; cursor: pointer; padding: 0">+</button>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span style="font-weight: 600; font-size: 15px; color: #ff4d4d">Repos entre deux tours</span>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{cx.rM}}" onChange="{{cx.setRM}}" aria-label="Minutes" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">min</span></label>
+            <label style="display: flex; align-items: center; gap: 6px"><input type="number" inputmode="numeric" min="0" max="59" value="{{cx.rS}}" onChange="{{cx.setRS}}" aria-label="Secondes" style="width: 64px; height: 50px; border-radius: 12px; border: 1px solid #2a2a2a; background: #0a0a0a; color: #f0f0f0; font-size: 24px; text-align: center; font-family: 'Bebas Neue', sans-serif"><span style="font-size: 13px; color: #888888">s</span></label>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px">
+          <button onClick="{{cx.supprimer}}" style="height: 52px; padding: 0 18px; border-radius: 14px; border: 1.5px solid #ff4d4d; background: transparent; color: #ff4d4d; font-weight: 600; font-size: 15px; cursor: pointer">Retirer</button>
+          <button onClick="{{fermerSheet}}" style="flex: 1; height: 52px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">Appliquer</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ================= BIBLIOTHÈQUE ================= -->
+<sc-if value="{{is.biblio}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; flex-direction: column; gap: 12px; padding: 18px 16px 12px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <button aria-label="Retour" onClick="{{go.editeur}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+      <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400">{{biblioTitre}}</h1>
+    </div>
+    <label style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input value="{{recherche}}" onChange="{{setRecherche}}" placeholder="Rechercher (pecs, squat, biceps…)" aria-label="Rechercher un exercice" style="flex: 1; background: transparent; border: none; outline: none; color: #f0f0f0; font-size: 16px">
+    </label>
+    <div style="display: flex; gap: 6px">
+      <sc-for list="{{filtres}}" as="o" hint-placeholder-count="3"><button onClick="{{o.pick}}" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid {{o.bd}}; background: {{o.bg}}; color: {{o.fg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{o.txt}}</button></sc-for>
+    </div>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 0 16px 110px; display: flex; flex-direction: column; gap: 10px">
+    <p style="margin: 0; font-size: 13px; color: #888888">{{biblioAide}}</p>
+    <sc-if value="{{biblioVide}}" hint-placeholder-val="{{ false }}"><p style="margin: 4px 0; font-size: 14px; color: #888888">Pas trouvé dans la base. Crée-le, il sera réglable comme les autres.</p></sc-if>
+    <button onClick="{{creerPerso}}" style="display: flex; align-items: center; gap: 12px; padding: 0 14px; height: 56px; border-radius: 18px; border: 1.5px dashed #4a5200; background: transparent; color: #e8ff00; font-weight: 700; font-size: 15px; cursor: pointer; text-align: left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>{{creerTxt}}</button>
+    <sc-for list="{{biblio}}" as="b" hint-placeholder-count="5">
+      <button onClick="{{b.basculer}}" aria-pressed="{{b.sel}}" style="text-align: left; display: flex; gap: 12px; align-items: center; padding: 8px 12px 8px 8px; border-radius: 18px; border: 1.5px solid {{b.bd}}; background: #141414; color: #f0f0f0; cursor: pointer">
+        <span style="width: 80px; height: 60px; flex: 0 0 80px; border-radius: 12px; background: #0a0a0a; display: flex; align-items: center; justify-content: center"><dc-import name="Illu" kind="{{b.kind}}" w="78" h="58" hint-size="78px,58px"></dc-import></span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+          <span style="font-weight: 600; font-size: 15px">{{b.nom}}</span>
+          <span style="font-size: 12px; color: #888888">{{b.muscle}}</span>
+        </span>
+        <sc-if value="{{b.sel}}" hint-placeholder-val="{{ false }}"><span style="width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 18px">{{b.ordre}}</span></sc-if>
+        <sc-if value="{{b.pasSel}}" hint-placeholder-val="{{ true }}"><span style="width: 32px; height: 32px; flex: 0 0 32px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid #3a3a3a"></span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+  <sc-if value="{{aSelection}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 16px 24px; background: #0a0a0a; border-top: 1px solid #1e1e1e">
+      <button onClick="{{validerSel}}" style="width: 100%; height: 54px; border: none; border-radius: 16px; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">{{selTxt}}</button>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ================= RÉCAP ================= -->
+<sc-if value="{{is.recap}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 18px 16px 8px">
+    <button aria-label="Retour" onClick="{{go.accueil}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <span style="font-size: 13px; letter-spacing: 0.1em; color: #888888; font-weight: 600">RÉCAP DE LA SÉANCE</span>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 8px 20px 120px; display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 40px; line-height: 1; font-weight: 400">{{recap.nom}}</h1>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <div style="padding: 12px 14px; border-radius: 16px; background: #141414; border: 1px solid #2a2a2a; display: flex; flex-direction: column"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: #e8ff00">{{recap.duree}}</span><span style="font-size: 12px; color: #888888">au total</span></div>
+      <div style="padding: 12px 14px; border-radius: 16px; background: #141414; border: 1px solid #2a2a2a; display: flex; flex-direction: column"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 30px">{{recap.nb}}</span><span style="font-size: 12px; color: #888888">exercices</span></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <sc-for list="{{recap.items}}" as="e" hint-placeholder-count="4">
+        <div style="display: flex; gap: 12px; align-items: center; padding: 8px 14px 8px 8px; border-radius: 16px; background: #141414; border: 1px solid {{e.bd}}">
+          <span style="width: 64px; height: 48px; flex: 0 0 64px; border-radius: 10px; background: #0a0a0a; display: flex; align-items: center; justify-content: center"><dc-import name="Illu" kind="{{e.kind}}" w="62" h="46" hint-size="62px,46px"></dc-import></span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">{{e.nom}}</span><span style="font-size: 12px; color: #888888">{{e.sub}}</span></span>
+          <span style="font-family: 'Bebas Neue', sans-serif; font-size: 24px">x{{e.fois}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px 24px; background: #0a0a0a; border-top: 1px solid #1e1e1e; display: flex; gap: 10px">
+    <button onClick="{{recap.modifier}}" style="height: 54px; padding: 0 18px; border-radius: 16px; border: 1px solid #2a2a2a; background: transparent; color: #f0f0f0; font-weight: 600; font-size: 15px; cursor: pointer">Modifier</button>
+    <button onClick="{{recap.go}}" style="flex: 1; height: 54px; border-radius: 16px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z"></path></svg>C’est parti !</button>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= SÉANCE EN COURS ================= -->
+<sc-if value="{{is.seance}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: grid; grid-template-columns: 44px minmax(0, 1fr) 72px; align-items: center; gap: 12px; padding: 18px 20px 0">
+    <button aria-label="Quitter la séance" onClick="{{run.demanderQuitter}}" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid #2a2a2a; background: #141414; color: #888888; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; color: #888888; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{run.nom}}</span>
+    <button aria-label="Voir toute la séance" onClick="{{run.ouvrirApercu}}" style="justify-self: end; height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer">{{run.prog1}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+  </header>
+
+  <sc-if value="{{run.enRoute}}" hint-placeholder-val="{{ true }}">
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 16px 20px 0">
+      <div style="width: 184px; height: 138px; display: flex; align-items: center; justify-content: center">
+        <dc-import name="Illu" kind="{{run.kind}}" w="184" h="138" hint-size="184px,138px"></dc-import>
+      </div>
+      <div style="position: relative; width: 216px; height: 216px; margin-top: 12px">
+        <svg width="216" height="216" viewBox="0 0 216 216" aria-hidden="true" style="transform: rotate(-90deg)">
+          <circle cx="108" cy="108" r="100" fill="none" stroke="#1e1e1e" stroke-width="8"></circle>
+          <circle cx="108" cy="108" r="100" fill="none" stroke="{{run.col}}" stroke-width="8" stroke-linecap="round" stroke-dasharray="{{run.dash}}" stroke-dashoffset="{{run.off}}" style="transition: stroke-dashoffset 0.9s linear"></circle>
+        </svg>
+        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-top: 4px; font-family: 'Bebas Neue', sans-serif; font-size: 60px; letter-spacing: 2px; line-height: 1; color: {{run.col}}">
+          <sc-for list="{{run.chars}}" as="ch" hint-placeholder-count="4"><span style="display: inline-block; width: {{ch.w}}; text-align: center">{{ch.c}}</span></sc-for>
+        </div>
+        <sc-if value="{{bip}}" hint-placeholder-val="{{ false }}">
+          <span role="status" aria-label="Alarme sonore" style="position: absolute; top: 34px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; height: 24px; padding: 0 10px; border-radius: 999px; background: #1e1e1e; color: {{run.col}}; font-size: 12px; font-weight: 700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"></path></svg>BIP</span>
+        </sc-if>
+      </div>
+      <span style="margin-top: 20px; height: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; color: #888888">{{run.avantNom}}</span>
+      <h2 style="margin: 4px 0 0; width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 34px; line-height: 36px; height: 36px; font-weight: 400; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{run.exoNom}}</h2>
+      <div style="display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 12px; height: 26px" role="img" aria-label="{{run.dotsLabel}}">
+        <sc-if value="{{run.aSeries}}" hint-placeholder-val="{{ true }}"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: #888888; margin-right: 4px">SÉRIES</span></sc-if>
+        <sc-for list="{{run.dots}}" as="d" hint-placeholder-count="4"><span style="width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: {{d.bg}}; border: 1.5px solid {{d.bd}}; color: {{d.fg}}; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 16px">
+          <sc-if value="{{d.check}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></sc-if>
+          <sc-if value="{{d.pasCheck}}" hint-placeholder-val="{{ true }}">{{d.num}}</sc-if>
+        </span></sc-for>
+      </div>
+      <p style="margin: 12px 0 0; width: 100%; height: 38px; overflow: hidden; font-size: 14px; line-height: 19px; color: #b5b5b5; text-align: center">{{run.detail}}</p>
+
+      <div style="margin-top: auto; padding-bottom: 22px; display: grid; grid-template-columns: repeat(3, 88px); justify-content: center; column-gap: 16px; row-gap: 8px; align-items: center; justify-items: center">
+        <button aria-label="{{run.recommencerTxt}}" onClick="{{run.recommencer}}" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v6h6"></path><path d="M5.5 15a8 8 0 1 0 1-9L4 10"></path></svg></button>
+        <button aria-label="{{run.pauseLabel}}" onClick="{{run.pause}}" style="width: 80px; height: 80px; border-radius: 50%; border: none; background: {{run.col}}; color: #0a0a0a; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0">
+          <sc-if value="{{run.enCours}}" hint-placeholder-val="{{ true }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg></sc-if>
+          <sc-if value="{{run.enPause}}" hint-placeholder-val="{{ false }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z"></path></svg></sc-if>
+        </button>
+        <button aria-label="Passer" onClick="{{run.passer}}" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M6 5l10 7-10 7zM18 5v14"></path></svg></button>
+        <span style="font-size: 12px; color: #888888">Recommencer</span>
+        <span style="font-size: 12px; color: #888888">{{run.pauseLabel}}</span>
+        <span style="font-size: 12px; color: #888888">Passer</span>
+      </div>
+    </div>
+
+    <div style="padding: 16px 20px 26px; border-top: 1px solid #1e1e1e; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-size: 13px; color: #888888">Fin de séance dans</span>
+        <span style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; line-height: 1">{{run.restant}}</span>
+      </div>
+      <div style="height: 6px; border-radius: 3px; background: #1e1e1e; overflow: hidden"><div style="height: 6px; width: {{run.prog}}%; background: #e8ff00; border-radius: 3px; transition: width 0.9s linear"></div></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{run.done}}" hint-placeholder-val="{{ false }}">
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; text-align: center">
+      <span style="width: 88px; height: 88px; border-radius: 50%; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 44px; font-weight: 400">Séance terminée</h2>
+      <span style="color: #b5b5b5; font-size: 15px">{{run.nom}} · {{run.dureeTotale}}</span>
+      <button onClick="{{run.quitter}}" style="margin-top: 10px; height: 54px; padding: 0 28px; border-radius: 16px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 16px; cursor: pointer">Retour à l’accueil</button>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ================= COACH IA ================= -->
+<sc-if value="{{is.coach}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 18px 16px 12px; border-bottom: 1px solid #1e1e1e">
+    <button aria-label="Retour" onClick="{{coachRetour}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <span style="width: 40px; height: 40px; border-radius: 12px; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg></span>
+    <div style="display: flex; flex-direction: column">
+      <span style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; line-height: 1">Coach IA</span>
+      <span style="font-size: 12px; color: #888888">Propulsé par Gemini, l’IA de Google</span>
+    </div>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{chat}}" as="m" hint-placeholder-count="3">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <sc-if value="{{m.ia}}" hint-placeholder-val="{{ true }}">
+          <div style="align-self: flex-start; max-width: 300px; padding: 12px 14px; border-radius: 18px 18px 18px 6px; background: #141414; border: 1px solid #2a2a2a; font-size: 15px; line-height: 1.45; white-space: pre-line">{{m.text}}</div>
+        </sc-if>
+        <sc-if value="{{m.moi}}" hint-placeholder-val="{{ false }}">
+          <div style="align-self: flex-end; max-width: 280px; padding: 12px 14px; border-radius: 18px 18px 6px 18px; background: #e8ff00; color: #0a0a0a; font-size: 15px; line-height: 1.45; white-space: pre-line">{{m.text}}</div>
+        </sc-if>
+        <sc-if value="{{m.carte}}" hint-placeholder-val="{{ false }}">
+          <div style="align-self: stretch; padding: 14px; border-radius: 18px; background: #161800; border: 1px solid #4a5200; display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 12px; letter-spacing: 0.1em; color: #e8ff00; font-weight: 700">{{m.titre}}</span>
+            <sc-for list="{{m.items}}" as="it" hint-placeholder-count="3">
+              <div style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: #0a0a0a">
+                <span style="font-weight: 600; font-size: 14px">{{it.t}}</span>
+                <span style="font-size: 12px; color: #888888">{{it.s}}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{m.aValider}}" hint-placeholder-val="{{ true }}"><button onClick="{{m.valider}}" style="height: 48px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 15px; cursor: pointer">{{m.btn}}</button></sc-if>
+            <sc-if value="{{m.valide}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #e8ff00; font-weight: 600">Ajouté dans « Mes séances »</span></sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding: 10px 12px 22px; border-top: 1px solid #1e1e1e; display: flex; flex-direction: column; gap: 10px">
+    <div class="pdc-scroll" style="display: flex; gap: 8px; overflow-x: auto">
+      <sc-for list="{{chips}}" as="c" hint-placeholder-count="3"><button onClick="{{c.pick}}" style="flex: 0 0 auto; height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid #4a5200; background: #161800; color: #f3ff80; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap">{{c.txt}}</button></sc-for>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center">
+      <input value="{{saisie}}" onChange="{{setSaisie}}" placeholder="Écris ou colle ta séance…" aria-label="Message au coach" style="flex: 1; height: 48px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; font-size: 16px; padding: 0 14px; outline: none">
+      <button aria-label="Envoyer" onClick="{{envoyer}}" style="width: 48px; height: 48px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2-7z"></path></svg></button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= NOTIFICATIONS & SON ================= -->
+<sc-if value="{{is.reglages}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 18px 16px 12px">
+    <button aria-label="Retour" onClick="{{go.accueil}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400">Notifications &amp; son</h1>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 4px 16px 28px; display: flex; flex-direction: column; gap: 14px">
+    <h2 style="margin: 6px 0 0; font-size: 13px; letter-spacing: 0.1em; color: #888888; font-weight: 600">APERÇU SUR L’ÉCRAN VERROUILLÉ</h2>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="padding: 12px; border-radius: 20px; background: #1e1e1e; display: flex; gap: 10px">
+        <img src="/_blob/35b36997dfe0ab878ee4f61dc0a63dd3" alt="" style="width: 38px; height: 38px; flex: 0 0 38px; border-radius: 9px; background: #0a0a0a; object-fit: contain; padding: 3px; box-sizing: border-box">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px"><div style="display: flex; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Reprise dans {{R.avantS}} s</span><span style="font-size: 12px; color: #888888">maintenant</span></div><span style="font-size: 14px; color: #cfcfcf">Développé couché · série 3/4</span></div>
+      </div>
+      <div style="padding: 12px; border-radius: 20px; background: #1e1e1e; display: flex; gap: 10px">
+        <img src="/_blob/35b36997dfe0ab878ee4f61dc0a63dd3" alt="" style="width: 38px; height: 38px; flex: 0 0 38px; border-radius: 9px; background: #0a0a0a; object-fit: contain; padding: 3px; box-sizing: border-box">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px"><div style="display: flex; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">C’est reparti !</span><span style="font-size: 12px; color: #888888">maintenant</span></div><span style="font-size: 14px; color: #cfcfcf">Développé couché · série 3/4</span></div>
+      </div>
+    </div>
+    <h2 style="margin: 10px 0 0; font-size: 13px; letter-spacing: 0.1em; color: #888888; font-weight: 600">ALERTES</h2>
+    <p style="margin: 0; font-size: 13px; color: #888888; line-height: 1.45">App ouverte à l’écran : alarme sonore seulement. Écran verrouillé ou autre app : notification avec son.</p>
+    <div style="background: #141414; border: 1px solid #2a2a2a; border-radius: 18px; display: flex; flex-direction: column">
+      <sc-for list="{{toggles1}}" as="t" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; border-top: 1px solid {{t.sep}}">
+          <div style="display: flex; gap: 12px; align-items: center; padding: 14px">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 3px"><span style="font-weight: 600; font-size: 15px">{{t.titre}}</span><span style="font-size: 13px; color: #888888">{{t.desc}}</span></div>
+            <button aria-label="{{t.titre}}" aria-pressed="{{t.on}}" onClick="{{t.basculer}}" style="width: 52px; height: 32px; flex: 0 0 52px; border-radius: 999px; border: none; background: {{t.bg}}; position: relative; cursor: pointer; padding: 0"><span style="position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #ffffff; transform: translateX({{t.x}}px); transition: transform 0.2s"></span></button>
+          </div>
+          <sc-if value="{{t.avecChoix}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; gap: 6px; padding: 0 14px 14px">
+              <sc-for list="{{segAvant}}" as="o" hint-placeholder-count="3"><button onClick="{{o.pick}}" style="flex: 1; height: 40px; border-radius: 10px; border: 1px solid {{o.bd}}; background: {{o.bg}}; color: {{o.fg}}; font-weight: 600; font-size: 14px; cursor: pointer">{{o.txt}}</button></sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <h2 style="margin: 10px 0 0; font-size: 13px; letter-spacing: 0.1em; color: #888888; font-weight: 600">PENDANT TA MUSIQUE</h2>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <sc-for list="{{musique}}" as="o" hint-placeholder-count="3">
+        <button onClick="{{o.pick}}" style="text-align: left; display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 16px; border: 1px solid {{o.bd}}; background: #141414; color: #f0f0f0; cursor: pointer">
+          <span style="width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; border: 2px solid {{o.bd}}; display: flex; align-items: center; justify-content: center"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{o.dot}}"></span></span>
+          <span style="display: flex; flex-direction: column; gap: 3px"><span style="font-weight: 600; font-size: 15px">{{o.titre}}</span><span style="font-size: 13px; color: #888888">{{o.desc}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <button onClick="{{testerSon}}" style="height: 50px; border-radius: 14px; border: 1px solid #2a2a2a; background: transparent; color: #f0f0f0; font-weight: 600; font-size: 15px; cursor: pointer">Tester l’alerte</button>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= AIDE ================= -->
+<sc-if value="{{is.aide}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 18px 16px 12px">
+    <button aria-label="Retour" onClick="{{go.accueil}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400">Aide</h1>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 4px 16px 28px; display: flex; flex-direction: column; gap: 14px">
+    <section style="background: #141414; border: 1px solid #2a2a2a; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 24px; font-weight: 400">Installer l’app sur ton iPhone</h2>
+      <p style="margin: 0; font-size: 13px; color: #888888; line-height: 1.4">Indispensable pour recevoir les notifications de reprise.</p>
+      <sc-for list="{{etapes}}" as="e" hint-placeholder-count="5">
+        <div style="display: flex; gap: 12px; align-items: flex-start">
+          <span style="width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">{{e.n}}</span>
+          <span style="font-size: 15px; line-height: 1.4; padding-top: 3px">{{e.t}}</span>
+        </div>
+      </sc-for>
+    </section>
+    <section style="background: #141414; border: 1px solid #2a2a2a; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 24px; font-weight: 400">Tes temps de série et de repos</h2>
+      <p style="margin: 0; font-size: 14px; color: #b5b5b5; line-height: 1.45">Demande au Coach IA (Gemini) : il règle tes temps de série et de repos directement dans l’app.</p>
+      <button onClick="{{go.coach}}" style="height: 48px; border-radius: 14px; border: none; background: #e8ff00; color: #0a0a0a; font-weight: 700; font-size: 15px; cursor: pointer">Ouvrir le coach</button>
+    </section>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= HISTORIQUE ================= -->
+<sc-if value="{{is.historique}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; height: 844px">
+  <header style="display: flex; align-items: center; gap: 10px; padding: 18px 16px 12px">
+    <button aria-label="Retour" onClick="{{go.accueil}}" style="width: 44px; height: 44px; border-radius: 14px; border: 1px solid #2a2a2a; background: #141414; color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400">Historique</h1>
+  </header>
+  <div class="pdc-scroll" style="flex: 1; overflow-y: auto; padding: 4px 16px 28px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{historique}}" as="h" hint-placeholder-count="3">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 16px; background: #141414; border: 1px solid #2a2a2a">
+        <div style="display: flex; flex-direction: column; gap: 3px"><span style="font-weight: 600; font-size: 15px">{{h.nom}}</span><span style="font-size: 13px; color: #888888">{{h.date}}</span></div>
+        <span style="font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8ff00">{{h.duree}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= COMPTE À REBOURS ================= -->
+<sc-if value="{{run.compte}}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position: absolute; inset: 0; background: rgba(10,10,10,0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px">
+    <span style="font-size: 15px; letter-spacing: 0.2em; color: #888888; font-weight: 600">PRÉPARE-TOI</span>
+    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 200px; line-height: 1; color: #e8ff00">{{run.compteTxt}}</span>
+    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #cfcfcf">{{run.exoNom}}</span>
+  </div>
+</sc-if>
+
+<!-- ================= APERÇU DE LA SÉANCE ================= -->
+<sc-if value="{{apercu}}" hint-placeholder-val="{{ false }}">
+  <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: flex-end">
+    <button aria-label="Fermer l’aperçu" onClick="{{fermerApercu}}" style="flex: 1; background: transparent; border: none; cursor: pointer"></button>
+    <div class="pdc-scroll" style="background: #141414; border-top: 1px solid #2a2a2a; border-radius: 24px 24px 0 0; max-height: 600px; overflow-y: auto; padding: 12px 20px 28px; display: flex; flex-direction: column; gap: 10px">
+      <div style="width: 40px; height: 5px; border-radius: 3px; background: #3a3a3a; align-self: center; margin-bottom: 8px"></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 30px; font-weight: 400">{{run.nom}}</h2><span style="font-size: 14px; color: #888888">{{run.prog1}}</span></div>
+      <sc-for list="{{run.apercu}}" as="o" hint-placeholder-count="4">
+        <div style="display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: {{o.bg}}; border: 1px solid {{o.bd}}">
+          <span style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: {{o.numCol}}; width: 26px">{{o.num}}</span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px; color: {{o.nomCol}}">{{o.nom}}</span><span style="font-size: 12px; color: #888888">{{o.detail}}</span></span>
+          <sc-if value="{{o.enCours}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 4px 8px; border-radius: 999px; background: #e8ff00; color: #0a0a0a">EN COURS</span></sc-if>
+          <sc-if value="{{o.fait}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8ff00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Terminé"><path d="M5 12l5 5 9-10"></path></svg></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ================= CONFIRMATION QUITTER ================= -->
+<sc-if value="{{confirmQuit}}" hint-placeholder-val="{{ false }}">
+  <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; flex-direction: column; justify-content: flex-end">
+    <button aria-label="Continuer la séance" onClick="{{continuer}}" style="flex: 1; background: transparent; border: none; cursor: pointer"></button>
+    <div role="dialog" aria-label="Quitter la séance" style="background: #141414; border-top: 1px solid #2a2a2a; border-radius: 24px 24px 0 0; padding: 12px 20px 30px; display: flex; flex-direction: column; gap: 6px">
+      <div style="width: 40px; height: 5px; border-radius: 3px; background: #3a3a3a; align-self: center; margin-bottom: 14px"></div>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-size: 32px; font-weight: 400">Quitter la séance ?</h2>
+      <p style="margin: 0 0 18px; font-size: 15px; color: #888888">Ta progression sera perdue.</p>
+      <div style="display: flex; gap: 10px">
+        <button onClick="{{continuer}}" style="flex: 1; height: 56px; border-radius: 14px; border: 1px solid #2a2a2a; background: #1e1e1e; color: #f0f0f0; font-weight: 700; font-size: 16px; cursor: pointer">Continuer</button>
+        <button onClick="{{run.quitter}}" style="flex: 1; height: 56px; border-radius: 14px; border: 1.5px solid #ff4d4d; background: transparent; color: #ff4d4d; font-weight: 700; font-size: 16px; cursor: pointer">Quitter</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ================= NOTIFICATION SIMULÉE ================= -->
+<sc-if value="{{toastOn}}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position: absolute; top: 10px; left: 10px; right: 10px; padding: 12px; border-radius: 20px; background: #1e1e1e; border: 1px solid #2a2a2a; box-shadow: 0 12px 30px rgba(0,0,0,0.5); display: flex; gap: 10px; animation: pdcSlide 0.3s ease-out">
+    <img src="/_blob/35b36997dfe0ab878ee4f61dc0a63dd3" alt="" style="width: 38px; height: 38px; flex: 0 0 38px; border-radius: 9px; background: #0a0a0a; object-fit: contain; padding: 3px; box-sizing: border-box">
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 2px"><div style="display: flex; justify-content: space-between"><span style="font-weight: 700; font-size: 14px">{{toast.titre}}</span><span style="font-size: 12px; color: #888888">maintenant</span></div><span style="font-size: 14px; color: #cfcfcf">{{toast.texte}}</span></div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"ecran": {"editor": "enum", "options": ["accueil", "recap", "editeur", "circuit", "exo", "biblio", "seance", "coach", "reglages", "aide", "historique"], "default": "accueil"}, "vitesseDemo": {"editor": "int", "default": 1, "min": 1, "max": 10}, "$preview": {"width": 390, "height": 844}}'>
+var PDC_LIB = [
+  {key:'dc', nom:'Développé couché', kind:'press', cats:['muscu'], muscle:'Pectoraux, triceps', serie:40, repos:120, series:4},
+  {key:'dch', nom:'Développé couché haltères', kind:'pressDb', cats:['muscu'], muscle:'Pectoraux, triceps', serie:40, repos:105, series:3},
+  {key:'di', nom:'Développé incliné haltères', kind:'incline', cats:['muscu'], muscle:'Haut des pectoraux', serie:40, repos:105, series:3},
+  {key:'dib', nom:'Développé incliné barre', kind:'inclineBar', cats:['muscu'], muscle:'Haut des pectoraux', serie:40, repos:120, series:4},
+  {key:'eeb', nom:'Écartés élastique de bas en haut', kind:'flyLowHigh', cats:['muscu', 'street'], muscle:'Haut des pectoraux', serie:40, repos:60, series:3},
+  {key:'eeh', nom:'Écartés élastique de haut en bas', kind:'flyHighLow', cats:['muscu', 'street'], muscle:'Bas des pectoraux', serie:40, repos:60, series:3},
+  {key:'ecp', nom:'Écartés poulie vis-à-vis', kind:'flyHighLow', cats:['muscu'], muscle:'Pectoraux', serie:40, repos:60, series:3},
+  {key:'po', nom:'Pompes', kind:'pushup', cats:['street'], muscle:'Pectoraux, triceps', serie:30, repos:60, series:3},
+  {key:'pla', nom:'Pompes larges', kind:'pushup', cats:['street'], muscle:'Pectoraux', serie:30, repos:60, series:3},
+  {key:'pdm', nom:'Pompes diamant', kind:'pushup', cats:['street'], muscle:'Triceps, pectoraux', serie:30, repos:60, series:3},
+  {key:'pin', nom:'Pompes inclinées (mains surélevées)', kind:'pushupIncline', cats:['street'], muscle:'Bas des pectoraux', serie:30, repos:60, series:3},
+  {key:'pds', nom:'Pompes pieds surélevés', kind:'pushupDecline', cats:['street'], muscle:'Haut des pectoraux, épaules', serie:35, repos:60, series:3},
+  {key:'pdd', nom:'Pompes pieds surélevés en déficit', kind:'pushupDeclineDeficit', cats:['street'], muscle:'Haut des pectoraux, épaules', serie:40, repos:60, series:3},
+  {key:'pdf', nom:'Pompes en déficit', kind:'pushupDeficit', cats:['street'], muscle:'Pectoraux, triceps', serie:35, repos:75, series:3},
+  {key:'pld', nom:'Pompes lestées en déficit', kind:'pushupDeficit', cats:['street'], muscle:'Pectoraux, triceps', serie:40, repos:75, series:4},
+  {key:'dp', nom:'Dips', kind:'dips', cats:['street'], muscle:'Triceps, pectoraux', serie:35, repos:90, series:3},
+  {key:'dpl', nom:'Dips buste penché', kind:'dipsLean', cats:['street'], muscle:'Pectoraux, triceps', serie:40, repos:75, series:4},
+  {key:'dpb', nom:'Dips sur banc', kind:'benchDips', cats:['street'], muscle:'Triceps', serie:30, repos:60, series:3},
+  {key:'tr', nom:'Tractions pronation', kind:'pullup', cats:['street'], muscle:'Dos, biceps', serie:40, repos:120, series:4},
+  {key:'trs', nom:'Tractions supination', kind:'pullup', cats:['street'], muscle:'Dos, biceps', serie:40, repos:120, series:4},
+  {key:'trn', nom:'Tractions prise neutre', kind:'pullup', cats:['street'], muscle:'Dos, biceps', serie:40, repos:120, series:4},
+  {key:'tre', nom:'Tractions avec élastique', kind:'pullup', cats:['street'], muscle:'Dos, biceps', serie:40, repos:90, series:3},
+  {key:'ro', nom:'Rowing haltère unilatéral', kind:'rowOne', cats:['muscu'], muscle:'Dos, arrière d’épaule', serie:40, repos:90, series:3},
+  {key:'rb', nom:'Rowing buste penché 2 haltères', kind:'row', cats:['muscu'], muscle:'Dos, arrière d’épaule', serie:40, repos:90, series:3},
+  {key:'rba', nom:'Rowing barre', kind:'rowBar', cats:['muscu'], muscle:'Dos', serie:40, repos:105, series:4},
+  {key:'ra', nom:'Rowing australien', kind:'invrow', cats:['street'], muscle:'Dos, biceps', serie:40, repos:75, series:3},
+  {key:'sdt', nom:'Soulevé de terre', kind:'deadlift', cats:['muscu'], muscle:'Dos, fessiers, ischios', serie:40, repos:150, series:4},
+  {key:'sdr', nom:'Soulevé de terre jambes tendues', kind:'rdl', cats:['muscu'], muscle:'Ischios, fessiers', serie:40, repos:120, series:3},
+  {key:'fp', nom:'Face pull', kind:'facepull', cats:['muscu'], muscle:'Arrière d’épaule, haut du dos', serie:40, repos:60, series:3},
+  {key:'fpe', nom:'Face pull à l’élastique', kind:'facepull', cats:['street'], muscle:'Arrière d’épaule, haut du dos', serie:40, repos:60, series:3},
+  {key:'dm', nom:'Développé militaire', kind:'ohp', cats:['muscu'], muscle:'Épaules, triceps', serie:40, repos:120, series:4},
+  {key:'dmh', nom:'Développé épaules haltères', kind:'ohpDb', cats:['muscu'], muscle:'Épaules, triceps', serie:40, repos:105, series:3},
+  {key:'el', nom:'Élévations latérales haltères', kind:'raise', cats:['muscu'], muscle:'Épaules', serie:45, repos:60, series:3},
+  {key:'ele', nom:'Élévations latérales à l’élastique', kind:'raiseBand', cats:['street'], muscle:'Épaules', serie:45, repos:60, series:3},
+  {key:'ef', nom:'Élévations frontales', kind:'frontraise', cats:['muscu'], muscle:'Avant d’épaule', serie:40, repos:60, series:3},
+  {key:'pp', nom:'Pompes piquées', kind:'pike', cats:['street'], muscle:'Épaules, triceps', serie:35, repos:75, series:3},
+  {key:'cb', nom:'Curl biceps haltères', kind:'curl', cats:['muscu'], muscle:'Biceps', serie:35, repos:75, series:3},
+  {key:'cs', nom:'Curl haltères en supination', kind:'curl', cats:['muscu'], muscle:'Biceps', serie:35, repos:75, series:3},
+  {key:'cbb', nom:'Curl barre', kind:'curlBar', cats:['muscu'], muscle:'Biceps', serie:35, repos:75, series:3},
+  {key:'cm', nom:'Curl marteau', kind:'hammer', cats:['muscu'], muscle:'Brachial, avant-bras', serie:35, repos:75, series:3},
+  {key:'cba', nom:'Curl Bayesian à l’élastique', kind:'bayesian', cats:['street'], muscle:'Biceps (étirement)', serie:40, repos:60, series:3},
+  {key:'cel', nom:'Curl à l’élastique', kind:'curlBand', cats:['street'], muscle:'Biceps', serie:35, repos:60, series:3},
+  {key:'bf', nom:'Barre au front', kind:'skull', cats:['muscu'], muscle:'Triceps', serie:35, repos:75, series:3},
+  {key:'bfh', nom:'Barre au front haltères au sol', kind:'skullFloor', cats:['muscu'], muscle:'Triceps', serie:40, repos:60, series:3},
+  {key:'en', nom:'Extension triceps nuque haltère', kind:'overheadExt', cats:['muscu'], muscle:'Triceps (longue portion)', serie:40, repos:60, series:3},
+  {key:'ene', nom:'Extension triceps nuque à l’élastique', kind:'overheadExtBand', cats:['street'], muscle:'Triceps (longue portion)', serie:40, repos:60, series:3},
+  {key:'sq', nom:'Squat', kind:'squat', cats:['muscu', 'street'], muscle:'Cuisses, fessiers', serie:45, repos:150, series:4},
+  {key:'sqg', nom:'Goblet squat', kind:'goblet', cats:['muscu'], muscle:'Cuisses, fessiers', serie:45, repos:90, series:3},
+  {key:'sqp', nom:'Squat poids du corps', kind:'squatBw', cats:['street'], muscle:'Cuisses, fessiers', serie:40, repos:60, series:3},
+  {key:'sqs', nom:'Squat sauté', kind:'jumpSquat', cats:['street'], muscle:'Cuisses, cardio', serie:30, repos:60, series:3},
+  {key:'fe', nom:'Fentes', kind:'lunge', cats:['muscu', 'street'], muscle:'Cuisses, fessiers', serie:45, repos:90, series:3},
+  {key:'fb', nom:'Fentes bulgares', kind:'bulgarian', cats:['muscu', 'street'], muscle:'Cuisses, fessiers', serie:45, repos:90, series:3},
+  {key:'ht', nom:'Hip thrust', kind:'hipthrust', cats:['muscu'], muscle:'Fessiers', serie:40, repos:90, series:3},
+  {key:'pf', nom:'Pont fessier', kind:'bridge', cats:['street'], muscle:'Fessiers', serie:40, repos:60, series:3},
+  {key:'mo', nom:'Mollets debout', kind:'calf', cats:['muscu', 'street'], muscle:'Mollets', serie:40, repos:60, series:3},
+  {key:'gn', nom:'Gainage', kind:'plank', cats:['street'], muscle:'Abdos, sangle abdominale', serie:45, repos:45, series:3},
+  {key:'cr', nom:'Crunch', kind:'crunch', cats:['street'], muscle:'Abdos', serie:40, repos:45, series:3},
+  {key:'rj', nom:'Relevés de jambes', kind:'legraise', cats:['street'], muscle:'Bas des abdos', serie:40, repos:60, series:3},
+  {key:'mc', nom:'Mountain climbers', kind:'mountain', cats:['street'], muscle:'Abdos, cardio', serie:30, repos:45, series:3},
+  {key:'jj', nom:'Jumping jacks', kind:'jumpingjack', cats:['street'], muscle:'Cardio', serie:40, repos:30, series:3},
+  {key:'ech', nom:'Échauffement', kind:'warmup', cats:['muscu', 'street'], muscle:'Épaules, articulations', serie:240, repos:0, series:1},
+  {key:'rot', nom:'Rotations d’épaules', kind:'warmup', cats:['muscu', 'street'], muscle:'Épaules', serie:45, repos:15, series:1}
+];
+var pdcUid = 1;
+function pdcBase(key){ return PDC_LIB.filter(function(e){ return e.key === key; })[0] || {key:'perso', nom:'Exercice perso', kind:'generic', muscle:'Exercice personnalisé', serie:40, repos:90, series:3}; }
+function pdcExo(key, o){ var b = pdcBase(key); var x = {type:'exo', id:'x' + (pdcUid++), key:b.key, nom:b.nom, kind:b.kind, muscle:b.muscle, series:b.series, serie:b.serie, repos:b.repos, reposApres:120, note:''}; return Object.assign(x, o || {}); }
+function pdcCircuit(keys, o){
+  o = o || {}; var tours = o.tours || 3;
+  var c = {type:'circuit', id:'c' + (pdcUid++), nom:'Circuit', tours:tours, reposTour:90, reposApres:120, exos:keys.map(function(k){ return Array.isArray(k) ? pdcExo(k[0], Object.assign({series:tours, repos:15}, k[1])) : pdcExo(k, {series:tours, repos:15}); })};
+  return Object.assign(c, o);
+}
+function pdcMMSS(s){ s = Math.max(0, Math.round(s)); var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+function pdcMin(t){ var m = Math.round(t / 60); if (m < 60) return m + ' min'; var r = m % 60; return Math.floor(m / 60) + ' h ' + (r < 10 ? '0' : '') + r; }
+function pdcClone(o){ return JSON.parse(JSON.stringify(o)); }
+function pdcSteps(s){
+  var st = [], n = s.items.length;
+  s.items.forEach(function(it, i){
+    if (it.type === 'circuit') {
+      if (!it.exos.length) return;
+      for (var t = 1; t <= it.tours; t++) {
+        var act = it.exos.filter(function(e){ return t <= Math.min(e.series, it.tours); });
+        act.forEach(function(e, j){
+          st.push({ph:'serie', dur:e.serie, item:i, exo:e, n:t, N:Math.min(e.series, it.tours), circuit:true});
+          if (j < act.length - 1 && e.repos > 0) st.push({ph:'repos', dur:e.repos, item:i});
+        });
+        var suiv = it.exos.filter(function(e){ return t + 1 <= Math.min(e.series, it.tours); }).length;
+        if (t < it.tours && suiv && it.reposTour > 0) st.push({ph:'repos', dur:it.reposTour, item:i});
+      }
+    } else {
+      for (var k = 1; k <= it.series; k++) {
+        st.push({ph:'serie', dur:it.serie, item:i, exo:it, n:k, N:it.series});
+        if (k < it.series && it.repos > 0) st.push({ph:'repos', dur:it.repos, item:i});
+      }
+    }
+    if (i < n - 1 && it.reposApres > 0) st.push({ph:'transition', dur:it.reposApres, item:i});
+  });
+  return st;
+}
+function pdcDuree(s){ return pdcSteps(s).reduce(function(a, x){ return a + x.dur; }, 0); }
+function pdcNbExos(s){ return s.items.reduce(function(a, it){ return a + (it.type === 'circuit' ? it.exos.length : 1); }, 0); }
+function pdcTrouver(d, id){
+  for (var i = 0; i < d.items.length; i++) {
+    var it = d.items[i];
+    if (it.id === id) return {obj:it, liste:d.items, idx:i, circuit:null};
+    if (it.type === 'circuit') for (var j = 0; j < it.exos.length; j++) if (it.exos[j].id === id) return {obj:it.exos[j], liste:it.exos, idx:j, circuit:it};
+  }
+  return null;
+}
+function pdcSeed(){
+  var bloc = function(nom, tours, repos, exos, apres){ var c = pdcCircuit(exos.map(function(e){ return [e[0], Object.assign({repos:repos}, e[1])]; }), {tours:tours, reposTour:repos, reposApres:apres || 60}); c.nom = nom; return c; };
+  return [
+  {id:'sa', dossier:'perso', nom:'Séance A — Pecs, triceps, dos', items:[
+    pdcExo('ech', {serie:240, reposApres:60, note:'Rotations d’épaules, pull-apart élastique 2 × 20, 10 pompes faciles, 3 dips'}),
+    bloc('Bloc 1', 4, 75, [['dpl', {serie:40, series:4, note:'6-10 reps'}], ['tr', {serie:40, series:3, note:'6-10 reps'}]], 60),
+    bloc('Bloc 2', 3, 60, [['pdd', {serie:40, note:'8-15 reps'}], ['el', {serie:45, note:'12-20 reps'}]], 60),
+    bloc('Bloc 3', 3, 45, [['en', {serie:40, note:'10-15 reps'}], ['cs', {serie:35, note:'8-12 reps'}]], 60)]},
+  {id:'sb', dossier:'perso', nom:'Séance B — Pecs, biceps, dos', items:[
+    pdcExo('ech', {serie:240, reposApres:60, note:'Comme la séance A, plus 1 série de rowing léger'}),
+    bloc('Bloc 1', 4, 75, [['pld', {serie:40, series:4, note:'6-12 reps'}], ['rb', {serie:40, series:3, note:'8-12 reps'}]], 60),
+    bloc('Bloc 2', 3, 60, [['eeb', {serie:45, note:'12-20 reps'}], ['cba', {serie:40, note:'10-15 reps'}]], 60),
+    bloc('Bloc 3', 3, 45, [['bfh', {serie:40, note:'10-15 reps'}], ['cm', {serie:35, note:'8-12 reps'}]], 60)]},
+  {id:'sc', dossier:'perso', nom:'Séance C — Pecs, bras (bonus)', items:[
+    pdcExo('ech', {serie:180, reposApres:60, note:'3 min'}),
+    bloc('Bloc 1', 3, 60, [['dp', {serie:40, note:'8-12 reps'}], ['cs', {serie:35, note:'8-12 reps'}]], 60),
+    bloc('Bloc 2', 3, 45, [['pds', {serie:40, note:'Max moins 1 rep'}], ['ene', {serie:40, note:'12-20 reps'}]], 60),
+    bloc('Bloc 3', 2, 45, [['eeh', {serie:45, note:'15-20 reps'}], ['cm', {serie:40, note:'12-15 reps'}]], 60),
+    pdcExo('pdm', {series:1, serie:45, note:'Finisher · 1 série jusqu’à l’échec'})]},
+  {id:'s1', dossier:'perso', nom:'Push – Haut du corps', items:[pdcExo('dc', {note:'60 kg · 10 reps'}), pdcExo('cb', {note:'12 kg'}), pdcExo('cm', {note:'12 kg'}), pdcExo('el', {note:'8 kg'}), pdcExo('bf', {note:'20 kg'}), pdcExo('fp', {note:'15 reps'})]},
+  {id:'e1', dossier:'debut', nom:'Full body A', items:[pdcExo('sqp', {series:3}), pdcExo('pin', {series:3}), pdcExo('ra', {series:3}), pdcExo('gn', {series:2})]},
+  {id:'e2', dossier:'debut', nom:'Full body B', items:[pdcExo('fe', {series:3}), pdcExo('dch', {series:3}), pdcExo('ro', {series:3}), pdcExo('cb', {series:2})]},
+  {id:'e3', dossier:'street', nom:'Circuit poids du corps', items:[pdcCircuit(['po', 'sqp', 'fe', 'gn'], {tours:3, reposTour:120})]},
+  {id:'e4', dossier:'street', nom:'Tractions & dips', items:[pdcExo('tre', {series:4}), pdcExo('dp', {series:3}), pdcExo('po', {series:3})]}
+]; }
+var PDC_EX = 'Développé couché 4x10\nCurl biceps 3x10\nCurl marteau 3x10\nÉlévations latérales 3x12\nBarre au front 3x10\nFace pull 2x15';
+
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    var e = (props && props.ecran) || 'accueil';
+    var seances = pdcSeed();
+    var st = {
+      screen:'accueil', seances:seances, draft:null, sheetId:null, cible:null, filtre:'tout', recherche:'', run:null, toast:null,
+      dossiers:[{id:'perso', nom:'Mes séances', preset:false, ouvert:true, masque:false}, {id:'debut', nom:'Muscu débutant', preset:true, ouvert:false, masque:false}, {id:'street', nom:'Street débutant', preset:true, ouvert:false, masque:false}],
+      dossierSheet:null,
+      chat:[{role:'ia', text:'Salut ! Je suis ton coach. Je peux créer une séance de zéro, importer une séance que tu as déjà écrite, ou adapter une de tes séances. On fait quoi ?'}],
+      step:'start', saisie:'', rep:{}, confirmQuit:false, recap:null, apercu:false,
+      reglages:{avant:true, avantS:10, decompte:true, reprise:true, fin:true, musique:'baisser', ecran:true},
+      historique:[{nom:'Push – Haut du corps', date:'lundi 16 novembre', duree:'51 min'}, {nom:'Jambes', date:'vendredi 13 novembre', duree:'38 min'}]
+    };
+    if (e === 'editeur' || e === 'exo' || e === 'biblio' || e === 'circuit') {
+      st.screen = e === 'biblio' ? 'biblio' : 'editeur';
+      st.draft = pdcClone(seances[e === 'circuit' ? 0 : 3]);
+      if (e === 'exo') st.sheetId = st.draft.items[0].id;
+    } else if (e === 'recap') { st.screen = 'recap'; st.recap = pdcClone(seances[0]); st.dossiers[0].ouvert = true; }
+    else if (e === 'seance') { st.screen = 'seance'; st.run = this.nouveauRun(pdcClone(seances[3]), 0); st.run.idx = 1; st.run.left = 15; st.run.total = st.run.steps[1].dur; }
+    else st.screen = e;
+    this.state = st;
+  }
+  nouveauRun(s, countdown){ var steps = pdcSteps(s); return {seance:s, steps:steps, idx:0, left:steps[0].dur, total:steps[0].dur, paused:false, done:false, countdown:countdown}; }
+  componentDidMount(){ var self = this; this.iv = setInterval(function(){ self.tick(); }, 1000); }
+  componentWillUnmount(){ clearInterval(this.iv); clearTimeout(this.tt); }
+  notif(titre, texte, son){
+    var self = this;
+    if (this.state.screen === 'seance' && !this.state.confirmQuit) { this.jouer(son || 'reprise'); this.setState({bip:true}); clearTimeout(this.tb); this.tb = setTimeout(function(){ self.setState({bip:false}); }, 900); return; }
+    this.setState({toast:{titre:titre, texte:texte}}); clearTimeout(this.tt); this.tt = setTimeout(function(){ self.setState({toast:null}); }, 4000);
+  }
+  jouer(type){
+    if (this.state.reglages.musique === 'rien' && type !== 'test') return;
+    try {
+      if (!this.ac) this.ac = new (window.AudioContext || window.webkitAudioContext)();
+      var ac = this.ac, t0 = ac.currentTime; if (type === 'init') return; var seq = type === 'tic' ? [[880, 0, 0.09]] : type === 'avant' ? [[660, 0, 0.12], [660, 0.2, 0.12]] : type === 'fin' ? [[440, 0, 0.25]] : [[520, 0, 0.15], [780, 0.18, 0.35]];
+      seq.forEach(function(q){ var o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = q[0]; o.connect(g); g.connect(ac.destination); g.gain.setValueAtTime(0.0001, t0 + q[1]); g.gain.exponentialRampToValueAtTime(0.35, t0 + q[1] + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + q[1] + q[2]); o.start(t0 + q[1]); o.stop(t0 + q[1] + q[2] + 0.05); });
+    } catch (e) {}
+  }
+  prochaineSerie(r, from){ for (var j = from; j < r.steps.length; j++) if (r.steps[j].ph === 'serie') return r.steps[j]; return null; }
+  libelle(x){ return x.exo.nom + ' · série ' + x.n + '/' + x.N; }
+  restant(r){ var t = r.left; for (var j = r.idx + 1; j < r.steps.length; j++) t += r.steps[j].dur; return t; }
+  avance(r){
+    var R = this.state.reglages, prev = r.steps[r.idx].ph, n = Object.assign({}, r);
+    n.idx = r.idx + 1;
+    if (n.idx >= r.steps.length) {
+      n.done = true; n.left = 0;
+      this.notif('Séance terminée', 'Bien joué ! ' + r.seance.nom + ' validée.');
+      this.setState({run:n, historique:[{nom:r.seance.nom, date:'aujourd’hui', duree:pdcMin(pdcDuree(r.seance))}].concat(this.state.historique)});
+      return null;
+    }
+    var x = r.steps[n.idx]; n.left = x.dur; n.total = x.dur;
+    if (x.ph === 'serie' && prev !== 'serie' && R.reprise) this.notif('C’est reparti !', this.libelle(x));
+    else if (prev === 'serie' && x.ph !== 'serie' && R.fin) this.notif('Série terminée', (x.ph === 'transition' ? 'Pause ' : 'Repos ') + pdcMMSS(x.dur), 'fin');
+    return n;
+  }
+  tick(){
+    var st = this.state, r = st.run;
+    if (st.screen !== 'seance' || !r || r.paused || r.done) return;
+    if (r.countdown > 0) { this.setState({run:Object.assign({}, r, {countdown:r.countdown - 1})}); return; }
+    var sp = Math.max(1, Math.min(10, this.props.vitesseDemo || 1)), n = Object.assign({}, r);
+    for (var k = 0; k < sp; k++) {
+      n.left -= 1;
+      var cur = n.steps[n.idx];
+      if (cur.ph !== 'serie' && st.reglages.avant && n.left === st.reglages.avantS) { var nx = this.prochaineSerie(n, n.idx + 1); if (nx) this.notif('Reprise dans ' + n.left + ' s', this.libelle(nx), 'avant'); }
+      if (cur.ph !== 'serie' && st.reglages.decompte && n.left >= 1 && n.left <= 3 && st.screen === 'seance') { this.jouer('tic'); var self2 = this; this.setState({bip:true}); clearTimeout(this.tb); this.tb = setTimeout(function(){ self2.setState({bip:false}); }, 500); }
+      if (n.left <= 0) { n = this.avance(n); if (!n) return; }
+    }
+    this.setState({run:n});
+  }
+  lancer(s){ if (!pdcSteps(s).length) return; this.setState({screen:'recap', recap:pdcClone(s)}); }
+  demarrer(){ this.jouer('init'); this.setState({screen:'seance', confirmQuit:false, apercu:false, run:this.nouveauRun(pdcClone(this.state.recap), 3)}); }
+  modifier(s){
+    var d = pdcClone(s), dos = this.state.dossiers.filter(function(x){ return x.id === s.dossier; })[0];
+    if (dos && dos.preset) { d.id = 's' + Date.now(); d.dossier = 'perso'; d.copie = true; }
+    this.setState({screen:'editeur', draft:d, sheetId:null});
+  }
+  upd(fn){ var d = pdcClone(this.state.draft); fn(d); this.setState({draft:d}); }
+
+  chipsPour(step){
+    var mk = function(list, k, next){ return list.map(function(l){ return {l:l, k:k, next:next}; }); };
+    var objs = ['Prendre du muscle', 'Gagner en force', 'Perdre du gras', 'Me remettre en forme'];
+    switch (step) {
+      case 'start': return [{l:'Créer de zéro', k:'mode', next:'objectif'}, {l:'Importer ma séance', k:'mode', next:'colle'}, {l:'Adapter une séance', k:'mode', next:'quelle'}];
+      case 'objectif': return mk(objs, 'obj', 'niveau');
+      case 'niveau': return mk(['Jamais fait de sport', 'Moins d’un an', '1 à 3 ans', 'Plus de 3 ans'], 'niveau', 'jours');
+      case 'jours': return mk(['2 jours', '3 jours', '4 jours'], 'jours', 'materiel');
+      case 'materiel': return mk(['Salle de sport', 'Haltères à la maison', 'Street workout / sans matériel'], 'materiel', 'contraintes');
+      case 'contraintes': return mk(['Rien de spécial', '45 min max par séance', 'Douleur aux genoux', 'Douleur au dos'], 'contrainte', 'resultat');
+      case 'colle': return [{l:'Envoyer un exemple', envoi:PDC_EX, k:'import', next:'objImport'}];
+      case 'objImport': return mk(objs, 'obj', 'resultatImport');
+      case 'quelle': return this.state.seances.filter(function(s){ return s.dossier === 'perso'; }).map(function(s){ return {l:s.nom, k:'seance', next:'modif'}; });
+      case 'modif': return mk(['Raccourcir la séance', 'Plus de volume pour les bras', 'Remplacer un exo qui me fait mal'], 'modif', 'resultatModif');
+      case 'fin': return [{l:'Nouvelle demande', reset:true}];
+      default: return [];
+    }
+  }
+  genZero(rep){
+    var nb = Math.max(2, Math.min(4, parseInt(rep.jours, 10) || 3));
+    var force = rep.obj === 'Gagner en force', street = rep.materiel === 'Street workout / sans matériel', genoux = rep.contrainte === 'Douleur aux genoux';
+    var out = [];
+    if (street) {
+      for (var i = 0; i < nb; i++) out.push({id:'s' + Date.now() + i, dossier:'perso', nom:'Street ' + 'ABCD'[i], items:i % 2 ? [pdcExo('tr', {series:3}), pdcCircuit(genoux ? ['po', 'dp', 'gn'] : ['po', 'sq', 'dp', 'gn'], {tours:3})] : [pdcCircuit(genoux ? ['po', 'gn', 'dp'] : ['po', 'fe', 'sq', 'gn'], {tours:4})]});
+      return out;
+    }
+    var plans = [['sq', 'dc', 'ro', 'el', 'cb'], ['fe', 'di', 'ro', 'fp', 'bf'], ['sq', 'po', 'ro', 'el', 'cm'], ['fe', 'dc', 'ro', 'fp', 'cb']];
+    for (var j = 0; j < nb; j++) {
+      out.push({id:'s' + Date.now() + j, dossier:'perso', nom:'Full body ' + 'ABCD'[j], items:plans[j].map(function(k){
+        if (genoux && (k === 'sq' || k === 'fe')) k = 'po';
+        var b = pdcBase(k), o = {};
+        if (force && (k === 'sq' || k === 'dc')) { o.repos = b.repos + 60; o.series = 5; o.note = '5 reps lourdes'; }
+        if (rep.niveau === 'Jamais fait de sport') o.series = Math.min(o.series || b.series, 3);
+        if (rep.contrainte === '45 min max par séance') o.repos = Math.max(45, (o.repos || b.repos) - 30);
+        return pdcExo(k, o);
+      })});
+    }
+    return out;
+  }
+  genImport(rep){
+    var force = rep.obj === 'Gagner en force';
+    var list = [['dc', 4, '10 reps'], ['cb', 3, '10 reps'], ['cm', 3, '10 reps'], ['el', 3, '12 reps'], ['bf', 3, '10 reps'], ['fp', 2, '15 reps']];
+    return {id:'s' + Date.now(), dossier:'perso', nom:'Ma séance importée', items:list.map(function(l){ var b = pdcBase(l[0]); return pdcExo(l[0], {series:l[1], note:l[2], repos:force ? b.repos + 30 : b.repos}); })};
+  }
+  genModif(rep){
+    var s = this.state.seances.filter(function(x){ return x.nom === rep.seance; })[0]; if (!s) return null;
+    var c = pdcClone(s), exos = c.items.filter(function(x){ return x.type === 'exo'; });
+    if (rep.modif === 'Raccourcir la séance') { exos.forEach(function(e){ e.repos = Math.max(45, e.repos - 15); e.reposApres = Math.max(60, e.reposApres - 30); }); if (c.items.length > 3) c.items.pop(); }
+    else if (rep.modif === 'Plus de volume pour les bras') { exos.forEach(function(e){ if (e.key === 'cb' || e.key === 'cm' || e.key === 'bf') e.series += 1; }); }
+    else { var p = pdcExo('po'); p.id = c.items[0].id; c.items[0] = p; }
+    return c;
+  }
+  carteDe(seances, titre, btn, kind){ return {titre:titre, btn:btn, kind:kind, data:seances, valide:false, items:seances.map(function(s){ return {t:s.nom + ' · ' + pdcMin(pdcDuree(s)), s:s.items.map(function(e){ return e.type === 'circuit' ? (e.nom || 'Circuit') + ' ×' + e.tours : e.nom + ' ×' + e.series; }).join(', ')}; })}; }
+  messagesPour(step, rep){
+    var ia = function(t){ return {role:'ia', text:t}; };
+    switch (step) {
+      case 'objectif': return [ia('Quel est ton objectif principal ?')];
+      case 'niveau': return [ia('Tu en es où avec le sport ?')];
+      case 'jours': return [ia('Combien de jours par semaine tu peux t’entraîner ?')];
+      case 'materiel': return [ia('Tu t’entraînes où, avec quel matériel ?')];
+      case 'contraintes': return [ia('Une douleur, une blessure, ou un temps max par séance ?')];
+      case 'resultat': { var g = this.genZero(rep); return [ia('Voilà ton programme : ' + g.length + ' séances, avec des temps de série et de repos réglés pour « ' + rep.obj.toLowerCase() + ' ». Tout reste modifiable ensuite.'), {role:'carte', carte:this.carteDe(g, 'PROGRAMME PROPOSÉ', 'Ajouter les ' + g.length + ' séances', 'ajout')}]; }
+      case 'colle': return [ia('Colle ta séance comme tu l’écris d’habitude, une ligne par exercice (ex : « Développé couché 4x10 »).')];
+      case 'objImport': return [ia('J’ai reconnu 6 exercices et 18 séries. Ton objectif sur cette séance ?')];
+      case 'resultatImport': { var s = this.genImport(rep); return [ia('Parfait. J’ai mis un temps de série adapté à chaque exo et des repos pour « ' + rep.obj.toLowerCase() + ' ».'), {role:'carte', carte:this.carteDe([s], 'SÉANCE IMPORTÉE', 'Ajouter à mes séances', 'ajout')}]; }
+      case 'quelle': return [ia('Laquelle tu veux adapter ?')];
+      case 'modif': return [ia('Qu’est-ce que tu veux changer sur « ' + rep.seance + ' » ?')];
+      case 'resultatModif': { var m = this.genModif(rep); if (!m) return [ia('Je ne trouve pas cette séance.')]; return [ia('Voici la nouvelle version, ' + pdcMin(pdcDuree(m)) + ' au total.'), {role:'carte', carte:this.carteDe([m], 'SÉANCE MODIFIÉE', 'Mettre à jour la séance', 'maj')}]; }
+      default: return [];
+    }
+  }
+  repondre(c){
+    if (c.reset) { this.setState({chat:[{role:'ia', text:'On repart : créer, importer ou adapter une séance ?'}], step:'start', rep:{}}); return; }
+    var st = this.state, rep = Object.assign({}, st.rep); if (c.k) rep[c.k] = c.l;
+    this.setState({chat:st.chat.concat([{role:'moi', text:c.envoi || c.l}]).concat(this.messagesPour(c.next, rep)), step:c.next, rep:rep});
+  }
+  envoyer(){
+    var st = this.state, t = (st.saisie || '').trim(); if (!t) return;
+    if (st.step === 'colle') { var rep = Object.assign({}, st.rep, {import:t}); this.setState({chat:st.chat.concat([{role:'moi', text:t}]).concat(this.messagesPour('objImport', rep)), step:'objImport', rep:rep, saisie:''}); return; }
+    this.setState({chat:st.chat.concat([{role:'moi', text:t}, {role:'ia', text:'Bien noté, j’en tiens compte pour la suite.'}]), saisie:''});
+  }
+  valider(idx){
+    var st = this.state, chat = st.chat.slice(), m = Object.assign({}, chat[idx]), c = Object.assign({}, m.carte), list = st.seances.slice();
+    if (c.kind === 'maj') c.data.forEach(function(s){ var j = list.findIndex(function(x){ return x.id === s.id; }); if (j >= 0) list[j] = s; });
+    else list = list.concat(c.data);
+    c.valide = true; m.carte = c; chat[idx] = m;
+    chat.push({role:'ia', text:'C’est fait ! Tu la retrouves dans « Mes séances ». Les notifications de reprise sont déjà calées sur ces temps.'});
+    this.setState({chat:chat, seances:list, step:'fin'});
+  }
+
+  renderVals(){
+    var self = this, st = this.state, R = st.reglages;
+    var go = {};
+    ['accueil', 'editeur', 'biblio', 'coach', 'reglages', 'aide', 'historique'].forEach(function(k){ go[k] = function(){ self.setState({screen:k, sheetId:null}); }; });
+    var is = {};
+    ['accueil', 'recap', 'editeur', 'biblio', 'seance', 'coach', 'reglages', 'aide', 'historique'].forEach(function(k){ is[k] = st.screen === k; });
+    var setDos = function(id, patch){ self.setState({dossiers:self.state.dossiers.map(function(d){ return d.id === id ? Object.assign({}, d, patch) : d; })}); };
+
+    // --- accueil : dossiers
+    var dossiers = st.dossiers.filter(function(d){ return !d.masque; }).map(function(d){
+      var list = st.seances.filter(function(s){ return s.dossier === d.id; });
+      return {nom:d.nom, preset:d.preset, ouvert:d.ouvert, rot:d.ouvert ? 90 : 0, nb:String(list.length), vide:list.length === 0, toggleLabel:(d.ouvert ? 'Replier ' : 'Déplier ') + d.nom,
+        basculer:function(){ setDos(d.id, {ouvert:!d.ouvert}); }, options:function(){ self.setState({dossierSheet:d.id}); },
+        seances:list.map(function(s){ return {nom:s.nom, dureeTxt:pdcMin(pdcDuree(s)), resume:pdcNbExos(s) + ' exercices', lancer:function(){ self.lancer(s); }, modifier:function(){ self.modifier(s); }}; })};
+    });
+    var masques = st.dossiers.filter(function(d){ return d.masque; }).length;
+    var D0 = st.dossiers.filter(function(d){ return d.id === st.dossierSheet; })[0];
+    var ds = {open:!!D0, fermer:function(){ self.setState({dossierSheet:null}); }};
+    if (D0) Object.assign(ds, {nom:D0.nom, perso:!D0.preset, preset:D0.preset, supprimable:!D0.preset && D0.id !== 'perso',
+      setNom:function(ev){ setDos(D0.id, {nom:ev.target.value}); },
+      masquer:function(){ setDos(D0.id, {masque:true}); self.setState({dossierSheet:null}); },
+      supprimer:function(){ self.setState({dossiers:self.state.dossiers.filter(function(d){ return d.id !== D0.id; }), seances:self.state.seances.map(function(s){ return s.dossier === D0.id ? Object.assign({}, s, {dossier:'perso'}) : s; }), dossierSheet:null}); }});
+
+    // --- éditeur
+    var ed = {nom:'', items:[], vide:true, dureeTxt:'0 min', compo:'', dossiers:[], dossier:'perso', copie:false}, sx = {open:false, chips:[]}, cx = {open:false};
+    if (st.draft) {
+      var Dr = st.draft, n = Dr.items.length, nbC = Dr.items.filter(function(x){ return x.type === 'circuit'; }).length;
+      ed = {nom:Dr.nom, vide:n === 0, copie:!!Dr.copie, dureeTxt:pdcMin(pdcDuree(Dr)), dossier:Dr.dossier || 'perso',
+        compo:pdcNbExos(Dr) + ' exercices' + (nbC ? ' · ' + nbC + ' circuit' + (nbC > 1 ? 's' : '') : ''),
+        dossiers:st.dossiers.filter(function(d){ return !d.preset; }).map(function(d){ return {id:d.id, nom:d.nom}; }),
+        setNom:function(ev){ var v = ev.target.value; self.upd(function(d){ d.nom = v; }); },
+        setDossier:function(ev){ var v = ev.target.value; self.upd(function(d){ d.dossier = v; }); },
+        ajouterExo:function(){ self.setState({screen:'biblio', cible:null, selection:[]}); },
+        ajouterCircuit:function(){ var c = pdcCircuit([]); self.upd(function(d){ d.items.push(c); }); self.setState({screen:'biblio', cible:c.id, selection:[]}); },
+        enregistrer:function(){ var d = pdcClone(self.state.draft); delete d.copie; var list = self.state.seances.slice(), j = list.findIndex(function(s){ return s.id === d.id; }); if (j >= 0) list[j] = d; else list.push(d); self.setState({seances:list, draft:null, screen:'accueil', sheetId:null}); },
+        items:Dr.items.map(function(x, i){
+          var o = {estExo:x.type !== 'circuit', estCircuit:x.type === 'circuit', pasDernier:i < n - 1, transTxt:pdcMMSS(x.reposApres),
+            transMoins:function(){ self.upd(function(d){ d.items[i].reposApres = Math.max(0, d.items[i].reposApres - 15); }); },
+            transPlus:function(){ self.upd(function(d){ d.items[i].reposApres = Math.min(900, d.items[i].reposApres + 15); }); }};
+          if (x.type === 'circuit') Object.assign(o, {nomCircuit:x.nom || 'Circuit', tours:x.tours, rtTxt:pdcMMSS(x.reposTour), exos:x.exos.map(function(c){ return {nom:c.nom, kind:c.kind, ouvrir:function(){ self.setState({sheetId:c.id}); }}; }),
+            ouvrirCircuit:function(){ self.setState({sheetId:x.id}); }, ajouter:function(){ self.setState({screen:'biblio', cible:x.id, selection:[]}); },
+            rtMoins:function(){ self.upd(function(d){ d.items[i].reposTour = Math.max(0, d.items[i].reposTour - 15); }); },
+            rtPlus:function(){ self.upd(function(d){ d.items[i].reposTour = Math.min(900, d.items[i].reposTour + 15); }); }});
+          else Object.assign(o, {nom:x.nom, kind:x.kind, series:x.series, ouvrir:function(){ self.setState({sheetId:x.id}); }});
+          return o;
+        })};
+      var f0 = st.sheetId ? pdcTrouver(Dr, st.sheetId) : null;
+      var maj = function(fn){ self.upd(function(d){ var f = pdcTrouver(d, st.sheetId); if (f) fn(f.obj, f); }); };
+      var num = function(ev){ var v = parseInt(ev.target.value, 10); if (isNaN(v)) v = 0; return Math.max(0, Math.min(59, v)); };
+      if (f0 && f0.obj.type === 'exo') {
+        var X = f0.obj, B = pdcBase(X.key) || X, enC = !!f0.circuit;
+        sx = {open:true, nom:X.nom, kind:X.kind, muscle:X.muscle, series:enC ? Math.min(X.series, f0.circuit.tours) : X.series, note:X.note, seriesLabel:enC ? 'Séries dans ce circuit' : 'Nombre de séries', perso:X.key === 'perso', setNomExo:function(ev){ var v = ev.target.value; maj(function(o){ o.nom = v; }); },
+          reposLabel:enC ? 'Repos avant l’exo suivant du circuit' : 'Repos entre les séries',
+          serieM:Math.floor(X.serie / 60), serieS:X.serie % 60, reposM:Math.floor(X.repos / 60), reposS:X.repos % 60,
+          conseilTxt:pdcMMSS(B.serie) + (enC ? '' : ' / ' + pdcMMSS(B.repos)),
+          moins:function(){ maj(function(o, f){ o.series = Math.max(1, Math.min(o.series, f.circuit ? f.circuit.tours : 99) - 1); }); }, plus:function(){ maj(function(o, f){ o.series = Math.min(f.circuit ? f.circuit.tours : 12, o.series + 1); }); },
+          setSerieM:function(ev){ var v = num(ev); maj(function(o){ o.serie = Math.max(1, v * 60 + o.serie % 60); }); },
+          setSerieS:function(ev){ var v = num(ev); maj(function(o){ o.serie = Math.max(1, Math.floor(o.serie / 60) * 60 + v); }); },
+          setReposM:function(ev){ var v = num(ev); maj(function(o){ o.repos = v * 60 + o.repos % 60; }); },
+          setReposS:function(ev){ var v = num(ev); maj(function(o){ o.repos = Math.floor(o.repos / 60) * 60 + v; }); },
+          setNote:function(ev){ var v = ev.target.value; maj(function(o){ o.note = v; }); },
+          conseil:function(){ maj(function(o){ o.serie = B.serie; if (!enC) o.repos = B.repos; }); },
+          supprimer:function(){ maj(function(o, f){ f.liste.splice(f.idx, 1); }); self.setState({sheetId:null}); },
+          chips:(enC ? [0, 10, 15, 30] : [60, 90, 120, 150]).map(function(v){ var on = X.repos === v; return {txt:pdcMMSS(v), pick:function(){ maj(function(o){ o.repos = v; }); }, bg:on ? '#ff4d4d' : 'transparent', fg:on ? '#0a0a0a' : '#f0f0f0', bd:on ? '#ff4d4d' : '#2a2a2a'}; })};
+      } else if (f0 && f0.obj.type === 'circuit') {
+        var C = f0.obj;
+        cx = {open:true, nom:C.nom || 'Circuit', setNom:function(ev){ var v = ev.target.value; maj(function(o){ o.nom = v; }); }, tours:C.tours, rM:Math.floor(C.reposTour / 60), rS:C.reposTour % 60,
+          moins:function(){ maj(function(o){ o.tours = Math.max(1, o.tours - 1); }); }, plus:function(){ maj(function(o){ o.exos.forEach(function(e){ if (e.series >= o.tours) e.series = o.tours + 1; }); o.tours = Math.min(10, o.tours + 1); }); },
+          setRM:function(ev){ var v = num(ev); maj(function(o){ o.reposTour = v * 60 + o.reposTour % 60; }); },
+          setRS:function(ev){ var v = num(ev); maj(function(o){ o.reposTour = Math.floor(o.reposTour / 60) * 60 + v; }); },
+          supprimer:function(){ maj(function(o, f){ f.liste.splice(f.idx, 1); }); self.setState({sheetId:null}); }};
+      }
+    }
+
+    // --- bibliothèque
+    var q = (st.recherche || '').toLowerCase();
+    var biblio = PDC_LIB.filter(function(e){ return (st.filtre === 'tout' || e.cats.indexOf(st.filtre) >= 0) && (!q || (e.nom + ' ' + e.muscle).toLowerCase().indexOf(q) >= 0); }).map(function(e){
+      var sel = st.selection || [], i0 = sel.indexOf(e.key);
+      return {nom:e.nom, kind:e.kind, muscle:e.muscle, sel:i0 >= 0, pasSel:i0 < 0, ordre:String(i0 + 1), bd:i0 >= 0 ? '#e8ff00' : '#2a2a2a',
+        basculer:function(){ var s2 = (self.state.selection || []).slice(), k2 = s2.indexOf(e.key); if (k2 >= 0) s2.splice(k2, 1); else s2.push(e.key); self.setState({selection:s2}); }};
+    });
+    var nbSel = (st.selection || []).length;
+    var validerSel = function(){
+      var d = pdcClone(self.state.draft || {id:'s' + Date.now(), dossier:'perso', nom:'Nouvelle séance', items:[]});
+      var c = self.state.cible ? pdcTrouver(d, self.state.cible) : null;
+      (self.state.selection || []).forEach(function(k){ if (c) c.obj.exos.push(pdcExo(k, {series:c.obj.tours, repos:15})); else d.items.push(pdcExo(k)); });
+      self.setState({draft:d, screen:'editeur', sheetId:null, recherche:'', cible:null, selection:[]});
+    };
+    var creerPerso = function(){
+      var nom = (self.state.recherche || '').trim() || 'Nouvel exercice';
+      var d = pdcClone(self.state.draft || {id:'s' + Date.now(), dossier:'perso', nom:'Nouvelle séance', items:[]}), c = self.state.cible ? pdcTrouver(d, self.state.cible) : null;
+      var nx = pdcExo('perso', {nom:nom, series:c ? c.obj.tours : 3, repos:c ? 15 : 90});
+      if (c) c.obj.exos.push(nx); else d.items.push(nx);
+      self.setState({draft:d, screen:'editeur', sheetId:nx.id, recherche:'', cible:null});
+    };
+    var filtres = [['tout', 'Tout'], ['muscu', 'Muscu'], ['street', 'Street workout']].map(function(f){ var on = st.filtre === f[0]; return {txt:f[1], bg:on ? '#e8ff00' : 'transparent', fg:on ? '#0a0a0a' : '#f0f0f0', bd:on ? '#e8ff00' : '#2a2a2a', pick:function(){ self.setState({filtre:f[0]}); }}; });
+
+    // --- récap
+    var recap = {nom:'', duree:'', nb:'', items:[]};
+    if (st.recap) { var Rc = st.recap; recap = {nom:Rc.nom, duree:pdcMin(pdcDuree(Rc)), nb:String(pdcNbExos(Rc)),
+      items:Rc.items.map(function(x){ return x.type === 'circuit' ? {nom:x.nom || 'Circuit', kind:(x.exos[0] || {kind:'pushup'}).kind, sub:x.exos.map(function(e){ return e.nom; }).join(', '), fois:x.tours, bd:'#4a5200'} : {nom:x.nom, kind:x.kind, sub:'', fois:x.series, bd:'#2a2a2a'}; }),
+      go:function(){ self.demarrer(); }, modifier:function(){ self.modifier(Rc); }}; }
+
+    // --- séance en cours
+    var run = {enRoute:false, done:false, enCours:true, enPause:false, compte:false, col:'#e8ff00', dots:[], apercu:[], quitter:go.accueil};
+    if (st.run) {
+      var r = st.run, S = r.seance, cur = r.steps[Math.min(r.idx, r.steps.length - 1)], show = cur.ph === 'serie' ? cur : (this.prochaineSerie(r, r.idx + 1) || cur);
+      var Cc = 628.3, frac = r.total ? r.left / r.total : 0, rem = this.restant(r), tot = pdcDuree(S);
+      var nx = this.prochaineSerie(r, r.idx + 1);
+      if (cur.ph !== 'serie' && nx === show) nx = this.prochaineSerie(r, r.steps.indexOf(show) + 1);
+      var upr = function(fn){ var n2 = Object.assign({}, self.state.run); fn(n2); self.setState({run:n2}); };
+      var sexo = show.exo || {nom:'', kind:'curl', note:''};
+      var fait = cur.ph === 'serie' ? show.n - 1 : show.n - 1, courant = cur.ph === 'serie' ? show.n - 1 : -1;
+      var dots = []; if (show.N > 1) for (var di = 0; di < show.N; di++) { var ok = di < fait, co = di === courant; dots.push({num:String(di + 1), check:ok, pasCheck:!ok, bg:ok ? '#e8ff00' : 'transparent', bd:ok || co ? '#e8ff00' : '#2a2a2a', fg:co ? '#e8ff00' : '#666666'}); }
+      run = {nom:S.nom, prog1:(show.item + 1) + '/' + S.items.length, col:cur.ph === 'serie' ? '#e8ff00' : '#ff4d4d',
+        temps:pdcMMSS(r.left), chars:pdcMMSS(r.left).split('').map(function(c){ return {c:c, w:c === ':' ? '0.24em' : '0.44em'}; }), exoNom:sexo.nom, kind:cur.ph === 'serie' ? sexo.kind : 'rest', detail:sexo.note || '', avantNom:cur.ph === 'serie' ? '' : 'EXERCICE SUIVANT',
+        dots:dots, dotsLabel:'Série ' + show.n + ' sur ' + show.N, aSeries:show.N > 1,
+        suiv:nx ? this.libelle(nx) : 'Fin de la séance',
+        dash:Cc, off:(Cc * (1 - frac)).toFixed(1), restant:pdcMMSS(rem), prog:Math.max(0, Math.min(100, Math.round(100 * (1 - rem / Math.max(1, tot))))),
+        enPause:!!r.paused, enCours:!r.paused, done:!!r.done, enRoute:!r.done, pauseLabel:r.paused ? 'Reprendre' : 'Pause', dureeTotale:pdcMin(tot),
+        compte:r.countdown > 0 && st.screen === 'seance', compteTxt:String(r.countdown || ''),
+        recommencerTxt:cur.ph === 'serie' ? 'Recommencer la série' : 'Recommencer le repos',
+        pause:function(){ upr(function(x){ x.paused = !x.paused; }); },
+        recommencer:function(){ upr(function(x){ x.left = x.total; }); },
+        passer:function(){ var n3 = self.avance(Object.assign({}, self.state.run)); if (n3) self.setState({run:n3}); },
+        demanderQuitter:function(){ self.setState({confirmQuit:true}); },
+        ouvrirApercu:function(){ self.setState({apercu:true}); },
+        quitter:function(){ self.setState({screen:'accueil', run:null, confirmQuit:false, apercu:false}); },
+        apercu:S.items.map(function(it, i){
+          var enC = i === show.item && !r.done, ok = i < show.item || r.done;
+          var det = it.type === 'circuit' ? it.exos.map(function(e){ return e.nom; }).join(' + ') : it.series + ' séries';
+          if (enC) det = sexo.nom + ' · série ' + show.n + ' / ' + show.N + (cur.ph !== 'serie' ? ' · repos' : '');
+          return {num:String(i + 1).padStart(2, '0'), nom:it.type === 'circuit' ? (it.nom || 'Circuit') : it.nom, detail:ok ? 'Terminé' : det, enCours:enC, fait:ok,
+            bg:enC ? '#161800' : '#1e1e1e', bd:enC ? '#4a5200' : '#2a2a2a', numCol:enC ? '#e8ff00' : '#888888', nomCol:ok ? '#888888' : '#f0f0f0'};
+        })};
+    }
+
+    // --- coach
+    var chips = this.chipsPour(st.step).map(function(c){ return {txt:c.l, pick:function(){ self.repondre(c); }}; });
+    var chat = st.chat.map(function(m, i){ var c = m.carte; return {ia:m.role === 'ia', moi:m.role === 'moi', carte:!!c, text:m.text || '', titre:c ? c.titre : '', btn:c ? c.btn : '', items:c ? c.items : [], aValider:!!c && !c.valide, valide:!!c && !!c.valide, valider:function(){ self.valider(i); }}; });
+
+    // --- réglages
+    var tog = function(k, titre, desc, avecChoix, first){ var on = !!R[k]; return {titre:titre, desc:desc, avecChoix:avecChoix && on, sep:first ? 'transparent' : '#2a2a2a', on:on ? 'true' : 'false', bg:on ? '#e8ff00' : '#3a3a3a', x:on ? 20 : 0, basculer:function(){ var r2 = Object.assign({}, self.state.reglages); r2[k] = !r2[k]; self.setState({reglages:r2}); }}; };
+    var toggles1 = [tog('decompte', 'Bips 3, 2, 1', 'Un bip à chacune des 3 dernières secondes du repos', false, true), tog('avant', 'Alerte avant la reprise', 'Te prévient quelques secondes avant la fin du repos', true, false), tog('reprise', 'Alerte « C’est reparti »', 'Au moment exact où la série doit commencer', false), tog('fin', 'Fin de série', 'Signal quand le temps de série est écoulé', false), tog('ecran', 'Garder l’écran allumé', 'Bips précis à la seconde ; écran verrouillé, les notifications prennent le relais', false)];
+    var segAvant = [5, 10, 15].map(function(v){ var on = R.avantS === v; return {txt:v + ' s avant', bg:on ? '#f0f0f0' : 'transparent', fg:on ? '#0a0a0a' : '#f0f0f0', bd:on ? '#f0f0f0' : '#2a2a2a', pick:function(){ self.setState({reglages:Object.assign({}, self.state.reglages, {avantS:v})}); }}; });
+    var musique = [
+      {k:'baisser', titre:'Baisser la musique', desc:'Le volume baisse pendant le bip puis remonte, comme Waze (à confirmer sur ton iPhone)'},
+      {k:'melanger', titre:'Bip par-dessus la musique', desc:'La musique continue au même volume, le bip passe par-dessus'},
+      {k:'rien', titre:'Notifications seulement', desc:'Aucun son de l’app, juste la notification'}
+    ].map(function(o){ var on = R.musique === o.k; return {titre:o.titre, desc:o.desc, bd:on ? '#e8ff00' : '#2a2a2a', dot:on ? '#e8ff00' : 'transparent', pick:function(){ self.setState({reglages:Object.assign({}, self.state.reglages, {musique:o.k})}); }}; });
+    var etapes = [{n:'1', t:'Ouvre le site dans Safari.'}, {n:'2', t:'Appuie sur l’icône Partager (le carré avec la flèche).'}, {n:'3', t:'Si besoin, appuie sur « En voir plus ».'}, {n:'4', t:'Choisis « Sur l’écran d’accueil », puis Ajouter.'}, {n:'5', t:'Ouvre l’app depuis ton écran d’accueil et autorise les notifications.'}];
+
+    return {is:is, go:go, dossiers:dossiers, aMasques:masques > 0, masquesTxt:'Afficher les dossiers masqués (' + masques + ')',
+      afficherMasques:function(){ self.setState({dossiers:self.state.dossiers.map(function(d){ return Object.assign({}, d, {masque:false}); })}); },
+      nouveauDossier:function(){ var id = 'd' + Date.now(); self.setState({dossiers:self.state.dossiers.concat([{id:id, nom:'Nouveau dossier', preset:false, ouvert:true, masque:false}]), dossierSheet:id}); },
+      ds:ds, nouvelle:function(){ self.setState({screen:'editeur', draft:{id:'s' + Date.now(), dossier:'perso', nom:'Nouvelle séance', items:[]}, sheetId:null}); },
+      ed:ed, sx:sx, cx:cx, fermerSheet:function(){ self.setState({sheetId:null}); },
+      biblio:biblio, filtres:filtres, biblioTitre:st.cible ? 'Ajouter au circuit' : 'Ajouter un exercice', recherche:st.recherche,
+      setRecherche:function(ev){ self.setState({recherche:ev.target.value}); },
+      recap:recap, creerPerso:creerPerso, aSelection:nbSel > 0, validerSel:validerSel, selTxt:'Ajouter ' + nbSel + ' exercice' + (nbSel > 1 ? 's' : '') + (st.cible ? ' au circuit' : ''), biblioAide:st.cible ? 'Sélectionne tous les exercices du circuit, dans l’ordre.' : 'Sélectionne un ou plusieurs exercices.', creerTxt:(st.recherche || '').trim() ? 'Créer « ' + st.recherche.trim() + ' »' : 'Créer un exercice perso', biblioVide:biblio.length === 0, run:run, chips:chips, chat:chat, saisie:st.saisie,
+      setSaisie:function(ev){ self.setState({saisie:ev.target.value}); }, envoyer:function(){ self.envoyer(); },
+      coachRetour:function(){ self.setState({screen:self.state.draft ? 'editeur' : 'accueil'}); },
+      R:R, toggles1:toggles1, segAvant:segAvant, musique:musique,
+      testerSon:function(){ self.jouer('test'); self.notif('Reprise dans ' + self.state.reglages.avantS + ' s', 'Développé couché · série 3/4'); },
+      etapes:etapes, historique:st.historique,
+      apercu:!!st.apercu && !!st.run, fermerApercu:function(){ self.setState({apercu:false}); },
+      confirmQuit:!!st.confirmQuit, continuer:function(){ self.setState({confirmQuit:false}); },
+      bip:!!st.bip, toastOn:!!st.toast, toast:st.toast || {titre:'', texte:''}};
+  }
+}
+</script>
+</body>
+</html>

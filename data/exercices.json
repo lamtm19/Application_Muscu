@@ -1,0 +1,754 @@
+[
+  {
+    "key": "dc",
+    "nom": "Développé couché",
+    "kind": "press",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "dch",
+    "nom": "Développé couché haltères",
+    "kind": "pressDb",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 40,
+    "repos": 105,
+    "series": 3
+  },
+  {
+    "key": "di",
+    "nom": "Développé incliné haltères",
+    "kind": "incline",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Haut des pectoraux",
+    "serie": 40,
+    "repos": 105,
+    "series": 3
+  },
+  {
+    "key": "dib",
+    "nom": "Développé incliné barre",
+    "kind": "inclineBar",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Haut des pectoraux",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "eeb",
+    "nom": "Écartés élastique de bas en haut",
+    "kind": "flyLowHigh",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Haut des pectoraux",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "eeh",
+    "nom": "Écartés élastique de haut en bas",
+    "kind": "flyHighLow",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Bas des pectoraux",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "ecp",
+    "nom": "Écartés poulie vis-à-vis",
+    "kind": "flyHighLow",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Pectoraux",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "po",
+    "nom": "Pompes",
+    "kind": "pushup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pla",
+    "nom": "Pompes larges",
+    "kind": "pushup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Pectoraux",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pdm",
+    "nom": "Pompes diamant",
+    "kind": "pushup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Triceps, pectoraux",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pin",
+    "nom": "Pompes inclinées (mains surélevées)",
+    "kind": "pushupIncline",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Bas des pectoraux",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pds",
+    "nom": "Pompes pieds surélevés",
+    "kind": "pushupDecline",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Haut des pectoraux, épaules",
+    "serie": 35,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pdd",
+    "nom": "Pompes pieds surélevés en déficit",
+    "kind": "pushupDeclineDeficit",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Haut des pectoraux, épaules",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pdf",
+    "nom": "Pompes en déficit",
+    "kind": "pushupDeficit",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "pld",
+    "nom": "Pompes lestées en déficit",
+    "kind": "pushupDeficit",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 40,
+    "repos": 75,
+    "series": 4
+  },
+  {
+    "key": "dp",
+    "nom": "Dips",
+    "kind": "dips",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Triceps, pectoraux",
+    "serie": 35,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "dpl",
+    "nom": "Dips buste penché",
+    "kind": "dipsLean",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Pectoraux, triceps",
+    "serie": 40,
+    "repos": 75,
+    "series": 4
+  },
+  {
+    "key": "dpb",
+    "nom": "Dips sur banc",
+    "kind": "benchDips",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Triceps",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "tr",
+    "nom": "Tractions pronation",
+    "kind": "pullup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Dos, biceps",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "trs",
+    "nom": "Tractions supination",
+    "kind": "pullup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Dos, biceps",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "trn",
+    "nom": "Tractions prise neutre",
+    "kind": "pullup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Dos, biceps",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "tre",
+    "nom": "Tractions avec élastique",
+    "kind": "pullup",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Dos, biceps",
+    "serie": 40,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "ro",
+    "nom": "Rowing haltère unilatéral",
+    "kind": "rowOne",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Dos, arrière d’épaule",
+    "serie": 40,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "rb",
+    "nom": "Rowing buste penché 2 haltères",
+    "kind": "row",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Dos, arrière d’épaule",
+    "serie": 40,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "rba",
+    "nom": "Rowing barre",
+    "kind": "rowBar",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Dos",
+    "serie": 40,
+    "repos": 105,
+    "series": 4
+  },
+  {
+    "key": "ra",
+    "nom": "Rowing australien",
+    "kind": "invrow",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Dos, biceps",
+    "serie": 40,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "sdt",
+    "nom": "Soulevé de terre",
+    "kind": "deadlift",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Dos, fessiers, ischios",
+    "serie": 40,
+    "repos": 150,
+    "series": 4
+  },
+  {
+    "key": "sdr",
+    "nom": "Soulevé de terre jambes tendues",
+    "kind": "rdl",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Ischios, fessiers",
+    "serie": 40,
+    "repos": 120,
+    "series": 3
+  },
+  {
+    "key": "fp",
+    "nom": "Face pull",
+    "kind": "facepull",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Arrière d’épaule, haut du dos",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "fpe",
+    "nom": "Face pull à l’élastique",
+    "kind": "facepull",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Arrière d’épaule, haut du dos",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "dm",
+    "nom": "Développé militaire",
+    "kind": "ohp",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Épaules, triceps",
+    "serie": 40,
+    "repos": 120,
+    "series": 4
+  },
+  {
+    "key": "dmh",
+    "nom": "Développé épaules haltères",
+    "kind": "ohpDb",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Épaules, triceps",
+    "serie": 40,
+    "repos": 105,
+    "series": 3
+  },
+  {
+    "key": "el",
+    "nom": "Élévations latérales haltères",
+    "kind": "raise",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Épaules",
+    "serie": 45,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "ele",
+    "nom": "Élévations latérales à l’élastique",
+    "kind": "raiseBand",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Épaules",
+    "serie": 45,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "ef",
+    "nom": "Élévations frontales",
+    "kind": "frontraise",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Avant d’épaule",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "pp",
+    "nom": "Pompes piquées",
+    "kind": "pike",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Épaules, triceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "cb",
+    "nom": "Curl biceps haltères",
+    "kind": "curl",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Biceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "cs",
+    "nom": "Curl haltères en supination",
+    "kind": "curl",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Biceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "cbb",
+    "nom": "Curl barre",
+    "kind": "curlBar",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Biceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "cm",
+    "nom": "Curl marteau",
+    "kind": "hammer",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Brachial, avant-bras",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "cba",
+    "nom": "Curl Bayesian à l’élastique",
+    "kind": "bayesian",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Biceps (étirement)",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "cel",
+    "nom": "Curl à l’élastique",
+    "kind": "curlBand",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Biceps",
+    "serie": 35,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "bf",
+    "nom": "Barre au front",
+    "kind": "skull",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Triceps",
+    "serie": 35,
+    "repos": 75,
+    "series": 3
+  },
+  {
+    "key": "bfh",
+    "nom": "Barre au front haltères au sol",
+    "kind": "skullFloor",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Triceps",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "en",
+    "nom": "Extension triceps nuque haltère",
+    "kind": "overheadExt",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Triceps (longue portion)",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "ene",
+    "nom": "Extension triceps nuque à l’élastique",
+    "kind": "overheadExtBand",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Triceps (longue portion)",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "sq",
+    "nom": "Squat",
+    "kind": "squat",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Cuisses, fessiers",
+    "serie": 45,
+    "repos": 150,
+    "series": 4
+  },
+  {
+    "key": "sqg",
+    "nom": "Goblet squat",
+    "kind": "goblet",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Cuisses, fessiers",
+    "serie": 45,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "sqp",
+    "nom": "Squat poids du corps",
+    "kind": "squatBw",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Cuisses, fessiers",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "sqs",
+    "nom": "Squat sauté",
+    "kind": "jumpSquat",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Cuisses, cardio",
+    "serie": 30,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "fe",
+    "nom": "Fentes",
+    "kind": "lunge",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Cuisses, fessiers",
+    "serie": 45,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "fb",
+    "nom": "Fentes bulgares",
+    "kind": "bulgarian",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Cuisses, fessiers",
+    "serie": 45,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "ht",
+    "nom": "Hip thrust",
+    "kind": "hipthrust",
+    "cats": [
+      "muscu"
+    ],
+    "muscle": "Fessiers",
+    "serie": 40,
+    "repos": 90,
+    "series": 3
+  },
+  {
+    "key": "pf",
+    "nom": "Pont fessier",
+    "kind": "bridge",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Fessiers",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "mo",
+    "nom": "Mollets debout",
+    "kind": "calf",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Mollets",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "gn",
+    "nom": "Gainage",
+    "kind": "plank",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Abdos, sangle abdominale",
+    "serie": 45,
+    "repos": 45,
+    "series": 3
+  },
+  {
+    "key": "cr",
+    "nom": "Crunch",
+    "kind": "crunch",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Abdos",
+    "serie": 40,
+    "repos": 45,
+    "series": 3
+  },
+  {
+    "key": "rj",
+    "nom": "Relevés de jambes",
+    "kind": "legraise",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Bas des abdos",
+    "serie": 40,
+    "repos": 60,
+    "series": 3
+  },
+  {
+    "key": "mc",
+    "nom": "Mountain climbers",
+    "kind": "mountain",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Abdos, cardio",
+    "serie": 30,
+    "repos": 45,
+    "series": 3
+  },
+  {
+    "key": "jj",
+    "nom": "Jumping jacks",
+    "kind": "jumpingjack",
+    "cats": [
+      "street"
+    ],
+    "muscle": "Cardio",
+    "serie": 40,
+    "repos": 30,
+    "series": 3
+  },
+  {
+    "key": "ech",
+    "nom": "Échauffement",
+    "kind": "warmup",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Épaules, articulations",
+    "serie": 240,
+    "repos": 0,
+    "series": 1
+  },
+  {
+    "key": "rot",
+    "nom": "Rotations d’épaules",
+    "kind": "warmup",
+    "cats": [
+      "muscu",
+      "street"
+    ],
+    "muscle": "Épaules",
+    "serie": 45,
+    "repos": 15,
+    "series": 1
+  }
+]
