@@ -78,8 +78,8 @@ test('alertes futures : avant la reprise et « C’est reparti »', () => {
   const t0 = 1_000_000;
   const a = alertesFutures(st, 0, t0 + 30_000, t0, { avant: true, avantS: 10, reprise: true });
   assert.deepEqual(a, [
-    { dans: 80, titre: 'Reprise dans 10 s', texte: 'Dips · série 2/2' },
-    { dans: 90, titre: 'C’est reparti !', texte: 'Dips · série 2/2' },
+    { dans: 80, a: t0 + 80_000, titre: 'Reprise dans 10 s', texte: 'Dips · série 2/2' },
+    { dans: 90, a: t0 + 90_000, titre: 'C’est reparti !', texte: 'Dips · série 2/2' },
   ]);
   const b = alertesFutures(st, 0, t0 + 30_000, t0, { avant: false, avantS: 10, reprise: true });
   assert.equal(b.length, 1);

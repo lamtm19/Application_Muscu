@@ -128,7 +128,7 @@ export function prochaineSerie(steps, depuis) {
    finEtape : heure (ms) de fin de l'étape en cours
    reglages : { avant, avantS, reprise }
    horizon  : on ne garde que les alertes des N prochaines secondes
-   Renvoie [{ dans (s), titre, texte }]
+   Renvoie [{ dans (s), a (heure exacte en ms), titre, texte }]
 ---------------------------------------------------------------- */
 export function alertesFutures(steps, idx, finEtape, maintenant, reglages, horizon = 45 * 60) {
   const out = [];
@@ -142,10 +142,10 @@ export function alertesFutures(steps, idx, finEtape, maintenant, reglages, horiz
       const texte = libelle(suivante);
       if (reglages.avant && x.dur > reglages.avantS) {
         const t = fin - reglages.avantS * 1000;
-        if (t > maintenant) out.push({ dans: Math.round((t - maintenant) / 1000), titre: 'Reprise dans ' + reglages.avantS + ' s', texte });
+        if (t > maintenant) out.push({ dans: Math.round((t - maintenant) / 1000), a: Math.round(t), titre: 'Reprise dans ' + reglages.avantS + ' s', texte });
       }
       if (reglages.reprise && fin > maintenant) {
-        out.push({ dans: Math.round((fin - maintenant) / 1000), titre: 'C’est reparti !', texte });
+        out.push({ dans: Math.round((fin - maintenant) / 1000), a: Math.round(fin), titre: 'C’est reparti !', texte });
       }
     }
     if ((fin - maintenant) / 1000 > horizon) break;

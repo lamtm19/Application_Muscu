@@ -108,7 +108,7 @@ export function rendu() {
   return `<div class="ecran ecran-seance">
     ${entete}
     <div class="seance-centre">
-      <div class="seance-illu">${illu(enSerie ? exo.kind : 'rest', 184, 138)}</div>
+      <div class="seance-illu">${illu(exo.kind, 184, 138)}</div>
       <div class="anneau-boite">
         <svg width="216" height="216" viewBox="0 0 216 216" aria-hidden="true" class="anneau">
           <circle cx="108" cy="108" r="100" fill="none" stroke="#1e1e1e" stroke-width="8"></circle>
@@ -122,14 +122,13 @@ export function rendu() {
         ${!enSerie && show.exo ? `<button class="btn-crayon" aria-label="Modifier l’exercice suivant" data-action="liveEdit">${ICONES.crayon}</button>` : ''}
       </div>
       <div class="cases" role="img" aria-label="Série ${show.n} sur ${show.N}">
-        ${show.N > 1 ? '<span class="cases-mot">SÉRIES</span>' : ''}${dots}
+        ${dots}
       </div>
       <p class="seance-note">${esc(exo.note || '')}</p>
       <div class="commandes">
         <button class="btn-rond" aria-label="${enSerie ? 'Recommencer la série' : 'Recommencer le repos'}" data-action="recommencer">${ICONES.recommencer}</button>
-        <button class="btn-rond grand" style="background:${v.col}" aria-label="${enPause ? 'Reprendre' : 'Pause'}" data-action="pause">${enPause ? ICONES.reprendre : ICONES.pause}</button>
+        <button class="btn-rond grand" style="background:${v.col};border-color:${v.col}" aria-label="${enPause ? 'Reprendre' : 'Pause'}" data-action="pause">${enPause ? ICONES.reprendre : ICONES.pause}</button>
         <button class="btn-rond" aria-label="Passer" data-action="passer">${ICONES.passer}</button>
-        <span>Recommencer</span><span>${enPause ? 'Reprendre' : 'Pause'}</span><span>Passer</span>
       </div>
     </div>
     <div class="seance-bas">

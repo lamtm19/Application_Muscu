@@ -4,7 +4,9 @@
    Pour chaque alerte, on publie un message QStash avec un délai.
    À l'heure dite, QStash appelle /api/push/send, qui envoie la
    notification. Aucune base de données : tout est dans le message.
-   Entrée : { subscription, alertes:[{ dans (s), titre, texte }], lot }
+   Entrée : { subscription, alertes:[{ dans (s), a (heure exacte, ms), titre, texte }], lot }
+   On utilise l’heure EXACTE (Upstash-Not-Before) et non un délai relatif : sinon le
+   temps d’envoi depuis l’iPhone qui se verrouille et le démarrage du serveur décalent tout.
    Sortie : { ids:[…] } (identifiants QStash, pour pouvoir annuler)
 ================================================================ */
 const QSTASH = (process.env.QSTASH_URL || 'https://qstash.upstash.io').replace(/\/$/, '');
@@ -38,12 +40,20 @@ export async function POST(request) {
   if (!alertes.length) return json({ ids: [] });
 
   const destination = adresseEnvoi(request);
+  const ANTICIPATION = 1; // s : compense le trajet QStash → Apple → iPhone
+  const maintenantS = Date.now() / 1000;
+  // Heure de livraison (secondes Unix) : heure exacte si fournie et cohérente, sinon délai relatif
+  const heure = a => {
+    const exacte = Number(a.a) / 1000;
+    if (exacte > maintenantS - 5 && exacte < maintenantS + 3700) return Math.max(Math.ceil(maintenantS), Math.floor(exacte) - ANTICIPATION);
+    return Math.round(maintenantS + Number(a.dans)) - ANTICIPATION;
+  };
   const contournement = process.env.VERCEL_AUTOMATION_BYPASS_SECRET; // previews protégées
   const lots = alertes.map(a => ({
     destination,
     headers: {
       'Content-Type': 'application/json',
-      'Upstash-Delay': Math.round(Number(a.dans)) + 's',
+      'Upstash-Not-Before': String(heure(a)),
       'Upstash-Label': lot,
       'Upstash-Retries': '1',
       ...(contournement && process.env.VERCEL_ENV !== 'production' ? { 'Upstash-Forward-x-vercel-protection-bypass': contournement } : {}),

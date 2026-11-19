@@ -3,8 +3,8 @@
 ================================================================ */
 import { rendre } from '../app.js';
 import { donnees, majReglages } from '../store.js';
-import { jouer, debloquer } from '../audio.js';
-import { entete, interrupteur, esc, toast } from './commun.js';
+import { debloquer } from '../audio.js';
+import { entete, interrupteur, esc } from './commun.js';
 import * as push from '../push.js';
 
 const INTERRUPTEURS = [
@@ -36,7 +36,7 @@ export function rendu() {
         ${interrupteur(!!R[k], 'basculer', titre, `data-k="${k}"`)}
       </div>
       ${k === 'avant' && R.avant ? `<div class="segments">
-        ${[5, 10, 15].map(v => `<button class="segment ${R.avantS === v ? 'on' : ''}" data-action="avantS" data-v="${v}">${v} s avant</button>`).join('')}
+        ${[10, 15, 20].map(v => `<button class="segment ${R.avantS === v ? 'on' : ''}" data-action="avantS" data-v="${v}">${v} s avant</button>`).join('')}
       </div>` : ''}
     </div>`).join('');
 
@@ -59,7 +59,6 @@ export function rendu() {
       <div class="boite-toggles">${toggles}</div>
       <h2 class="sous-titre mt10">PENDANT TA MUSIQUE</h2>
       <div class="pile8">${musique}</div>
-      <button class="btn-contour h50" data-action="tester">Tester l’alerte</button>
     </div>
   </div>`;
 }
@@ -68,10 +67,5 @@ export const actions = {
   basculer: el => { const k = el.dataset.k; majReglages({ [k]: !donnees.reglages[k] }); rendre(); },
   avantS: el => { majReglages({ avantS: parseInt(el.dataset.v, 10) }); rendre(); },
   musique: el => { majReglages({ musique: el.dataset.k }); rendre(); },
-  tester: () => {
-    debloquer();
-    jouer('reprise', true);
-    toast('Reprise dans ' + donnees.reglages.avantS + ' s', 'Développé couché · série 3/4');
-  },
   activerNotif: async () => { debloquer(); await push.activer(); rendre(); },
 };

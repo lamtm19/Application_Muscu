@@ -77,22 +77,6 @@ export function interrupteur(on, action, label, extra = '') {
   return `<button class="inter ${on ? 'on' : ''}" aria-label="${esc(label)}" aria-pressed="${on}" data-action="${action}" ${extra}><span></span></button>`;
 }
 
-// Petit message temporaire en haut de l'écran
-let timerToast = null;
-export function toast(titre, texte = '') {
-  let el = document.getElementById('toast');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'toast';
-    el.setAttribute('role', 'status');
-    document.body.appendChild(el);
-  }
-  el.innerHTML = `<img src="logoApp.png" alt=""><div><div class="toast-haut"><strong>${esc(titre)}</strong><span>maintenant</span></div><span>${esc(texte)}</span></div>`;
-  el.classList.add('visible');
-  clearTimeout(timerToast);
-  timerToast = setTimeout(() => el.classList.remove('visible'), 4000);
-}
-
 // Date lisible pour l'historique : « lundi 16 novembre »
 export function dateLisible(ts) {
   const d = new Date(ts);

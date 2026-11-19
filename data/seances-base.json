@@ -27,7 +27,7 @@
       "dureeEstimeeMin": 36,
       "id": "sa",
       "dossier": "perso",
-      "nom": "Séance A — Pecs, triceps, dos",
+      "nom": "Pecs, triceps, dos",
       "items": [
         {
           "type": "exo",
@@ -156,7 +156,7 @@
       "dureeEstimeeMin": 36,
       "id": "sb",
       "dossier": "perso",
-      "nom": "Séance B — Pecs, biceps, dos",
+      "nom": "Pecs, biceps, dos",
       "items": [
         {
           "type": "exo",
@@ -169,7 +169,7 @@
           "serie": 240,
           "repos": 0,
           "reposApres": 60,
-          "note": "Comme la séance A, plus 1 série de rowing léger"
+          "note": "Rotations d’épaules, pull-apart élastique 2 × 20, 10 pompes faciles, 3 dips, plus 1 série de rowing léger"
         },
         {
           "type": "circuit",
@@ -285,7 +285,7 @@
       "dureeEstimeeMin": 29,
       "id": "sc",
       "dossier": "perso",
-      "nom": "Séance C — Pecs, bras (bonus)",
+      "nom": "Pecs, bras (bonus)",
       "items": [
         {
           "type": "exo",

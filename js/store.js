@@ -11,7 +11,9 @@ const CLES = {
   historique: 'pdc2_historique',
   reglages: 'pdc2_reglages',
   run: 'pdc2_run',
+  version: 'pdc2_version',
 };
+const VERSION_DONNEES = 2;
 const V1 = {
   sessions: 'pause_champion_sessions',
   history: 'pause_champion_history',
@@ -20,7 +22,7 @@ const V1 = {
 
 // Réglages par défaut (identiques à la maquette)
 export const REGLAGES_DEFAUT = {
-  avant: true, avantS: 10, decompte: true, reprise: true, fin: true, musique: 'baisser', ecran: true,
+  avant: true, avantS: 15, decompte: true, reprise: true, fin: true, musique: 'baisser', ecran: true,
 };
 
 // État en mémoire, chargé au démarrage
@@ -56,15 +58,37 @@ export async function charger() {
     donnees.dossiers = lire(CLES.dossiers, []);
     donnees.historique = lire(CLES.historique, []);
     donnees.reglages = { ...REGLAGES_DEFAUT, ...lire(CLES.reglages, {}) };
+    mettreAJourDonnees();
   } else {
     // Premier lancement de la v2 : séances de base + migration des données v1
     const base = await (await fetch('data/seances-base.json')).json();
     donnees.dossiers = base.dossiers;
     donnees.seances = base.seances.map(s => { const { dureeEstimeeMin, ...reste } = s; return reste; });
     migrerV1();
+    ecrire(CLES.version, VERSION_DONNEES);
     sauver();
   }
 }
+
+/* ---------- Mises à jour des données déjà enregistrées sur le téléphone ---------- */
+function mettreAJourDonnees() {
+  const v = lire(CLES.version, 1);
+  if (v < 2) {
+    // Noms des séances de Lam sans « Séance A/B/C » + note d’échauffement de la B écrite en entier
+    const noms = { sa: ['Séance A — Pecs, triceps, dos', 'Pecs, triceps, dos'], sb: ['Séance B — Pecs, biceps, dos', 'Pecs, biceps, dos'], sc: ['Séance C — Pecs, bras (bonus)', 'Pecs, bras (bonus)'] };
+    donnees.seances.forEach(s => {
+      const n = noms[s.id];
+      if (n && s.nom === n[0]) s.nom = n[1];
+      if (s.id === 'sb' && s.items[0] && s.items[0].note === NOTE_B_ANCIENNE) s.items[0].note = NOTE_B;
+    });
+    // Alerte avant la reprise : 15 s par défaut (choix 10, 15 ou 20 s)
+    if (![10, 15, 20].includes(donnees.reglages.avantS) || donnees.reglages.avantS === 10) donnees.reglages.avantS = 15;
+  }
+  ecrire(CLES.version, VERSION_DONNEES);
+  sauver();
+}
+const NOTE_B_ANCIENNE = 'Comme la séance A, plus 1 série de rowing léger';
+const NOTE_B = 'Rotations d’épaules, pull-apart élastique 2 × 20, 10 pompes faciles, 3 dips, plus 1 série de rowing léger';
 
 /* ---------- Migration v1 → v2 ---------- */
 function migrerV1() {
