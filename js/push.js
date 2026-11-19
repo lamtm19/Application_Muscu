@@ -20,6 +20,22 @@ const K_LOTS = 'pdc2_push_lots';     // étiquettes des lots programmés (secour
 const K_DEMANDE = 'pdc2_notif_demande';
 
 let envoiEnCours = null; // promesse de la dernière programmation
+let decalage = lire('pdc2_decalage', 0); // ms à ajouter à l'horloge du téléphone pour avoir l'heure du serveur
+
+/* ---------- Horloge : mesure l'écart entre le téléphone et le serveur ----------
+   Les notifications sont programmées à l'heure exacte : si l'horloge du téléphone
+   avance ou retarde de quelques secondes, on corrige. */
+export async function synchroniserHorloge() {
+  try {
+    const t1 = Date.now();
+    const rep = await fetch('/api/push/schedule', { cache: 'no-store' });
+    const t2 = Date.now();
+    const d = await rep.json();
+    if (!d.maintenant || t2 - t1 > 3000) return; // réseau trop lent : mesure peu fiable
+    decalage = Math.round(d.maintenant - (t1 + t2) / 2);
+    ecrire('pdc2_decalage', decalage);
+  } catch { /* hors ligne : on garde l'ancienne mesure */ }
+}
 
 /* ---------- Ce que sait faire l'appareil ---------- */
 export function supporte() {
@@ -93,7 +109,8 @@ export function programmerSiBesoin() {
   const fin = runner.finEtapeReelle();
   if (!fin) return;
   const idx = runner.enCompteARebours() ? 0 : r.idx;
-  const alertes = alertesFutures(runner.steps, idx, fin, Date.now(), donnees.reglages);
+  const alertes = alertesFutures(runner.steps, idx, fin, Date.now(), donnees.reglages)
+    .map(a => ({ ...a, a: a.a + decalage })); // heure du serveur
   if (!alertes.length) return;
 
   // L'étiquette est enregistrée AVANT l'envoi : on pourra annuler même si la réponse se perd

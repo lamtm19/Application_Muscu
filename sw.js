@@ -5,7 +5,7 @@
    - Push : affiche les notifications « Reprise dans 10 s » / « C'est reparti ! ».
    Change le numéro de VERSION à chaque mise en ligne.
 ================================================================ */
-const VERSION = '2.0.1';
+const VERSION = '2.0.2';
 const CACHE = 'pdc-v2-' + VERSION;
 
 const FICHIERS = [

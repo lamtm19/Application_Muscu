@@ -22,6 +22,11 @@ function adresseEnvoi(request) {
   return new URL(request.url).origin + '/api/push/send';
 }
 
+// GET : heure du serveur, pour que le téléphone corrige un éventuel décalage de son horloge
+export function GET() {
+  return json({ maintenant: Date.now() });
+}
+
 export async function POST(request) {
   const token = (process.env.QSTASH_TOKEN || '').replace(/\s+/g, '');
   if (!token) return json({ erreur: 'Notifications non configurées' }, 503);

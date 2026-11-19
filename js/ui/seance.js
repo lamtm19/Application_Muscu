@@ -29,6 +29,7 @@ export function brancher() {
   clearInterval(boucle);
   boucle = setInterval(runner.tic, 200);
   reprendreVerrou();
+  push.synchroniserHorloge();
 }
 
 function arreter() {
