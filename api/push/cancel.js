@@ -11,7 +11,7 @@ const json = (data, status = 200) => new Response(JSON.stringify(data), {
 });
 
 export async function POST(request) {
-  const token = process.env.QSTASH_TOKEN;
+  const token = (process.env.QSTASH_TOKEN || '').replace(/\s+/g, '');
   if (!token) return json({ annules: 0 });
 
   let e;

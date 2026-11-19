@@ -21,7 +21,7 @@ function adresseEnvoi(request) {
 }
 
 export async function POST(request) {
-  const token = process.env.QSTASH_TOKEN;
+  const token = (process.env.QSTASH_TOKEN || '').replace(/\s+/g, '');
   if (!token) return json({ erreur: 'Notifications non configurées' }, 503);
 
   let e;
