@@ -49,10 +49,10 @@ export function creerCircuit(remplacer = {}) {
 ---------------------------------------------------------------- */
 export function etapes(seance) {
   const st = [];
-  const n = seance.items.length;
-  seance.items.forEach((it, i) => {
+  (seance.items || []).forEach((it, i) => {
+    const avant = st.length;
     if (it.type === 'circuit') {
-      if (!it.exos.length) return;
+      if (!Array.isArray(it.exos) || !it.exos.length) return;
       for (let t = 1; t <= it.tours; t++) {
         // Au tour t : seulement les exos qui ont encore une série à faire
         const actifs = it.exos.filter(e => t <= Math.min(e.series, it.tours));
@@ -70,9 +70,11 @@ export function etapes(seance) {
         if (k < it.series && it.repos > 0) st.push({ ph: 'repos', dur: it.repos, item: i });
       }
     }
-    // Pause avant l'élément suivant
-    if (i < n - 1 && it.reposApres > 0) st.push({ ph: 'transition', dur: it.reposApres, item: i });
+    // Pause avant l'élément suivant (seulement si cet élément a produit des séries)
+    if (st.length > avant && it.reposApres > 0) st.push({ ph: 'transition', dur: it.reposApres, item: i });
   });
+  // Pas de pause à la toute fin (dernier élément, ou éléments vides après lui)
+  while (st.length && st[st.length - 1].ph === 'transition') st.pop();
   return st;
 }
 

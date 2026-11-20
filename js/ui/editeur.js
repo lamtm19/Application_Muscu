@@ -3,7 +3,7 @@
    + feuille de réglages d'un exercice, + feuille d'un circuit
 ================================================================ */
 import { etat, aller, rendre } from '../app.js';
-import { donnees, enregistrerSeance } from '../store.js';
+import { donnees, enregistrerSeance, supprimerSeance } from '../store.js';
 import { duree, enMinutes, nbExos, mmss, trouver, baseDe, creerCircuit, clone } from '../model.js';
 import { illu } from '../illustrations.js';
 import { esc, ICONES, feuille, champTemps, lireTemps } from './commun.js';
@@ -84,6 +84,7 @@ export function rendu() {
         <button class="btn-ajout" data-action="ajouterExo">${ICONES.plus}Exercice</button>
         <button class="btn-ajout jaune" data-action="ajouterCircuit">${ICONES.plus}Circuit</button>
       </div>
+      ${donnees.seances.some(s => s.id === D.id) ? '<button class="btn-supprimer-seance" data-action="demanderSuppression">Supprimer la séance</button>' : ''}
     </div>
     <div class="barre-bas barre-editeur">
       <div class="editeur-total">
@@ -98,6 +99,14 @@ export function rendu() {
 }
 
 function rendreFeuille() {
+  if (etat.sheetId === 'supprimer') {
+    return feuille(`<h2 class="titre-feuille t32">Supprimer la séance ?</h2>
+      <p class="gris15 m0 mb18">« ${esc(etat.draft.nom)} » sera effacée. Ton historique est conservé.</p>
+      <div class="ligne10">
+        <button class="btn-gris h56 flex1" data-action="fermerFeuille">Annuler</button>
+        <button class="btn-danger h56 flex1 gras" data-action="supprimerSeance">Supprimer</button>
+      </div>`, 'fermerFeuille', 'Annuler', 'feuille-quitter');
+  }
   const f = etat.sheetId ? trouver(etat.draft, etat.sheetId) : null;
   if (!f) return '';
   if (f.obj.type === 'circuit') return feuilleCircuit(f.obj);
@@ -227,9 +236,15 @@ export const actions = {
     aller('biblio', { cible: c.id, selection: [], recherche: '' });
   },
   ajouterAuCircuit: el => aller('biblio', { cible: el.dataset.id, selection: [], recherche: '' }),
+  demanderSuppression: () => { etat.sheetId = 'supprimer'; rendre(); },
+  supprimerSeance: () => {
+    supprimerSeance(etat.draft.id);
+    aller('accueil', { draft: null, sheetId: null });
+  },
   enregistrer: () => {
     const d = clone(etat.draft);
     delete d.copie;
+    d.items = d.items.filter(it => it.type !== 'circuit' || it.exos.length); // pas de circuit vide
     if (!d.nom.trim()) d.nom = 'Nouvelle séance';
     enregistrerSeance(d);
     aller('accueil', { draft: null, sheetId: null });

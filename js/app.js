@@ -11,7 +11,7 @@
 import { charger } from './store.js';
 import { chargerIllustrations } from './illustrations.js';
 import * as runner from './runner.js';
-import { reveiller } from './audio.js';
+import { reveiller, debloquer, estDebloque } from './audio.js';
 import * as push from './push.js';
 
 import * as accueil from './ui/accueil.js';
@@ -104,6 +104,14 @@ document.addEventListener('keydown', ev => {
   if (fn) { ev.preventDefault(); fn(el, ev); }
 });
 
+/* ---------- Son : débloqué au premier toucher ----------
+   Sur iPhone, le son ne marche que s'il a été activé pendant un toucher.
+   Si l'app a été rouverte au milieu d'une séance (pas de « C'est parti ! »),
+   n'importe quel toucher réactive le son. */
+['touchend', 'click'].forEach(t => document.addEventListener(t, () => {
+  if (!estDebloque()) debloquer();
+}, { capture: true, passive: true }));
+
 /* ---------- Zéro zoom sur iPhone ---------- */
 ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
@@ -130,6 +138,21 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 window.addEventListener('pagehide', () => push.programmerSiBesoin());
+
+/* ---------- Hauteur de l'écran (app installée sur iPhone) ----------
+   Dans l'app installée, iOS donne parfois une hauteur trop petite
+   (100vh, 100dvh, innerHeight) : une bande noire apparaît en bas.
+   En plein écran et en portrait, la vraie hauteur est celle de l'écran. */
+function ajusterHauteur() {
+  const installee = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  const portrait = matchMedia('(orientation: portrait)').matches;
+  if (!installee || !portrait) { document.documentElement.style.removeProperty('--h-app'); return; }
+  const h = Math.max(window.innerHeight, screen.height);
+  document.documentElement.style.setProperty('--h-app', h + 'px');
+}
+ajusterHauteur();
+window.addEventListener('resize', ajusterHauteur);
+window.addEventListener('orientationchange', () => setTimeout(ajusterHauteur, 300));
 
 /* ---------- Démarrage ---------- */
 async function demarrer() {

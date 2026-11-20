@@ -54,12 +54,18 @@ export function demarrer(seance) {
 export function restaurer() {
   const r = lireRun();
   if (!r || r.done || !r.seance) return false;
-  run = r;
-  steps = etapes(run.seance);
-  if (!steps.length) { run = null; persister(); return false; }
-  dernierReste = null;
-  avancerSelonHorloge(false);
-  return true;
+  try {
+    run = r;
+    steps = etapes(run.seance);
+    if (!steps.length) throw new Error('séance vide');
+    dernierReste = null;
+    avancerSelonHorloge(false);
+    return true;
+  } catch {
+    // Données abîmées : on oublie cette séance plutôt que de bloquer l'app
+    run = null; steps = []; persister();
+    return false;
+  }
 }
 
 export function quitter() { run = null; steps = []; persister(); }
@@ -149,7 +155,8 @@ function avancerSelonHorloge(avecSon) {
 
 function sonTransition(prev, x) {
   const R = donnees.reglages;
-  if (x.ph === 'serie' && prev.ph !== 'serie') { if (R.reprise) jouer('reprise'); }
+  // Nouvelle série (après un repos, ou directement après une autre série sans repos)
+  if (x.ph === 'serie') { if (R.reprise) jouer('reprise'); }
   else if (prev.ph === 'serie' && x.ph !== 'serie') { if (R.fin) jouer('fin'); }
 }
 

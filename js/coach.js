@@ -6,7 +6,7 @@
 ================================================================ */
 import { etat, aller, rendre } from './app.js';
 import { donnees, enregistrerSeance, lire, ecrire } from './store.js';
-import { creerExo, creerCircuit, duree, enMinutes, uid } from './model.js';
+import { creerExo, creerCircuit, duree, enMinutes, uid, clone } from './model.js';
 import { esc, ICONES } from './ui/commun.js';
 
 const LIMITE_JOUR = 20;
@@ -76,7 +76,7 @@ function seanceDepuisIA(s) {
       });
     }
     return exoDepuisIA(it, false, 0);
-  }).filter(Boolean);
+  }).filter(it => it && (it.type !== 'circuit' || it.exos.length)); // pas de circuit vide
   const existante = s.id && donnees.seances.find(x => x.id === s.id && x.dossier !== 'debut' && x.dossier !== 'street');
   return {
     id: existante ? existante.id : uid('s'),
@@ -86,6 +86,9 @@ function seanceDepuisIA(s) {
     _maj: !!existante,
   };
 }
+
+// Séances enregistrées par le coach (pour mettre à jour l'éditeur au retour)
+const majParCoach = new Set();
 
 /* ---------- Envoi d'un message ---------- */
 async function envoyer(texte) {
@@ -102,7 +105,6 @@ async function envoyer(texte) {
   }
   attente = true;
   rendre();
-  compterMessage();
 
   try {
     const rep = await fetch('/api/coach', {
@@ -112,6 +114,7 @@ async function envoyer(texte) {
     });
     const d = await rep.json().catch(() => null);
     if (!rep.ok || !d || !d.texte) throw new Error((d && d.erreur) || 'Erreur');
+    compterMessage(); // un message ne compte que si le coach a vraiment répondu
     historiqueApi.push({ role: 'model', text: JSON.stringify(d) });
     chat.push({ role: 'ia', text: d.texte });
     if (d.type === 'seances' && Array.isArray(d.seances) && d.seances.length) {
@@ -184,7 +187,14 @@ export function apresRendu() {
 }
 
 export const actions = {
-  retourCoach: () => aller(etat.draft ? 'editeur' : 'accueil'),
+  retourCoach: () => {
+    if (!etat.draft) return aller('accueil');
+    // Si le coach a mis à jour la séance ouverte dans l'éditeur, on reprend sa nouvelle version
+    const maj = majParCoach.has(etat.draft.id) && donnees.seances.find(s => s.id === etat.draft.id);
+    if (maj) etat.draft = clone(maj);
+    majParCoach.clear();
+    aller('editeur');
+  },
   choix: el => {
     const c = choix[+el.dataset.i];
     if (c === 'Nouvelle demande') {
@@ -199,7 +209,7 @@ export const actions = {
   valider: el => {
     const m = chat[+el.dataset.i];
     if (!m || !m.carte || m.carte.valide) return;
-    m.carte.seances.forEach(s => { const { _maj, ...propre } = s; enregistrerSeance(propre); });
+    m.carte.seances.forEach(s => { const { _maj, ...propre } = s; enregistrerSeance(propre); majParCoach.add(propre.id); });
     m.carte.valide = true;
     chat.push({ role: 'ia', text: 'C’est fait ! Tu la retrouves dans « Mes séances ». Les notifications de reprise sont déjà calées sur ces temps.' });
     choix = ['Nouvelle demande'];

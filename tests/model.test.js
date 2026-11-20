@@ -91,3 +91,17 @@ test('formats de temps', () => {
   assert.equal(enMinutes(2160), '36 min');
   assert.equal(enMinutes(4020), '1 h 07');
 });
+
+test('pas de pause fantôme : élément vide ou à la fin', () => {
+  const exo = { type: 'exo', nom: 'A', series: 2, serie: 30, repos: 60, reposApres: 120 };
+  const vide = { type: 'circuit', tours: 3, reposTour: 90, reposApres: 120, exos: [] };
+  // Exo puis circuit vide : la séance se termine sur la dernière série
+  assert.deepEqual(etapes({ items: [exo, vide] }).map(x => x.ph), ['serie', 'repos', 'serie']);
+  // Circuit vide au milieu : une seule pause entre les deux exos
+  assert.deepEqual(etapes({ items: [exo, vide, exo] }).filter(x => x.ph === 'transition').length, 1);
+  // Exo à 0 série : pas de pause pour lui
+  assert.deepEqual(etapes({ items: [{ ...exo, series: 0 }, exo] }).map(x => x.ph), ['serie', 'repos', 'serie']);
+  // Données abîmées : pas de plantage
+  assert.deepEqual(etapes({}), []);
+  assert.deepEqual(etapes({ items: [{ type: 'circuit', tours: 2 }] }), []);
+});

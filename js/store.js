@@ -54,10 +54,13 @@ export async function charger() {
 
   const dejaV2 = lire(CLES.seances) !== null;
   if (dejaV2) {
-    donnees.seances = lire(CLES.seances, []);
-    donnees.dossiers = lire(CLES.dossiers, []);
-    donnees.historique = lire(CLES.historique, []);
-    donnees.reglages = { ...REGLAGES_DEFAUT, ...lire(CLES.reglages, {}) };
+    // On ne garde que des données valides (une valeur abîmée ne doit pas bloquer l'app)
+    const tableau = (cle) => { const v = lire(cle, []); return Array.isArray(v) ? v : []; };
+    donnees.seances = tableau(CLES.seances).filter(s => s && typeof s === 'object' && Array.isArray(s.items));
+    donnees.dossiers = tableau(CLES.dossiers).filter(d => d && typeof d === 'object' && d.id);
+    donnees.historique = tableau(CLES.historique).filter(h => h && typeof h === 'object');
+    const reg = lire(CLES.reglages, {});
+    donnees.reglages = { ...REGLAGES_DEFAUT, ...(reg && typeof reg === 'object' ? reg : {}) };
     mettreAJourDonnees();
   } else {
     // Premier lancement de la v2 : séances de base + migration des données v1
@@ -72,6 +75,13 @@ export async function charger() {
 
 /* ---------- Mises à jour des données déjà enregistrées sur le téléphone ---------- */
 function mettreAJourDonnees() {
+  // Le dossier « Mes séances » doit toujours exister, et chaque séance doit être dans un dossier connu
+  if (!donnees.dossiers.some(d => d.id === 'perso')) {
+    donnees.dossiers.unshift({ id: 'perso', nom: 'Mes séances', preset: false, masque: false, ouvert: true });
+  }
+  const ids = new Set(donnees.dossiers.map(d => d.id));
+  donnees.seances.forEach(s => { if (!ids.has(s.dossier)) s.dossier = 'perso'; });
+
   const v = lire(CLES.version, 1);
   if (v < 2) {
     // Noms des séances de Lam sans « Séance A/B/C » + note d’échauffement de la B écrite en entier

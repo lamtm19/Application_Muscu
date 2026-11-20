@@ -10,6 +10,7 @@ import { esc, ICONES, feuille } from './commun.js';
 import { feuilleExo, actionsFeuilleExo } from './editeur.js';
 import * as runner from '../runner.js';
 import * as push from '../push.js';
+import { debloquer, estDebloque } from '../audio.js';
 
 let boucle = null;
 let verrou = null;            // Wake Lock (écran allumé)
@@ -126,6 +127,7 @@ export function rendu() {
         ${dots}
       </div>
       <p class="seance-note">${esc(exo.note || '')}</p>
+      ${!estDebloque() && donnees.reglages.musique !== 'rien' ? `<button class="puce-son" data-action="activerSon">Touche ici pour activer le son</button>` : ''}
       <div class="commandes">
         <button class="btn-rond" aria-label="${enSerie ? 'Recommencer la série' : 'Recommencer le repos'}" data-action="recommencer">${ICONES.recommencer}</button>
         <button class="btn-rond grand" style="background:${v.col};border-color:${v.col}" aria-label="${enPause ? 'Reprendre' : 'Pause'}" data-action="pause">${enPause ? ICONES.reprendre : ICONES.pause}</button>
@@ -200,6 +202,7 @@ const editActions = actionsFeuilleExo(() => edition && { obj: edition.exo, circu
 
 export const actions = {
   ...editActions.actions,
+  activerSon: () => { debloquer(); setTimeout(rendre, 150); },
   demanderQuitter: () => { panneau = 'quitter'; rendre(); },
   ouvrirApercu: () => { panneau = 'apercu'; rendre(); },
   fermerPanneau: () => { panneau = null; edition = null; rendre(); },

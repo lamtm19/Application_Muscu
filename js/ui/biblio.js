@@ -64,7 +64,11 @@ function majPartielle() {
 }
 
 export const actions = {
-  retourBiblio: () => aller('editeur', { cible: null, selection: [], recherche: '' }),
+  retourBiblio: () => {
+    // Circuit tout juste créé puis abandonné sans exercice : on le retire
+    if (etat.cible && etat.draft) etat.draft.items = etat.draft.items.filter(it => it.id !== etat.cible || it.exos.length);
+    aller('editeur', { cible: null, selection: [], recherche: '' });
+  },
   filtre: el => { etat.filtre = el.dataset.k; rendre(); },
   basculer: el => {
     const k = el.dataset.key, i = etat.selection.indexOf(k);

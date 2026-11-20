@@ -22,7 +22,9 @@ export function rendu() {
           <span class="carte-duree">${enMinutes(duree(s))}</span>
         </div>
         <div class="carte-boutons">
-          <button class="btn-jaune h46" data-action="lancer" data-id="${s.id}">${ICONES.play}Lancer</button>
+          ${etapes(s).length
+            ? `<button class="btn-jaune h46" data-action="lancer" data-id="${s.id}">${ICONES.play}Lancer</button>`
+            : `<button class="btn-gris h46 flex1" data-action="modifier" data-id="${s.id}">Séance vide</button>`}
           <button class="btn-contour h46" data-action="modifier" data-id="${s.id}">Modifier</button>
         </div>
       </article>`).join('');

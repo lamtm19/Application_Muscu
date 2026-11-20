@@ -45,6 +45,9 @@ export function debloquer() {
   } catch { /* pas d'audio */ }
 }
 
+// Le son est-il prêt (contexte créé et actif) ?
+export function estDebloque() { return !!ctx && ctx.state === 'running'; }
+
 // Quand l'app revient à l'écran, le contexte peut avoir été suspendu
 export function reveiller() {
   if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
