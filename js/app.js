@@ -140,19 +140,43 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('pagehide', () => push.programmerSiBesoin());
 
 /* ---------- Hauteur de l'écran (app installée sur iPhone) ----------
-   Dans l'app installée, iOS donne parfois une hauteur trop petite
-   (100vh, 100dvh, innerHeight) : une bande noire apparaît en bas.
-   En plein écran et en portrait, la vraie hauteur est celle de l'écran. */
+   Bug d'iOS 26 dans l'app installée : la zone affichable devient parfois
+   plus courte que l'écran (environ la hauteur de la barre d'état en moins).
+   Tout ce qui dépasse cette zone est coupé : il ne faut donc JAMAIS donner
+   à l'app la hauteur de l'écran, mais celle réellement visible (innerHeight).
+   La bande restante en bas est peinte de la même couleur que le fond, et
+   comme elle recouvre déjà la barre d'accueil de l'iPhone, on retire la
+   marge du bas (--bas) d'autant pour que les boutons ne remontent pas trop. */
 function ajusterHauteur() {
+  const style = document.documentElement.style;
   const installee = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  if (!installee) { style.removeProperty('--h-app'); style.removeProperty('--bas'); return; }
+  const h = window.innerHeight;
+  style.setProperty('--h-app', h + 'px');
   const portrait = matchMedia('(orientation: portrait)').matches;
-  if (!installee || !portrait) { document.documentElement.style.removeProperty('--h-app'); return; }
-  const h = Math.max(window.innerHeight, screen.height);
-  document.documentElement.style.setProperty('--h-app', h + 'px');
+  const manque = portrait ? Math.round(screen.height - h) : 0;
+  if (manque > 0) style.setProperty('--bas', `max(0px, env(safe-area-inset-bottom, 0px) - ${manque}px)`);
+  else style.removeProperty('--bas');
+}
+function reajusterBientot() {
+  ajusterHauteur();
+  setTimeout(ajusterHauteur, 350); // iOS met parfois à jour la hauteur un peu après
 }
 ajusterHauteur();
 window.addEventListener('resize', ajusterHauteur);
-window.addEventListener('orientationchange', () => setTimeout(ajusterHauteur, 300));
+window.visualViewport?.addEventListener('resize', ajusterHauteur);
+window.addEventListener('orientationchange', reajusterBientot);
+window.addEventListener('pageshow', reajusterBientot);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reajusterBientot(); });
+// Après la fermeture du clavier, iOS laisse parfois la page décalée vers le haut
+document.addEventListener('focusout', ev => {
+  if (!ev.target.matches?.('input, textarea, select')) return;
+  setTimeout(() => {
+    if (document.activeElement?.matches('input, textarea, select')) return; // passage d'un champ à l'autre
+    window.scrollTo(0, 0);
+    ajusterHauteur();
+  }, 100);
+});
 
 /* ---------- Démarrage ---------- */
 async function demarrer() {

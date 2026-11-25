@@ -46,9 +46,9 @@ button { font-family: inherit; cursor: pointer; padding: 0; color: inherit; touc
 h1, h2, h3, p { margin: 0; }
 a { color: var(--jaune); }
 
-/* L'app est fixée sur tout l'écran. --h-app est calculée par js/app.js quand
-   l'app est installée sur l'iPhone : là-bas, 100vh / 100dvh sont parfois trop
-   courts et laissent une bande noire en bas de l'écran. */
+/* L'app est fixée en haut de l'écran. --h-app est calculée par js/app.js quand
+   l'app est installée sur l'iPhone : c'est la hauteur réellement visible
+   (iOS 26 coupe parfois le bas de l'écran, voir ajusterHauteur). */
 #app {
   position: fixed; top: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto;
   height: 100vh; height: 100dvh; height: var(--h-app, 100dvh);
@@ -219,7 +219,9 @@ a { color: var(--jaune); }
 .carte-boutons { display: flex; gap: 8px; }
 .carte-boutons .btn-jaune { flex: 1; }
 .carte-boutons .btn-gris { color: var(--gris); font-size: 15px; font-weight: 600; }
-.puce-son { position: absolute; z-index: 5; left: 50%; transform: translateX(-50%); top: calc(74px + var(--haut)); white-space: nowrap; box-shadow: 0 6px 20px rgba(0,0,0,.5); background: var(--surface2); border: 1px solid var(--bord); color: var(--texte); border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+/* Pastille « activer le son » : posée juste au-dessus des boutons de la séance,
+   pour ne jamais cacher l'illustration de l'exercice */
+.puce-son { flex: 0 0 auto; align-self: center; margin-top: auto; white-space: nowrap; box-shadow: 0 6px 20px rgba(0,0,0,.5); background: var(--surface2); border: 1px solid var(--bord); color: var(--texte); border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
 .btn-supprimer-seance { display: block; margin: 28px auto 0; background: none; border: none; color: var(--rouge); font-size: 15px; font-weight: 600; padding: 12px 16px; }
 .ligne-pilules { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .pilule-pointillee { height: 40px; padding: 0 14px; border-radius: 999px; border: 1px dashed #444; background: transparent; color: #cfcfcf; font-size: 14px; font-weight: 600; }
@@ -237,7 +239,13 @@ a { color: var(--jaune); }
 .editeur-titres { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .input-nom-seance { background: transparent; border: none; color: var(--texte); font-family: var(--titre); font-size: 28px; letter-spacing: 0.02em; padding: 0; outline: none; width: 100%; height: 36px; }
 .choix-dossier { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gris); }
-.choix-dossier select { background: transparent; border: none; color: #cfcfcf; font-size: 16px; padding: 0; outline: none; max-width: 100%; }
+.choix-dossier select {
+  -webkit-appearance: none; appearance: none; background: transparent; border: none; border-radius: 0;
+  color: #cfcfcf; font-size: 16px; padding: 0 18px 0 0; outline: none; max-width: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right center;
+}
+.choix-dossier select option { color: #0a0a0a; }
 .contenu-editeur { flex: 1; overflow-y: auto; padding: 16px 16px calc(150px + var(--bas)); }
 .bandeau-copie { margin: 0 0 14px; padding: 10px 12px; border-radius: 12px; background: #161800; border: 1px solid #4a5200; font-size: 13px; color: #f3ff80; }
 .item-chemin { display: flex; flex-direction: column; }
@@ -338,6 +346,7 @@ a { color: var(--jaune); }
 .case.courant { border-color: var(--jaune); color: var(--jaune); }
 .seance-note { margin: 12px 0 0; width: 100%; height: 38px; flex: 0 0 38px; overflow: hidden; font-size: 14px; line-height: 19px; color: #b5b5b5; text-align: center; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .commandes { width: 100%; margin-top: auto; padding: 14px 0 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.puce-son + .commandes { margin-top: 0; padding-top: 10px; }
 .btn-rond { height: 56px; border-radius: 10px; border: 1px solid var(--bord); background: var(--surface2); color: var(--texte); display: flex; align-items: center; justify-content: center; }
 .btn-rond.grand { color: #0a0a0a; }
 .btn-rond svg { width: 24px; height: 24px; }
